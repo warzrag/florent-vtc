@@ -778,16 +778,6 @@
                 });
             });
 
-            // Autocomplete pour les adresses
-            setupAutocomplete('customDepart', 'departList', (coords) => {
-                departCoords = coords;
-                calculatePrice();
-            });
-            setupAutocomplete('customArrivee', 'arriveeList', (coords) => {
-                arriveeCoords = coords;
-                calculatePrice();
-            });
-
             // Vérification code parrainage
             document.getElementById('btnVerifierCode').addEventListener('click', verifierCodeParrain);
             document.getElementById('codeParrain').addEventListener('keypress', function(e) {
@@ -847,6 +837,8 @@
             }
         }
 
+        let autocompleteInitialized = false;
+
         function selectDestination(value) {
             selectedDestination = value;
 
@@ -859,6 +851,21 @@
 
             document.getElementById('flightGroup').style.display =
                 ['cdg', 'orly', 'beauvais'].includes(value) ? 'block' : 'none';
+
+            // Initialiser Google Autocomplete quand les champs deviennent visibles
+            if (value === 'custom' && !autocompleteInitialized) {
+                setTimeout(() => {
+                    setupAutocomplete('customDepart', 'departList', (coords) => {
+                        departCoords = coords;
+                        calculatePrice();
+                    });
+                    setupAutocomplete('customArrivee', 'arriveeList', (coords) => {
+                        arriveeCoords = coords;
+                        calculatePrice();
+                    });
+                    autocompleteInitialized = true;
+                }, 100);
+            }
 
             // Reset prix calculé
             if (value !== 'custom') {

@@ -1377,7 +1377,7 @@
                         <li>45 min d'attente</li>
                         <li>Aide bagages</li>
                     </ul>
-                    <a href="https://wa.me/33743661203?text=Bonjour%2C%20je%20souhaite%20réserver%20un%20transfert%20Paris%20↔%20Orly%20(55€)" target="_blank" class="btn btn-secondary" style="width:100%;justify-content:center">Réserver</a>
+                    <a href="#estimateur" onclick="selectForfait('orly', 'Paris', 'Aéroport Orly', 55); return false;" class="btn btn-secondary" style="width:100%;justify-content:center">Réserver</a>
                 </div>
                 <div class="tarif-card featured">
                     <p class="tarif-label">Aéroport</p>
@@ -1389,7 +1389,7 @@
                         <li>Aide bagages</li>
                         <li>Eau offerte</li>
                     </ul>
-                    <a href="https://wa.me/33743661203?text=Bonjour%2C%20je%20souhaite%20réserver%20un%20transfert%20Paris%20↔%20CDG%20(65€)" target="_blank" class="btn btn-gradient" style="width:100%;justify-content:center">Réserver</a>
+                    <a href="#estimateur" onclick="selectForfait('cdg', 'Paris', 'Aéroport CDG', 65); return false;" class="btn btn-gradient" style="width:100%;justify-content:center">Réserver</a>
                 </div>
                 <div class="tarif-card">
                     <p class="tarif-label">Aéroport</p>
@@ -1400,7 +1400,7 @@
                         <li>45 min d'attente</li>
                         <li>Aide bagages</li>
                     </ul>
-                    <a href="https://wa.me/33743661203?text=Bonjour%2C%20je%20souhaite%20réserver%20un%20transfert%20Paris%20↔%20Beauvais%20(120€)" target="_blank" class="btn btn-secondary" style="width:100%;justify-content:center">Réserver</a>
+                    <a href="#estimateur" onclick="selectForfait('beauvais', 'Paris', 'Aéroport Beauvais', 120); return false;" class="btn btn-secondary" style="width:100%;justify-content:center">Réserver</a>
                 </div>
             </div>
         </div>
@@ -1422,8 +1422,8 @@
                     <p style="color:var(--gray);font-size:14px">Silence moteur</p>
                 </div>
                 <div class="card" style="text-align:center">
-                    <p style="font-size:32px;font-weight:700">5</p>
-                    <p style="color:var(--gray);font-size:14px">Places</p>
+                    <p style="font-size:32px;font-weight:700">4</p>
+                    <p style="color:var(--gray);font-size:14px">Passagers</p>
                 </div>
                 <div class="card" style="text-align:center">
                     <p style="font-size:32px;font-weight:700">WiFi</p>
@@ -1776,12 +1776,34 @@
             document.getElementById('btn-calculate').style.display = 'flex';
         }
 
-        // Sélectionner un forfait et ouvrir WhatsApp
-        // Sélectionner un forfait et ouvrir WhatsApp
+        // Sélectionner un forfait : pré-remplir l'estimateur et scroller
         function selectForfait(type, depart, destination, price) {
-            const message = `Bonjour, je souhaite réserver un transfert ${depart} → ${destination} (${price}€)`;
-            const encoded = encodeURIComponent(message);
-            window.open('https://wa.me/33743661203?text=' + encoded, '_blank');
+            // Passer en mode transfert
+            currentMode = 'transfert';
+            document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.mode-tab')[0].classList.add('active');
+            document.getElementById('mode-transfert').style.display = 'block';
+            document.getElementById('mode-disposition').style.display = 'none';
+            
+            // Pré-remplir les champs
+            document.getElementById('depart').value = depart;
+            document.getElementById('destination').value = destination;
+            
+            // Stocker le prix du forfait
+            calculatedPrice = price;
+            
+            // Afficher directement le résultat
+            document.getElementById('price-value').textContent = price + '€';
+            document.getElementById('price-details').innerHTML = 
+                '<strong>🎫 FORFAIT</strong> ' + depart + ' → ' + destination + '<br><small>Tesla Model Y • Prix fixe garanti</small>';
+            document.getElementById('price-result').classList.add('visible');
+            document.getElementById('btn-calculate').style.display = 'none';
+            
+            // Scroller vers l'estimateur
+            document.getElementById('estimateur').scrollIntoView({ behavior: 'smooth' });
+            
+            // Afficher le champ vol si c'est un aéroport
+            checkAirport();
         }
 
         // Scroll vers l'estimateur personnalisé
@@ -1855,11 +1877,12 @@
             input.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') e.preventDefault();
             });
-        }
 
+            // Détecter si aéroport pour afficher champ vol
             input.addEventListener('input', function() {
                 checkAirport();
             });
+        }
 
         // Détecter forfait
         function detecterForfait(depart, destination) {

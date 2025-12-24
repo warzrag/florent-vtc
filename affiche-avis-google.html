@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiche Avis Google - Florent VTC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .instructions {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 600px;
+            text-align: center;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Format A6 (105mm x 148mm) - compact pour siège */
+        .poster {
+            width: 105mm;
+            height: 148mm;
+            background: #ffffff;
+            border-radius: 4mm;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* Header avec Google colors */
+        .poster-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 8mm 6mm;
+            text-align: center;
+            position: relative;
+        }
+
+        .poster-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #34A853);
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 2px;
+            margin-bottom: 2mm;
+        }
+
+        .tagline {
+            font-size: 9px;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 1px;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6mm;
+            text-align: center;
+            gap: 5mm;
+        }
+
+        .satisfaction {
+            font-size: 13px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1.3;
+        }
+
+        .title span {
+            color: #d4af37;
+        }
+
+        /* Stars */
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 2mm;
+        }
+
+        .star {
+            font-size: 22px;
+            color: #FBBC05;
+        }
+
+        /* QR Section */
+        .qr-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3mm;
+        }
+
+        .qr-code {
+            width: 32mm;
+            height: 32mm;
+            background: #fff;
+            border-radius: 3mm;
+            padding: 2mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .scan-text {
+            font-size: 11px;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .google-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2mm;
+            background: #f8f9fa;
+            padding: 2mm 4mm;
+            border-radius: 4mm;
+            border: 1px solid #e0e0e0;
+        }
+
+        .google-logo {
+            height: 14px;
+        }
+
+        .google-text {
+            font-size: 10px;
+            color: #5f6368;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .poster-footer {
+            background: linear-gradient(135deg, #d4af37 0%, #c9a227 100%);
+            padding: 5mm;
+            text-align: center;
+        }
+
+        .merci {
+            font-size: 12px;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .emoji {
+            font-size: 14px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .instructions, h1 {
+                display: none;
+            }
+            .poster {
+                box-shadow: none;
+                margin: 0;
+                border: 0.5px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Affiche Avis Google - Florent VTC</h1>
+
+    <div class="instructions">
+        <strong>Instructions :</strong><br>
+        Imprime cette affiche en format A6 (105mm x 148mm).<br>
+        Plastifie-la et place-la à l'arrière du siège conducteur ou passager.<br>
+        Les clients peuvent scanner le QR code pour laisser un avis en 30 secondes !
+    </div>
+
+    <div class="poster">
+        <div class="poster-header">
+            <div class="logo">FLORENT VTC</div>
+            <div class="tagline">Votre chauffeur privé à Paris</div>
+        </div>
+
+        <div class="main-content">
+            <div class="satisfaction">Satisfait de votre trajet ?</div>
+
+            <div class="title">
+                Laissez-nous<br><span>un avis</span> ⭐
+            </div>
+
+            <div class="stars">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+            </div>
+
+            <div class="qr-section">
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://share.google/CcyJXGeMtnb3xhULA&color=1a1a1a" alt="QR Code Avis Google">
+                </div>
+                <div class="scan-text">Scannez avec votre téléphone</div>
+                <div class="google-badge">
+                    <svg class="google-logo" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span class="google-text">Avis Google</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="poster-footer">
+            <div class="merci"><span class="emoji">🙏</span> Merci pour votre soutien !</div>
+        </div>
+    </div>
+</body>
+</html>

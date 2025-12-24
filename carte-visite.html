@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte de Visite - Florent VTC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .instructions {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 600px;
+            text-align: center;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card-wrapper {
+            text-align: center;
+        }
+
+        .card-label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* Carte de visite standard : 85mm x 55mm */
+        .card {
+            width: 85mm;
+            height: 55mm;
+            border-radius: 3mm;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        /* RECTO */
+        .card-front {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 8mm;
+            position: relative;
+        }
+
+        .card-front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+
+        .card-front::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+
+        .logo-front {
+            font-size: 28px;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 3px;
+            margin-bottom: 3mm;
+        }
+
+        .tagline {
+            font-size: 9px;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5mm;
+        }
+
+        .tesla-badge {
+            display: flex;
+            align-items: center;
+            gap: 2mm;
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.3);
+            padding: 2mm 4mm;
+            border-radius: 2mm;
+        }
+
+        .tesla-badge span {
+            font-size: 10px;
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+        /* VERSO */
+        .card-back {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 4mm;
+            padding: 5mm;
+            align-items: center;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5mm;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 2mm;
+        }
+
+        .contact-icon {
+            width: 14px;
+            height: 14px;
+            color: #d4af37;
+        }
+
+        .contact-text {
+            font-size: 9px;
+            color: #fff;
+        }
+
+        .contact-text.highlight {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .qr-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5mm;
+        }
+
+        .qr-code {
+            width: 22mm;
+            height: 22mm;
+            background: #fff;
+            border-radius: 2mm;
+            padding: 1.5mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-label {
+            font-size: 7px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .name-section {
+            position: absolute;
+            bottom: 5mm;
+            left: 5mm;
+        }
+
+        .driver-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .driver-title {
+            font-size: 8px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 10mm;
+            }
+            .instructions, h1 {
+                display: none;
+            }
+            .card {
+                box-shadow: none;
+                border: 0.5px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Carte de Visite - Florent VTC</h1>
+
+    <div class="instructions">
+        <strong>Instructions d'impression :</strong><br>
+        Imprime cette page sur du papier cartonné (300g minimum).<br>
+        Format carte de visite standard : 85mm x 55mm.<br>
+        Tu peux aussi envoyer ce fichier à un imprimeur (Vistaprint, Pixartprinting, etc.)
+    </div>
+
+    <div class="cards-container">
+        <!-- RECTO -->
+        <div class="card-wrapper">
+            <div class="card-label">RECTO</div>
+            <div class="card card-front">
+                <div class="logo-front">FLORENT VTC</div>
+                <div class="tagline">Service Premium Paris & Île-de-France</div>
+                <div class="tesla-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#d4af37">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                    <span>Tesla Model Y</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- VERSO -->
+        <div class="card-wrapper">
+            <div class="card-label">VERSO</div>
+            <div class="card card-back">
+                <div class="contact-info">
+                    <div class="contact-row">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        <span class="contact-text highlight">06 83 66 97 16</span>
+                    </div>
+                    <div class="contact-row">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <span class="contact-text">Paris & Île-de-France</span>
+                    </div>
+                    <div class="contact-row">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        <span class="contact-text">contact@florent-vtc.fr</span>
+                    </div>
+                    <div class="contact-row">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                        <span class="contact-text">7j/7 • 6h - 23h</span>
+                    </div>
+                    <div class="contact-row" style="margin-top: 2mm;">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                        </svg>
+                        <span class="contact-text highlight">florent-vtc.fr</span>
+                    </div>
+                </div>
+                <div class="qr-section">
+                    <div class="qr-code">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://florent-vtc.fr&color=0a0a0a" alt="QR Code">
+                    </div>
+                    <span class="qr-label">Scannez pour réserver</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

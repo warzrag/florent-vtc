@@ -1,0 +1,13 @@
+# Local Netlify folder
+.netlify
+.vercel
+
+# Node modules
+node_modules/
+florent-vtc-app/
+
+# Screenshots & temp files
+*.png
+*.jpg
+screen/
+Nouveau dossier/

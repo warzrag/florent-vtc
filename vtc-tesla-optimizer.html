@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTC Tesla - Optimiseur de Rentabilité</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .result-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat span:first-child {
+            color: #666;
+        }
+
+        .stat span:last-child {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .positive {
+            color: #28a745 !important;
+        }
+
+        .negative {
+            color: #dc3545 !important;
+        }
+
+        .platform-list {
+            list-style: none;
+        }
+
+        .platform-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .platform-item h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .platform-item p {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .platform-item .tarif {
+            color: #28a745;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .course-log {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .course-item {
+            background: #f8f9fa;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .course-item .course-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .course-item .course-details {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .prospect-form {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .action-plan {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .action-plan h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .action-plan ul {
+            list-style: none;
+        }
+
+        .action-plan li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .action-plan li:before {
+            content: "✓ ";
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .email-template {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 2px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 VTC Tesla - Optimiseur Pro</h1>
+            <p>Augmente ta rentabilité et trouve des clients premium</p>
+        </div>
+
+        <div class="action-plan">
+            <h3>🎯 Plan d'Action Immédiat</h3>
+            <ul>
+                <li>Inscris-toi sur les plateformes premium (Blacklane, Kapten Prestige, LeCab)</li>
+                <li>Prospecte 5 hôtels 4-5 étoiles cette semaine avec le template email</li>
+                <li>Track toutes tes courses pendant 7 jours pour analyser ta rentabilité</li>
+                <li>Fixe ton tarif minimum à 25€ pour les clients directs</li>
+                <li>Contacte les entreprises locales pour des contrats mensuels</li>
+            </ul>
+        </div>
+
+        <div class="grid">
+            <!-- Calculateur de Rentabilité -->
+            <div class="card">
+                <h2>💰 Calculateur de Rentabilité</h2>
+                <div class="input-group">
+                    <label>Plateforme</label>
+                    <select id="platform">
+                        <option value="uber">Uber</option>
+                        <option value="bolt">Bolt</option>
+                        <option value="freenow">FreeNow</option>
+                        <option value="kapten">Kapten</option>
+                        <option value="lecab">LeCab</option>
+                        <option value="direct">Client Direct</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Prix de la course (€)</label>
+                    <input type="number" id="coursePrice" placeholder="ex: 15" value="9">
+                </div>
+                <div class="input-group">
+                    <label>Distance (km)</label>
+                    <input type="number" id="distance" placeholder="ex: 10" value="10">
+                </div>
+                <div class="input-group">
+                    <label>Temps (minutes)</label>
+                    <input type="number" id="time" placeholder="ex: 20" value="15">
+                </div>
+                <button class="btn" onclick="calculateRentability()">Calculer</button>
+                <div id="rentabilityResult"></div>
+            </div>
+
+            <!-- Tracker de Courses -->
+            <div class="card">
+                <h2>📊 Tracker de Courses</h2>
+                <div class="input-group">
+                    <label>Montant (€)</label>
+                    <input type="number" id="logPrice" placeholder="ex: 15">
+                </div>
+                <div class="input-group">
+                    <label>Plateforme</label>
+                    <select id="logPlatform">
+                        <option value="uber">Uber</option>
+                        <option value="bolt">Bolt</option>
+                        <option value="freenow">FreeNow</option>
+                        <option value="kapten">Kapten</option>
+                        <option value="lecab">LeCab</option>
+                        <option value="direct">Client Direct</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Distance (km)</label>
+                    <input type="number" id="logDistance" placeholder="ex: 10">
+                </div>
+                <button class="btn" onclick="logCourse()">Enregistrer la Course</button>
+                <div id="courseStats"></div>
+                <div class="course-log" id="courseLog"></div>
+            </div>
+
+            <!-- Plateformes Premium -->
+            <div class="card">
+                <h2>⭐ Plateformes Premium Tesla</h2>
+                <ul class="platform-list">
+                    <li class="platform-item">
+                        <h4>Blacklane</h4>
+                        <p>Clientèle haut de gamme, entreprises</p>
+                        <p class="tarif">~40-60€ la course</p>
+                        <p><a href="https://www.blacklane.com/fr/chauffeurs/" target="_blank">S'inscrire →</a></p>
+                    </li>
+                    <li class="platform-item">
+                        <h4>Kapten Prestige</h4>
+                        <p>Service premium, Tesla valorisées</p>
+                        <p class="tarif">~30-45€ la course</p>
+                        <p><a href="https://www.kapten.com/" target="_blank">S'inscrire →</a></p>
+                    </li>
+                    <li class="platform-item">
+                        <h4>LeCab Executive</h4>
+                        <p>Entreprises et voyages affaires</p>
+                        <p class="tarif">~35-50€ la course</p>
+                        <p><a href="https://www.lecab.fr/" target="_blank">S'inscrire →</a></p>
+                    </li>
+                    <li class="platform-item">
+                        <h4>Clients Directs</h4>
+                        <p>Hôtels, entreprises, particuliers</p>
+                        <p class="tarif">~50-80€ la course</p>
+                        <p style="color: #667eea; font-weight: 600;">Utilise l'outil de prospection →</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Prospection -->
+            <div class="card">
+                <h2>🎯 Prospection Clients Directs</h2>
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('hotels')">Hôtels</button>
+                    <button class="tab" onclick="switchTab('entreprises')">Entreprises</button>
+                    <button class="tab" onclick="switchTab('particuliers')">Particuliers</button>
+                </div>
+
+                <div id="hotels" class="tab-content active">
+                    <div class="alert alert-success">
+                        <strong>Cible :</strong> Hôtels 4-5 étoiles qui ont des clients VIP
+                    </div>
+                    <div class="email-template">
+                        <h4>📧 Template Email Hôtels</h4>
+                        <p><strong>Objet :</strong> Service VTC Premium Tesla pour vos clients</p>
+                        <hr style="margin: 15px 0; border: none; border-top: 1px solid #e0e0e0;">
+                        <p>Bonjour,</p>
+                        <p>Je suis chauffeur VTC professionnel avec une Tesla Model [X/3/S] et je propose un service premium pour les clients de votre établissement.</p>
+                        <p><strong>Ce que je propose :</strong></p>
+                        <ul>
+                            <li>Véhicule électrique haut de gamme (Tesla)</li>
+                            <li>Disponibilité 24/7 pour vos clients</li>
+                            <li>Tarifs préférentiels pour l'hôtel</li>
+                            <li>Facturation mensuelle simplifiée</li>
+                            <li>Accueil aéroport avec panneau nominatif</li>
+                        </ul>
+                        <p><strong>Tarifs :</strong> À partir de 50€ selon trajet</p>
+                        <p>Je serais ravi d'échanger avec vous pour mettre en place un partenariat.</p>
+                        <p>Cordialement,<br>[Ton nom]<br>[Ton numéro]</p>
+                    </div>
+                    <button class="btn" onclick="copyTemplate('hotels')" style="margin-top: 15px;">Copier le Template</button>
+                </div>
+
+                <div id="entreprises" class="tab-content">
+                    <div class="alert alert-success">
+                        <strong>Cible :</strong> PME/Grandes entreprises qui déplacent des clients/collaborateurs
+                    </div>
+                    <div class="email-template">
+                        <h4>📧 Template Email Entreprises</h4>
+                        <p><strong>Objet :</strong> Solution VTC professionnelle pour vos déplacements</p>
+                        <hr style="margin: 15px 0; border: none; border-top: 1px solid #e0e0e0;">
+                        <p>Bonjour,</p>
+                        <p>Je suis chauffeur VTC professionnel et je propose mes services aux entreprises pour leurs déplacements professionnels.</p>
+                        <p><strong>Avantages :</strong></p>
+                        <ul>
+                            <li>Tesla électrique - Image premium pour vos invités</li>
+                            <li>Facturation mensuelle détaillée</li>
+                            <li>Tarifs négociés pour contrat mensuel</li>
+                            <li>Disponibilité garantie</li>
+                            <li>Suivi en temps réel des courses</li>
+                        </ul>
+                        <p><strong>Formule mensuelle :</strong> À partir de 800€/mois (20h de courses)</p>
+                        <p>Seriez-vous disponible pour un échange téléphonique ?</p>
+                        <p>Cordialement,<br>[Ton nom]<br>[Ton numéro]</p>
+                    </div>
+                    <button class="btn" onclick="copyTemplate('entreprises')" style="margin-top: 15px;">Copier le Template</button>
+                </div>
+
+                <div id="particuliers" class="tab-content">
+                    <div class="alert alert-success">
+                        <strong>Cible :</strong> Particuliers aisés, trajets récurrents (aéroport, gares)
+                    </div>
+                    <div class="email-template">
+                        <h4>📱 Message Réseaux / Carte de Visite</h4>
+                        <p><strong>Service VTC Premium Tesla</strong></p>
+                        <hr style="margin: 15px 0; border: none; border-top: 1px solid #e0e0e0;">
+                        <p>🚗 Tesla Model [X/3/S]<br>
+                        ⭐ Service Premium<br>
+                        📍 Trajets aéroport, gares, événements<br>
+                        💼 Disponible 24/7<br>
+                        💰 Tarifs fixes, pas de surprises</p>
+                        <p><strong>Exemples de tarifs :</strong><br>
+                        - Aéroport : 60€<br>
+                        - Gare : 35€<br>
+                        - Soirée : 50€</p>
+                        <p>Réservation : [Ton numéro]</p>
+                    </div>
+                    <button class="btn" onclick="copyTemplate('particuliers')" style="margin-top: 15px;">Copier le Message</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Objectifs -->
+        <div class="card">
+            <h2>🎯 Objectifs de Rentabilité</h2>
+            <div class="alert alert-warning">
+                <strong>Objectif minimum :</strong> 25€/h NET (après commission et frais)
+            </div>
+            <div class="result-box">
+                <h3>Frais Tesla à considérer :</h3>
+                <div class="stat">
+                    <span>Électricité (Superchargeur)</span>
+                    <span>~0.35€/km</span>
+                </div>
+                <div class="stat">
+                    <span>Électricité (maison)</span>
+                    <span>~0.15€/km</span>
+                </div>
+                <div class="stat">
+                    <span>Assurance VTC Tesla</span>
+                    <span>~200-300€/mois</span>
+                </div>
+                <div class="stat">
+                    <span>Amortissement Tesla</span>
+                    <span>~400-600€/mois</span>
+                </div>
+                <div class="stat">
+                    <span>Entretien</span>
+                    <span>~50-100€/mois</span>
+                </div>
+            </div>
+            <div class="alert alert-danger" style="margin-top: 15px;">
+                <strong>⚠️ Courses Uber à 9€ = PAS RENTABLE</strong><br>
+                Avec commission Uber (~25%) + frais, tu perds de l'argent sur les petites courses.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Données stockées
+        let courses = JSON.parse(localStorage.getItem('vtcCourses')) || [];
+
+        // Commissions par plateforme
+        const commissions = {
+            uber: 0.25,
+            bolt: 0.20,
+            freenow: 0.22,
+            kapten: 0.15,
+            lecab: 0.15,
+            direct: 0
+        };
+
+        // Frais fixes
+        const FRAIS_ELEC_KM = 0.25; // Moyenne entre maison et superchargeur
+        const FRAIS_FIXES_JOUR = 25; // Assurance + amortissement + entretien
+
+        function calculateRentability() {
+            const platform = document.getElementById('platform').value;
+            const price = parseFloat(document.getElementById('coursePrice').value);
+            const distance = parseFloat(document.getElementById('distance').value);
+            const time = parseFloat(document.getElementById('time').value);
+
+            if (!price || !distance || !time) {
+                alert('Remplis tous les champs');
+                return;
+            }
+
+            const commission = price * commissions[platform];
+            const fraisElec = distance * FRAIS_ELEC_KM;
+            const gainNet = price - commission - fraisElec;
+            const tauxHoraire = (gainNet / time) * 60;
+
+            const resultDiv = document.getElementById('rentabilityResult');
+
+            let alertClass = 'alert-danger';
+            let message = '❌ PAS RENTABLE - Refuse cette course';
+
+            if (tauxHoraire >= 25) {
+                alertClass = 'alert-success';
+                message = '✅ RENTABLE - Course à accepter';
+            } else if (tauxHoraire >= 15) {
+                alertClass = 'alert-warning';
+                message = '⚠️ LIMITE - Accepte seulement si proche';
+            }
+
+            resultDiv.innerHTML = `
+                <div class="alert ${alertClass}" style="margin-top: 15px;">
+                    <strong>${message}</strong>
+                </div>
+                <div class="result-box">
+                    <h3>Détail de la course</h3>
+                    <div class="stat">
+                        <span>Prix brut</span>
+                        <span>${price.toFixed(2)}€</span>
+                    </div>
+                    <div class="stat">
+                        <span>Commission ${platform}</span>
+                        <span class="negative">-${commission.toFixed(2)}€ (${(commissions[platform]*100).toFixed(0)}%)</span>
+                    </div>
+                    <div class="stat">
+                        <span>Frais électricité</span>
+                        <span class="negative">-${fraisElec.toFixed(2)}€</span>
+                    </div>
+                    <div class="stat" style="border-top: 2px solid #667eea; margin-top: 10px; padding-top: 10px;">
+                        <span><strong>Gain NET</strong></span>
+                        <span class="${gainNet > 0 ? 'positive' : 'negative'}"><strong>${gainNet.toFixed(2)}€</strong></span>
+                    </div>
+                    <div class="stat">
+                        <span><strong>Taux horaire NET</strong></span>
+                        <span class="${tauxHoraire >= 25 ? 'positive' : 'negative'}"><strong>${tauxHoraire.toFixed(2)}€/h</strong></span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function logCourse() {
+            const price = parseFloat(document.getElementById('logPrice').value);
+            const platform = document.getElementById('logPlatform').value;
+            const distance = parseFloat(document.getElementById('logDistance').value);
+
+            if (!price || !distance) {
+                alert('Remplis tous les champs');
+                return;
+            }
+
+            const course = {
+                date: new Date().toISOString(),
+                price,
+                platform,
+                distance,
+                gainNet: price - (price * commissions[platform]) - (distance * FRAIS_ELEC_KM)
+            };
+
+            courses.unshift(course);
+            localStorage.setItem('vtcCourses', JSON.stringify(courses));
+
+            // Reset form
+            document.getElementById('logPrice').value = '';
+            document.getElementById('logDistance').value = '';
+
+            updateCourseLog();
+            updateStats();
+        }
+
+        function updateCourseLog() {
+            const logDiv = document.getElementById('courseLog');
+
+            if (courses.length === 0) {
+                logDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Aucune course enregistrée</p>';
+                return;
+            }
+
+            logDiv.innerHTML = courses.slice(0, 10).map(course => {
+                const date = new Date(course.date);
+                return `
+                    <div class="course-item">
+                        <div class="course-header">
+                            <span>${course.platform.toUpperCase()}</span>
+                            <span class="${course.gainNet > 0 ? 'positive' : 'negative'}">${course.gainNet.toFixed(2)}€</span>
+                        </div>
+                        <div class="course-details">
+                            ${date.toLocaleDateString()} ${date.toLocaleTimeString()} - ${course.price}€ - ${course.distance}km
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats() {
+            const statsDiv = document.getElementById('courseStats');
+
+            if (courses.length === 0) {
+                statsDiv.innerHTML = '';
+                return;
+            }
+
+            const totalGain = courses.reduce((sum, c) => sum + c.gainNet, 0);
+            const totalBrut = courses.reduce((sum, c) => sum + c.price, 0);
+            const avgGain = totalGain / courses.length;
+
+            const today = new Date().toDateString();
+            const coursesToday = courses.filter(c => new Date(c.date).toDateString() === today);
+            const gainToday = coursesToday.reduce((sum, c) => sum + c.gainNet, 0);
+
+            statsDiv.innerHTML = `
+                <div class="result-box" style="margin-top: 15px;">
+                    <h3>📊 Statistiques</h3>
+                    <div class="stat">
+                        <span>Courses aujourd'hui</span>
+                        <span><strong>${coursesToday.length}</strong></span>
+                    </div>
+                    <div class="stat">
+                        <span>Gain NET aujourd'hui</span>
+                        <span class="${gainToday > 0 ? 'positive' : 'negative'}"><strong>${gainToday.toFixed(2)}€</strong></span>
+                    </div>
+                    <div class="stat">
+                        <span>Total courses</span>
+                        <span><strong>${courses.length}</strong></span>
+                    </div>
+                    <div class="stat">
+                        <span>Chiffre brut total</span>
+                        <span><strong>${totalBrut.toFixed(2)}€</strong></span>
+                    </div>
+                    <div class="stat">
+                        <span>Gain NET total</span>
+                        <span class="${totalGain > 0 ? 'positive' : 'negative'}"><strong>${totalGain.toFixed(2)}€</strong></span>
+                    </div>
+                    <div class="stat">
+                        <span>Gain moyen/course</span>
+                        <span class="${avgGain > 0 ? 'positive' : 'negative'}"><strong>${avgGain.toFixed(2)}€</strong></span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function copyTemplate(type) {
+            const templates = {
+                hotels: document.querySelector('#hotels .email-template').innerText,
+                entreprises: document.querySelector('#entreprises .email-template').innerText,
+                particuliers: document.querySelector('#particuliers .email-template').innerText
+            };
+
+            navigator.clipboard.writeText(templates[type]).then(() => {
+                alert('✅ Template copié ! Colle-le dans ton email');
+            });
+        }
+
+        // Init
+        updateCourseLog();
+        updateStats();
+    </script>
+</body>
+</html>

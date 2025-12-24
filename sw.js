@@ -1,12 +1,11 @@
 // Service Worker pour Florent VTC PWA
-const CACHE_NAME = 'florent-vtc-v1';
-const STATIC_CACHE = 'florent-vtc-static-v1';
+const CACHE_NAME = 'florent-vtc-v2';
+const STATIC_CACHE = 'florent-vtc-static-v2';
 
 // Fichiers à mettre en cache lors de l'installation
 const STATIC_FILES = [
   '/',
   '/index.html',
-  '/reserver.html',
   '/logo-florent-vtc.svg',
   '/photo/tesla-face.jpg',
   '/photo/tesla-angle.jpg',

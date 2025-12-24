@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRESTIGE VTC - Service de Chauffeur Privé Luxe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><rect fill="%23000000"/><path fill="%23111111" d="M0,400 Q480,300 960,400 T1920,400 L1920,1080 L0,1080 Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(218,165,32,0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 900px;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 4em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #DAA520 0%, #FFD700 50%, #DAA520 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: 8px;
+            text-shadow: 0 0 30px rgba(218,165,32,0.3);
+        }
+
+        .tagline {
+            font-size: 1.8em;
+            color: #DAA520;
+            margin-bottom: 15px;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #ccc;
+            margin-bottom: 40px;
+            font-family: 'Arial', sans-serif;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 60px;
+            background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%);
+            color: #000;
+            text-decoration: none;
+            font-size: 1.3em;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 40px rgba(218,165,32,0.4);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(218,165,32,0.6);
+        }
+
+        .section {
+            padding: 100px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #DAA520;
+            letter-spacing: 3px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #DAA520;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(218,165,32,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(218,165,32,0.3);
+        }
+
+        .service-card h3 {
+            font-size: 2em;
+            color: #DAA520;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            color: #ccc;
+            line-height: 1.8;
+            font-size: 1.1em;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card .price {
+            font-size: 2.5em;
+            color: #FFD700;
+            font-weight: 700;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .vehicle-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            padding: 100px 20px;
+        }
+
+        .vehicle-card {
+            background: #0f0f0f;
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 2px solid #333;
+            transition: all 0.3s;
+        }
+
+        .vehicle-card:hover {
+            border-color: #DAA520;
+            box-shadow: 0 20px 60px rgba(218,165,32,0.2);
+        }
+
+        .vehicle-card h3 {
+            font-size: 2.5em;
+            color: #DAA520;
+            margin-bottom: 20px;
+        }
+
+        .vehicle-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #DAA520;
+        }
+
+        .feature h4 {
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .feature p {
+            color: #ccc;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .booking-section {
+            background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%);
+            padding: 100px 20px;
+            color: #000;
+        }
+
+        .booking-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Arial', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #DAA520;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .why-us {
+            background: #0a0a0a;
+            padding: 100px 20px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .benefit-card {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .benefit-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.8em;
+            color: #DAA520;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card p {
+            color: #ccc;
+            line-height: 1.8;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .prospection-section {
+            background: #1a1a1a;
+            padding: 100px 20px;
+        }
+
+        .strategy-card {
+            background: #0f0f0f;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border-left: 6px solid #DAA520;
+        }
+
+        .strategy-card h3 {
+            font-size: 2em;
+            color: #DAA520;
+            margin-bottom: 20px;
+        }
+
+        .strategy-list {
+            list-style: none;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .strategy-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+            color: #ccc;
+            font-size: 1.1em;
+        }
+
+        .strategy-list li:before {
+            content: "✓ ";
+            color: #DAA520;
+            font-weight: 700;
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        .email-template-box {
+            background: #fff;
+            color: #000;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .email-template-box h4 {
+            color: #DAA520;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .copy-btn {
+            background: #DAA520;
+            color: #000;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            font-family: 'Arial', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        .pricing-highlight {
+            background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%);
+            color: #000;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 60px 0;
+            border-radius: 20px;
+        }
+
+        .pricing-highlight h3 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-item {
+            background: rgba(0,0,0,0.3);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .pricing-item h4 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .pricing-item .amount {
+            font-size: 3em;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        footer {
+            background: #000;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 2px solid #DAA520;
+        }
+
+        footer p {
+            color: #ccc;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .contact-info {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #DAA520;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5em;
+            }
+
+            .tagline {
+                font-size: 1.3em;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+
+            .booking-form {
+                padding: 30px 20px;
+            }
+        }
+
+        .success-message {
+            display: none;
+            background: #28a745;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            font-size: 3em;
+            color: #DAA520;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="logo">PRESTIGE VTC</h1>
+            <p class="tagline">Service de Chauffeur Privé Ultra-Premium</p>
+            <p class="subtitle">L'excellence au service de votre confort</p>
+            <a href="#booking" class="cta-button">Réserver Maintenant</a>
+        </div>
+        <div class="scroll-indicator"></div>
+    </div>
+
+    <!-- Services Section -->
+    <div class="section">
+        <h2 class="section-title">Nos Services Exclusifs</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Transfert Aéroport</h3>
+                <p>Accueil personnalisé avec panneau nominatif, prise en charge de vos bagages, confort absolu jusqu'à votre destination.</p>
+                <div class="price">150-250€</div>
+            </div>
+            <div class="service-card">
+                <h3>Mise à Disposition</h3>
+                <p>Chauffeur privé à votre service pour la journée. Shopping, réunions, visites touristiques en toute sérénité.</p>
+                <div class="price">500-800€/jour</div>
+            </div>
+            <div class="service-card">
+                <h3>Événements VIP</h3>
+                <p>Soirées, galas, concerts, événements sportifs. Arrivez avec style et élégance.</p>
+                <div class="price">200-400€</div>
+            </div>
+            <div class="service-card">
+                <h3>Mariages de Luxe</h3>
+                <p>Le jour le plus important de votre vie mérite un service exceptionnel. Décoration personnalisée possible.</p>
+                <div class="price">600-1000€</div>
+            </div>
+            <div class="service-card">
+                <h3>Transfert Groupe</h3>
+                <p>Jusqu'à 7 personnes dans un confort optimal. Idéal pour les familles ou groupes d'affaires.</p>
+                <div class="price">250-450€</div>
+            </div>
+            <div class="service-card">
+                <h3>Service sur Mesure</h3>
+                <p>Un besoin spécifique ? Nous créons le service qui vous correspond parfaitement.</p>
+                <div class="price">Sur devis</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vehicles Section -->
+    <div class="vehicle-section">
+        <div class="section">
+            <h2 class="section-title">Notre Flotte Premium</h2>
+
+            <div class="vehicle-card">
+                <h3>🚗 Tesla Model S/X</h3>
+                <p style="color: #ccc; font-family: Arial, sans-serif; font-size: 1.1em; margin-bottom: 20px;">Véhicule électrique ultra-premium, silencieux et performant. L'innovation au service du luxe.</p>
+                <div class="vehicle-features">
+                    <div class="feature">
+                        <h4>Confort Suprême</h4>
+                        <p>Sièges en cuir premium chauffants et ventilés</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Technologie</h4>
+                        <p>Écran tactile 17", Wi-Fi, système audio haut de gamme</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Espace</h4>
+                        <p>Jusqu'à 4 passagers + bagages</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Écologique</h4>
+                        <p>100% électrique, zéro émission</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vehicle-card">
+                <h3>🚐 Mercedes Classe V VIP</h3>
+                <p style="color: #ccc; font-family: Arial, sans-serif; font-size: 1.1em; margin-bottom: 20px;">Le summum du luxe pour les groupes. Aménagement VIP avec sièges premium type business class.</p>
+                <div class="vehicle-features">
+                    <div class="feature">
+                        <h4>Capacité</h4>
+                        <p>Jusqu'à 7 passagers</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Luxe</h4>
+                        <p>Cuir Nappa, éclairage d'ambiance, tables escamotables</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Business</h4>
+                        <p>Prises USB/220V, Wi-Fi, intimité garantie</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Mini-Bar</h4>
+                        <p>Boissons fraîches et rafraîchissements disponibles</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vehicle-card">
+                <h3>🚙 Mercedes Sprinter VIP</h3>
+                <p style="color: #ccc; font-family: Arial, sans-serif; font-size: 1.1em; margin-bottom: 20px;">Pour les groupes importants et les événements d'exception. Un véritable salon roulant.</p>
+                <div class="vehicle-features">
+                    <div class="feature">
+                        <h4>Grand Espace</h4>
+                        <p>Jusqu'à 14 passagers en configuration VIP</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Salon Mobile</h4>
+                        <p>Sièges face-à-face, bar intégré</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Événements</h4>
+                        <p>Idéal pour mariages, anniversaires, soirées</p>
+                    </div>
+                    <div class="feature">
+                        <h4>Équipement</h4>
+                        <p>Système audio premium, écrans TV, climatisation multi-zones</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Us Section -->
+    <div class="why-us">
+        <div class="section">
+            <h2 class="section-title">Pourquoi Nous Choisir ?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">👔</div>
+                    <h3>Professionnalisme</h3>
+                    <p>Chauffeurs expérimentés, discrets et élégants. Formation continue pour garantir un service impeccable.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⭐</div>
+                    <h3>Excellence</h3>
+                    <p>Véhicules premium entretenus quotidiennement. Propreté irréprochable garantie.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔒</div>
+                    <h3>Confidentialité</h3>
+                    <p>Discrétion absolue. Vos informations et trajets restent strictement confidentiels.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📱</div>
+                    <h3>Disponibilité</h3>
+                    <p>Service 24h/24, 7j/7. Réservation instantanée par téléphone ou en ligne.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💎</div>
+                    <h3>Personnalisation</h3>
+                    <p>Chaque trajet est unique. Nous adaptons notre service à vos besoins spécifiques.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🌟</div>
+                    <h3>Extras</h3>
+                    <p>Eau, journaux, chargeurs, Wi-Fi gratuit. Demandes spéciales toujours bienvenues.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing Highlight -->
+    <div class="pricing-highlight">
+        <h3>Nos Tarifs Premium</h3>
+        <div class="pricing-grid">
+            <div class="pricing-item">
+                <h4>Aéroport</h4>
+                <div class="amount">150-250€</div>
+                <p>Prise en charge VIP</p>
+            </div>
+            <div class="pricing-item">
+                <h4>Événement</h4>
+                <div class="amount">200-400€</div>
+                <p>Soirée prestige</p>
+            </div>
+            <div class="pricing-item">
+                <h4>Journée</h4>
+                <div class="amount">500-800€</div>
+                <p>Mise à disposition</p>
+            </div>
+            <div class="pricing-item">
+                <h4>Mariage</h4>
+                <div class="amount">600-1000€</div>
+                <p>Service complet</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Section -->
+    <div class="booking-section" id="booking">
+        <div class="section">
+            <h2 class="section-title" style="color: #000;">Réservez Votre Service</h2>
+            <div class="booking-form">
+                <div class="success-message" id="successMessage">
+                    ✅ Votre demande a été enregistrée ! Nous vous contacterons sous 2h.
+                </div>
+                <form id="bookingForm" onsubmit="handleBooking(event)">
+                    <div class="form-group">
+                        <label>Nom Complet *</label>
+                        <input type="text" name="name" required placeholder="M./Mme...">
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone *</label>
+                        <input type="tel" name="phone" required placeholder="+33 6 XX XX XX XX">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="votre@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Type de Service *</label>
+                        <select name="service" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="aeroport">Transfert Aéroport (150-250€)</option>
+                            <option value="journee">Mise à Disposition Journée (500-800€)</option>
+                            <option value="evenement">Événement VIP (200-400€)</option>
+                            <option value="mariage">Mariage de Luxe (600-1000€)</option>
+                            <option value="groupe">Transfert Groupe (250-450€)</option>
+                            <option value="sur-mesure">Service Sur Mesure</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Véhicule Souhaité *</label>
+                        <select name="vehicle" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="tesla">Tesla Model S/X (1-4 passagers)</option>
+                            <option value="classe-v">Mercedes Classe V VIP (1-7 passagers)</option>
+                            <option value="sprinter">Mercedes Sprinter VIP (1-14 passagers)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date et Heure *</label>
+                        <input type="datetime-local" name="datetime" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Lieu de Départ *</label>
+                        <input type="text" name="pickup" required placeholder="Adresse complète">
+                    </div>
+                    <div class="form-group">
+                        <label>Destination</label>
+                        <input type="text" name="destination" placeholder="Adresse complète">
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre de Passagers *</label>
+                        <input type="number" name="passengers" required min="1" max="14" placeholder="1-14">
+                    </div>
+                    <div class="form-group">
+                        <label>Demandes Spéciales</label>
+                        <textarea name="notes" placeholder="Bagages nombreux, champagne, décorations, itinéraire spécifique..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Confirmer la Réservation</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prospection Strategy Section -->
+    <div class="prospection-section">
+        <div class="section">
+            <h2 class="section-title">🎯 Guide de Prospection Clientèle VIP</h2>
+
+            <div class="strategy-card">
+                <h3>1. Hôtels de Luxe (5 étoiles)</h3>
+                <ul class="strategy-list">
+                    <li>Cible : Concierges et responsables conciergerie</li>
+                    <li>Avantage : Flux constant de clients fortunés</li>
+                    <li>Commission : Offrir 10-15% au concierge sur chaque course</li>
+                    <li>Action : Visite en personne avec carte de visite luxe + flyers</li>
+                    <li>Proposer : Tarifs préférentiels pour l'hôtel, disponibilité prioritaire</li>
+                </ul>
+
+                <div class="email-template-box">
+                    <h4>📧 Email pour Concierge Hôtel</h4>
+                    <p><strong>Objet :</strong> Partenariat VTC Premium pour votre clientèle d'exception</p>
+                    <hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">
+                    <p>Bonjour,</p>
+                    <p>Je dirige PRESTIGE VTC, service de chauffeur privé haut de gamme avec véhicules premium (Tesla, Mercedes Classe V VIP, Sprinter VIP).</p>
+                    <p><strong>Je vous propose un partenariat exclusif :</strong></p>
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li>Commission de 15% sur chaque course pour vous</li>
+                        <li>Disponibilité prioritaire 24/7 pour vos clients</li>
+                        <li>Tarifs préférentiels négociés</li>
+                        <li>Accueil aéroport avec panneau nominatif</li>
+                        <li>Facturation mensuelle simplifiée</li>
+                    </ul>
+                    <p><strong>Nos véhicules :</strong> Tesla électrique, Mercedes Classe V VIP (7 places), Sprinter VIP (14 places)</p>
+                    <p><strong>Tarifs :</strong> À partir de 150€ (aéroport), 200€ (événements), 500€/jour (mise à disposition)</p>
+                    <p>Seriez-vous disponible pour un rendez-vous cette semaine ? Je passerai vous rencontrer avec notre documentation.</p>
+                    <p>Cordialement,<br><strong>[TON NOM]</strong><br>Directeur - PRESTIGE VTC<br>[TON NUMÉRO]</p>
+                </div>
+                <button class="copy-btn" onclick="copyTemplate('hotel')">📋 Copier l'Email</button>
+            </div>
+
+            <div class="strategy-card">
+                <h3>2. Entreprises & Grandes Sociétés</h3>
+                <ul class="strategy-list">
+                    <li>Cible : Directeurs généraux, assistants de direction, services achats</li>
+                    <li>Besoin : Déplacements clients VIP, collaborateurs, événements d'entreprise</li>
+                    <li>Avantage : Contrats mensuels récurrents</li>
+                    <li>Action : Prospection LinkedIn + email personnalisé</li>
+                    <li>Proposer : Forfait mensuel avec heures incluses</li>
+                </ul>
+
+                <div class="email-template-box">
+                    <h4>📧 Email pour Entreprise</h4>
+                    <p><strong>Objet :</strong> Solution transport premium pour vos invités & collaborateurs</p>
+                    <hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">
+                    <p>Bonjour [Prénom],</p>
+                    <p>J'ai remarqué que [NOM ENTREPRISE] organise régulièrement des événements et reçoit des clients importants.</p>
+                    <p>Je dirige PRESTIGE VTC et nous proposons une solution transport haut de gamme adaptée aux besoins des entreprises comme la vôtre.</p>
+                    <p><strong>Ce que nous offrons :</strong></p>
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li>Flotte premium : Tesla, Mercedes Classe V VIP, Sprinter VIP</li>
+                        <li>Image premium pour vos invités</li>
+                        <li>Facturation mensuelle détaillée par département</li>
+                        <li>Disponibilité garantie 24/7</li>
+                        <li>Chauffeurs professionnels multilingues</li>
+                        <li>Tarifs négociés pour contrat annuel</li>
+                    </ul>
+                    <p><strong>Forfait Entreprise :</strong> À partir de 2000€/mois (40h de courses incluses)</p>
+                    <p>Seriez-vous disponible pour un café cette semaine ? Je vous présenterai notre service en détail.</p>
+                    <p>Cordialement,<br><strong>[TON NOM]</strong><br>PRESTIGE VTC<br>[TON NUMÉRO]</p>
+                </div>
+                <button class="copy-btn" onclick="copyTemplate('entreprise')">📋 Copier l'Email</button>
+            </div>
+
+            <div class="strategy-card">
+                <h3>3. Organisateurs d'Événements</h3>
+                <ul class="strategy-list">
+                    <li>Cible : Wedding planners, agences événementielles, traiteurs haut de gamme</li>
+                    <li>Besoin : Transport pour mariages, galas, soirées d'entreprise</li>
+                    <li>Avantage : Événements récurrents, recommandations</li>
+                    <li>Action : Portfolio photo des véhicules + tarifs partenaires</li>
+                    <li>Proposer : Partenariat avec commission sur apport d'affaires</li>
+                </ul>
+
+                <div class="email-template-box">
+                    <h4>📧 Email pour Wedding Planner / Organisateur</h4>
+                    <p><strong>Objet :</strong> Partenariat transport luxe pour vos événements</p>
+                    <hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">
+                    <p>Bonjour,</p>
+                    <p>En tant que professionnel de l'événementiel haut de gamme, vous savez que chaque détail compte pour créer une expérience inoubliable.</p>
+                    <p>PRESTIGE VTC propose un service de transport premium qui sublime vos événements :</p>
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li><strong>Mariages :</strong> Tesla/Mercedes Classe V décorées (600-1000€)</li>
+                        <li><strong>Événements VIP :</strong> Transport invités de prestige</li>
+                        <li><strong>Groupes :</strong> Sprinter VIP jusqu'à 14 personnes</li>
+                        <li><strong>Flexibilité :</strong> Décoration personnalisée, champagne, parcours sur-mesure</li>
+                    </ul>
+                    <p><strong>Partenariat :</strong> 15% de commission sur chaque prestation + tarifs préférentiels pour vos clients</p>
+                    <p>Je vous envoie notre book photo par email. Disponible pour échanger ?</p>
+                    <p>Cordialement,<br><strong>[TON NOM]</strong><br>PRESTIGE VTC<br>[TON NUMÉRO]</p>
+                </div>
+                <button class="copy-btn" onclick="copyTemplate('evenement')">📋 Copier l'Email</button>
+            </div>
+
+            <div class="strategy-card">
+                <h3>4. Clubs Privés & Restaurants Étoilés</h3>
+                <ul class="strategy-list">
+                    <li>Cible : Gestionnaires de clubs privés, maîtres d'hôtel restaurants étoilés</li>
+                    <li>Clientèle : Millionnaires, célébrités, entrepreneurs</li>
+                    <li>Action : Partenariat avec service de voiturier exclusif</li>
+                    <li>Proposer : Prise en charge des membres à domicile</li>
+                    <li>Avantage : Clientèle haut de gamme fidèle</li>
+                </ul>
+            </div>
+
+            <div class="strategy-card">
+                <h3>5. Réseaux Sociaux & Influenceurs</h3>
+                <ul class="strategy-list">
+                    <li>Instagram : Photos professionnelles des véhicules + témoignages clients</li>
+                    <li>LinkedIn : Cibler directeurs, assistants de direction, entrepreneurs</li>
+                    <li>Partenariat influenceurs : Offrir un trajet gratuit contre story/post</li>
+                    <li>Google My Business : Optimiser pour recherches "VTC luxe [ta ville]"</li>
+                    <li>Publicité Facebook : Cibler revenus >100k€/an dans ta zone</li>
+                </ul>
+            </div>
+
+            <div class="pricing-highlight" style="margin-top: 40px;">
+                <h3>📊 Objectif Rentabilité</h3>
+                <div style="max-width: 800px; margin: 30px auto; text-align: left; background: rgba(0,0,0,0.3); padding: 30px; border-radius: 15px;">
+                    <h4 style="margin-bottom: 20px; font-size: 1.5em;">Avec 1 véhicule premium :</h4>
+                    <ul style="list-style: none; font-size: 1.1em;">
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.2);">✅ 2 courses/jour à 200€ = 12000€/mois</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.2);">✅ 1 contrat entreprise = 2000€/mois fixe</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.2);">✅ 2 mariages/mois = 1600€</li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.2);">✅ Partenariat hôtel = 3000€/mois</li>
+                        <li style="padding: 20px 0; margin-top: 20px; font-size: 1.3em; font-weight: 700; border-top: 3px solid #000;">
+                            💰 TOTAL : 18 600€/mois
+                        </li>
+                    </ul>
+                    <p style="margin-top: 20px; font-size: 1.1em;">Après frais (véhicule, assurance, essence) : <strong>8000-12000€ NET/mois</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <h3 style="color: #DAA520; font-size: 2em; margin-bottom: 20px;">PRESTIGE VTC</h3>
+        <p>Service de Chauffeur Privé Ultra-Premium</p>
+        <div class="contact-info">
+            <p>📱 [TON NUMÉRO]</p>
+            <p>📧 [TON EMAIL]</p>
+            <p>🌐 [TON SITE]</p>
+        </div>
+        <p style="margin-top: 30px; font-size: 0.9em;">© 2025 PRESTIGE VTC - Tous droits réservés</p>
+    </footer>
+
+    <script>
+        // Gestion du formulaire de réservation
+        function handleBooking(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const booking = {};
+            formData.forEach((value, key) => {
+                booking[key] = value;
+            });
+
+            // Stocker la réservation
+            let bookings = JSON.parse(localStorage.getItem('prestigeBookings')) || [];
+            booking.id = Date.now();
+            booking.date = new Date().toISOString();
+            booking.status = 'En attente';
+            bookings.push(booking);
+            localStorage.setItem('prestigeBookings', JSON.stringify(bookings));
+
+            // Afficher message de succès
+            document.getElementById('successMessage').style.display = 'block';
+            event.target.reset();
+
+            // Notification (dans un vrai site, ici tu enverrais un email/SMS)
+            console.log('Nouvelle réservation:', booking);
+
+            // Scroller vers le message
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+
+            // Masquer le message après 5 secondes
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
+        }
+
+        // Copier les templates email
+        const templates = {
+            hotel: `Objet : Partenariat VTC Premium pour votre clientèle d'exception
+
+Bonjour,
+
+Je dirige PRESTIGE VTC, service de chauffeur privé haut de gamme avec véhicules premium (Tesla, Mercedes Classe V VIP, Sprinter VIP).
+
+Je vous propose un partenariat exclusif :
+• Commission de 15% sur chaque course pour vous
+• Disponibilité prioritaire 24/7 pour vos clients
+• Tarifs préférentiels négociés
+• Accueil aéroport avec panneau nominatif
+• Facturation mensuelle simplifiée
+
+Nos véhicules : Tesla électrique, Mercedes Classe V VIP (7 places), Sprinter VIP (14 places)
+
+Tarifs : À partir de 150€ (aéroport), 200€ (événements), 500€/jour (mise à disposition)
+
+Seriez-vous disponible pour un rendez-vous cette semaine ? Je passerai vous rencontrer avec notre documentation.
+
+Cordialement,
+[TON NOM]
+Directeur - PRESTIGE VTC
+[TON NUMÉRO]`,
+
+            entreprise: `Objet : Solution transport premium pour vos invités & collaborateurs
+
+Bonjour [Prénom],
+
+J'ai remarqué que [NOM ENTREPRISE] organise régulièrement des événements et reçoit des clients importants.
+
+Je dirige PRESTIGE VTC et nous proposons une solution transport haut de gamme adaptée aux besoins des entreprises comme la vôtre.
+
+Ce que nous offrons :
+• Flotte premium : Tesla, Mercedes Classe V VIP, Sprinter VIP
+• Image premium pour vos invités
+• Facturation mensuelle détaillée par département
+• Disponibilité garantie 24/7
+• Chauffeurs professionnels multilingues
+• Tarifs négociés pour contrat annuel
+
+Forfait Entreprise : À partir de 2000€/mois (40h de courses incluses)
+
+Seriez-vous disponible pour un café cette semaine ? Je vous présenterai notre service en détail.
+
+Cordialement,
+[TON NOM]
+PRESTIGE VTC
+[TON NUMÉRO]`,
+
+            evenement: `Objet : Partenariat transport luxe pour vos événements
+
+Bonjour,
+
+En tant que professionnel de l'événementiel haut de gamme, vous savez que chaque détail compte pour créer une expérience inoubliable.
+
+PRESTIGE VTC propose un service de transport premium qui sublime vos événements :
+
+• Mariages : Tesla/Mercedes Classe V décorées (600-1000€)
+• Événements VIP : Transport invités de prestige
+• Groupes : Sprinter VIP jusqu'à 14 personnes
+• Flexibilité : Décoration personnalisée, champagne, parcours sur-mesure
+
+Partenariat : 15% de commission sur chaque prestation + tarifs préférentiels pour vos clients
+
+Je vous envoie notre book photo par email. Disponible pour échanger ?
+
+Cordialement,
+[TON NOM]
+PRESTIGE VTC
+[TON NUMÉRO]`
+        };
+
+        function copyTemplate(type) {
+            const text = templates[type];
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Template copié ! Colle-le dans ton email et personnalise-le.');
+            }).catch(err => {
+                console.error('Erreur de copie:', err);
+            });
+        }
+
+        // Smooth scroll pour les ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

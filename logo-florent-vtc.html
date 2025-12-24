@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logo Florent VTC</title>
+    <style>
+        body {
+            background: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            gap: 40px;
+        }
+        .logo {
+            width: 400px;
+            height: 400px;
+            background: #0a0a0a;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .logo::before {
+            content: '';
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border: 3px solid #d4af37;
+            border-radius: 50%;
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 50%;
+        }
+        .letter {
+            font-family: Georgia, serif;
+            font-size: 140px;
+            font-weight: bold;
+            color: #d4af37;
+            margin-top: -20px;
+        }
+        .vtc {
+            font-family: Arial, sans-serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 8px;
+            margin-top: -10px;
+        }
+        .instructions {
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .instructions h2 { margin-bottom: 10px; }
+        .instructions p { opacity: 0.7; }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <div class="letter">F</div>
+        <div class="vtc">VTC</div>
+    </div>
+    <div class="instructions">
+        <h2>Logo Florent VTC</h2>
+        <p>Fais une capture d'écran du logo ci-dessus pour l'utiliser sur Google Business</p>
+        <p>Ou clique droit → "Enregistrer l'image sous..."</p>
+    </div>
+</body>
+</html>

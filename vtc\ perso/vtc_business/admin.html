@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin VTC - Gestion des Réservations</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1>🚗 Admin VTC</h1>
+            </div>
+            <div class="navbar-user">
+                <span id="userEmail" class="user-email"></span>
+                <button id="logoutBtn" class="btn btn-logout">Déconnexion</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Auth Section (Login) -->
+        <div id="authSection" class="auth-section hidden">
+            <div class="auth-card">
+                <h2>Connexion Admin</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required placeholder="admin@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Mot de passe</label>
+                        <input type="password" id="loginPassword" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                </form>
+                <p class="auth-message" id="authMessage"></p>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="dashboard-section hidden">
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Réservations Total</h3>
+                    <p id="totalReservations" class="stat-number">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>En Attente</h3>
+                    <p id="pendingReservations" class="stat-number">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Confirmées</h3>
+                    <p id="confirmedReservations" class="stat-number">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Complétées</h3>
+                    <p id="completedReservations" class="stat-number">0</p>
+                </div>
+            </div>
+
+            <!-- Add Reservation Section -->
+            <section class="section">
+                <h2>Ajouter une réservation</h2>
+                <form id="addReservationForm" class="form-grid">
+                    <div class="form-group">
+                        <label for="nomClient">Nom client</label>
+                        <input type="text" id="nomClient" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailClient">Email</label>
+                        <input type="email" id="emailClient" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneClient">Téléphone</label>
+                        <input type="tel" id="phoneClient" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateReservation">Date</label>
+                        <input type="date" id="dateReservation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="heureReservation">Heure</label>
+                        <input type="time" id="heureReservation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aeroport">Aéroport</label>
+                        <select id="aeroport" required>
+                            <option value="">Sélectionner un aéroport</option>
+                            <option value="CDG">CDG - Roissy (60€)</option>
+                            <option value="Orly">Orly (60€)</option>
+                            <option value="Beauvais">Beauvais (140€)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="typeVehicule">Type véhicule</label>
+                        <select id="typeVehicule" required>
+                            <option value="">Sélectionner un véhicule</option>
+                            <option value="Berline">Berline Premium</option>
+                            <option value="VAN">VAN 7 places</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombrePassagers">Nombre passagers</label>
+                        <input type="number" id="nombrePassagers" min="1" max="7" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="statut">Statut</label>
+                        <select id="statut" required>
+                            <option value="En attente">En attente</option>
+                            <option value="Confirmée">Confirmée</option>
+                            <option value="Complétée">Complétée</option>
+                            <option value="Annulée">Annulée</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Ajouter réservation</button>
+                </form>
+            </section>
+
+            <!-- Filters Section -->
+            <section class="section">
+                <h2>Filtres</h2>
+                <div class="filters">
+                    <div class="form-group">
+                        <label for="filterAeroport">Aéroport</label>
+                        <select id="filterAeroport">
+                            <option value="">Tous</option>
+                            <option value="CDG">CDG</option>
+                            <option value="Orly">Orly</option>
+                            <option value="Beauvais">Beauvais</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterStatut">Statut</label>
+                        <select id="filterStatut">
+                            <option value="">Tous</option>
+                            <option value="En attente">En attente</option>
+                            <option value="Confirmée">Confirmée</option>
+                            <option value="Complétée">Complétée</option>
+                            <option value="Annulée">Annulée</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterDate">Date</label>
+                        <input type="date" id="filterDate">
+                    </div>
+                    <button id="resetFiltersBtn" class="btn btn-secondary">Réinitialiser</button>
+                </div>
+            </section>
+
+            <!-- Reservations Table -->
+            <section class="section">
+                <h2>Réservations</h2>
+                <div class="table-wrapper">
+                    <table id="reservationsTable" class="reservations-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
+                                <th>Date</th>
+                                <th>Heure</th>
+                                <th>Aéroport</th>
+                                <th>Véhicule</th>
+                                <th>Passagers</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservationsBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Modifier réservation</h2>
+            <form id="editForm" class="form-grid">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label for="editNomClient">Nom client</label>
+                    <input type="text" id="editNomClient" required>
+                </div>
+                <div class="form-group">
+                    <label for="editEmailClient">Email</label>
+                    <input type="email" id="editEmailClient" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPhoneClient">Téléphone</label>
+                    <input type="tel" id="editPhoneClient" required>
+                </div>
+                <div class="form-group">
+                    <label for="editDateReservation">Date</label>
+                    <input type="date" id="editDateReservation" required>
+                </div>
+                <div class="form-group">
+                    <label for="editHeureReservation">Heure</label>
+                    <input type="time" id="editHeureReservation" required>
+                </div>
+                <div class="form-group">
+                    <label for="editAeroport">Aéroport</label>
+                    <select id="editAeroport" required>
+                        <option value="CDG">CDG - Roissy (60€)</option>
+                        <option value="Orly">Orly (60€)</option>
+                        <option value="Beauvais">Beauvais (140€)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editTypeVehicule">Type véhicule</label>
+                    <select id="editTypeVehicule" required>
+                        <option value="Berline">Berline Premium</option>
+                        <option value="VAN">VAN 7 places</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editNombrePassagers">Nombre passagers</label>
+                    <input type="number" id="editNombrePassagers" min="1" max="7" required>
+                </div>
+                <div class="form-group">
+                    <label for="editStatut">Statut</label>
+                    <select id="editStatut" required>
+                        <option value="En attente">En attente</option>
+                        <option value="Confirmée">Confirmée</option>
+                        <option value="Complétée">Complétée</option>
+                        <option value="Annulée">Annulée</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-success">Sauvegarder</button>
+                    <button type="button" class="btn btn-danger" id="deleteBtn">Supprimer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+
+    <!-- Admin Scripts -->
+    <script src="admin.js"></script>
+</body>
+</html>

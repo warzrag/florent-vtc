@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiche Siège VTC - Florent Ivorra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #2a2a2a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* Format A4 portrait pour affiche siège */
+        .seat-poster {
+            width: 210mm;
+            height: 297mm;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+        }
+
+        /* Effet de fond */
+        .seat-poster::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .seat-poster::after {
+            content: '';
+            position: absolute;
+            bottom: 10%;
+            left: 10%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite 4s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 3rem;
+        }
+
+        /* En-tête */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        @media screen {
+            .brand {
+                background: linear-gradient(135deg, #d4af37, #f4d03f, #d4af37);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                color: transparent;
+            }
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        /* Section centrale avec QR code */
+        .main-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        .qr-zone {
+            text-align: center;
+        }
+
+        .qr-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 30px;
+            box-shadow:
+                0 20px 60px rgba(212, 175, 55, 0.4),
+                0 0 0 2px rgba(212, 175, 55, 0.3);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .qr-container::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            border-radius: 35px;
+            z-index: -1;
+            opacity: 0.6;
+            filter: blur(15px);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            display: block;
+        }
+
+        .scan-instruction {
+            font-size: 1.8rem;
+            color: #d4af37;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .scan-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            font-weight: 300;
+        }
+
+        /* Informations de contact */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(244, 208, 63, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-text {
+            text-align: left;
+        }
+
+        .contact-label {
+            font-size: 0.9rem;
+            color: rgba(212, 175, 55, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-value {
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .vehicle-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            margin-bottom: 1rem;
+        }
+
+        .vehicle-text {
+            font-size: 1.2rem;
+            color: #d4af37;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .premium-text {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.6);
+            font-weight: 300;
+            margin-top: 0.5rem;
+        }
+
+        /* Bouton d'impression */
+        .print-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #0a0a0a;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            z-index: 1000;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+
+            .seat-poster {
+                width: 210mm;
+                height: 297mm;
+                box-shadow: none;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color-adjust: exact;
+            }
+
+            .seat-poster::before,
+            .seat-poster::after {
+                display: none;
+            }
+
+            .qr-container::before {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color-adjust: exact;
+            }
+
+            .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimer</button>
+
+    <div class="seat-poster">
+        <div class="content">
+            <!-- En-tête -->
+            <div class="header">
+                <div class="brand">VTC PREMIUM</div>
+                <div class="tagline">Votre chauffeur privé</div>
+            </div>
+
+            <!-- Section centrale -->
+            <div class="main-section">
+                <!-- QR Code -->
+                <div class="qr-zone">
+                    <div class="qr-container">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://florent-vtc.netlify.app&bgcolor=FFFFFF&color=0a0a0a"
+                             alt="QR Code"
+                             class="qr-code">
+                    </div>
+                    <div class="scan-instruction">Scannez pour réserver</div>
+                    <div class="scan-subtitle">Accédez directement à mon site</div>
+                </div>
+
+                <!-- Contact -->
+                <div class="contact-info">
+                    <div class="contact-row">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 40px; height: 40px; fill: #25D366;">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                        </div>
+                        <div class="contact-text">
+                            <div class="contact-label">Tel + WhatsApp</div>
+                            <div class="contact-value">06 83 66 97 16</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="vehicle-badge">
+                    <div class="vehicle-text">🚗 Tesla Model Y Noir</div>
+                    <div class="premium-text">Service Premium - Disponible 24/7</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

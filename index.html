@@ -790,6 +790,12 @@
             transition: opacity 0.3s;
         }
 
+        /* Crisp Chat - Position à gauche pour ne pas chevaucher WhatsApp */
+        .crisp-client .crisp-1rjpbb7 {
+            left: 24px !important;
+            right: auto !important;
+        }
+
         /* Bouton WhatsApp flottant */
         .whatsapp-float {
             position: fixed;
@@ -1088,6 +1094,27 @@
 
             .faq-answer {
                 padding: 0 20px;
+            }
+        }
+
+        /* Animations au scroll */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Réduire le mouvement pour les utilisateurs qui le préfèrent */
+        @media (prefers-reduced-motion: reduce) {
+            .animate-on-scroll {
+                opacity: 1;
+                transform: none;
+                transition: none;
             }
         }
 
@@ -2054,6 +2081,110 @@
                 installBanner.style.display = 'none';
             }
         });
+    </script>
+
+    <!-- Script FAQ Toggle -->
+    <script>
+        function toggleFAQ(button) {
+            const faqItem = button.parentElement;
+            const isActive = faqItem.classList.contains('active');
+
+            // Fermer tous les autres items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Toggle l'item actuel
+            faqItem.classList.toggle('active');
+        }
+    </script>
+
+    <!-- Script Animations au Scroll -->
+    <script>
+        // Intersection Observer pour les animations au scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            // Créer l'observer avec les options
+            const observerOptions = {
+                root: null, // viewport
+                threshold: 0.1, // 10% de l'élément visible
+                rootMargin: '0px 0px -50px 0px' // Déclenche un peu avant
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Ajouter la classe visible avec un délai pour le stagger effect
+                        const delay = entry.target.dataset.delay || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, delay);
+
+                        // Arrêter d'observer cet élément (animation une seule fois)
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Sélectionner tous les éléments à animer
+            const elementsToAnimate = document.querySelectorAll(
+                '.forfait-card, .card, .tarif-card, .estimateur-box, .avis-card, .faq-item'
+            );
+
+            // Ajouter la classe animate-on-scroll et observer chaque élément
+            elementsToAnimate.forEach((element, index) => {
+                element.classList.add('animate-on-scroll');
+
+                // Calculer le délai en fonction de la position dans le parent
+                const parent = element.parentElement;
+                const siblings = Array.from(parent.children).filter(child =>
+                    child.classList.contains('forfait-card') ||
+                    child.classList.contains('card') ||
+                    child.classList.contains('tarif-card') ||
+                    child.classList.contains('avis-card') ||
+                    child.classList.contains('faq-item')
+                );
+                const indexInParent = siblings.indexOf(element);
+
+                // Stagger effect : 100ms par élément dans une grille
+                if (parent.classList.contains('forfaits-grid') ||
+                    parent.classList.contains('grid-3') ||
+                    parent.classList.contains('avis-grid') ||
+                    parent.classList.contains('faq-container')) {
+                    element.dataset.delay = indexInParent * 100;
+                }
+
+                observer.observe(element);
+            });
+
+            // Animer aussi l'estimateur
+            const estimateurBox = document.querySelector('.estimateur-box');
+            if (estimateurBox) {
+                estimateurBox.classList.add('animate-on-scroll');
+                observer.observe(estimateurBox);
+            }
+        });
+    </script>
+
+    <!-- Crisp Chat -->
+    <!--
+        IMPORTANT: Pour activer le chat en direct Crisp :
+        1. Créez un compte gratuit sur https://crisp.chat/fr/
+        2. Récupérez votre WEBSITE_ID depuis votre tableau de bord Crisp
+        3. Remplacez "REMPLACER_PAR_VOTRE_ID_CRISP" ci-dessous par votre véritable ID
+        Le chat apparaîtra en bas à gauche pour ne pas chevaucher le bouton WhatsApp
+    -->
+    <script type="text/javascript">
+        window.$crisp=[];
+        window.CRISP_WEBSITE_ID="REMPLACER_PAR_VOTRE_ID_CRISP";
+        (function(){
+            d=document;
+            s=d.createElement("script");
+            s.src="https://client.crisp.chat/l.js";
+            s.async=1;
+            d.getElementsByTagName("head")[0].appendChild(s);
+        })();
     </script>
 </body>
 </html>

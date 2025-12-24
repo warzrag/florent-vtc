@@ -473,10 +473,77 @@
             section { padding-bottom: 120px; }
         }
 
+        /* Forfaits populaires */
+        .forfaits-section {
+            padding: 80px 24px;
+            background: var(--black);
+        }
+
+        .forfaits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .forfait-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .forfait-card:hover {
+            background: rgba(212,175,55,0.1);
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+
+        .forfait-card.forfait-custom {
+            border-style: dashed;
+        }
+
+        .forfait-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .forfait-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .forfait-price {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .forfait-info {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        @media (max-width: 600px) {
+            .forfaits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         /* Estimateur de prix */
         .estimateur-section {
-            padding: 80px 24px;
-            background: linear-gradient(180deg, rgba(212,175,55,0.05), transparent);
+            padding: 60px 24px;
+            background: linear-gradient(180deg, rgba(212,175,55,0.03), transparent);
         }
 
         .estimateur-box {
@@ -706,11 +773,64 @@
         </div>
     </section>
 
+    <!-- Forfaits populaires -->
+    <section id="forfaits" class="forfaits-section">
+        <div class="container">
+            <p class="section-label" style="text-align:center">Réservez en 1 clic</p>
+            <h2 style="text-align:center">Nos forfaits populaires</h2>
+            <p class="section-desc" style="text-align:center;margin-left:auto;margin-right:auto">Prix fixes, sans surprise. Cliquez et réservez.</p>
+
+            <div class="forfaits-grid">
+                <div class="forfait-card" onclick="selectForfait('cdg', 'Paris', 'Aéroport CDG', 65)">
+                    <div class="forfait-icon">✈️</div>
+                    <div class="forfait-name">Paris → CDG</div>
+                    <div class="forfait-price">65€</div>
+                    <div class="forfait-info">~45 min • Suivi du vol</div>
+                </div>
+
+                <div class="forfait-card" onclick="selectForfait('orly', 'Paris', 'Aéroport Orly', 55)">
+                    <div class="forfait-icon">✈️</div>
+                    <div class="forfait-name">Paris → Orly</div>
+                    <div class="forfait-price">55€</div>
+                    <div class="forfait-info">~35 min • Suivi du vol</div>
+                </div>
+
+                <div class="forfait-card" onclick="selectForfait('beauvais', 'Paris', 'Aéroport Beauvais', 120)">
+                    <div class="forfait-icon">✈️</div>
+                    <div class="forfait-name">Paris → Beauvais</div>
+                    <div class="forfait-price">120€</div>
+                    <div class="forfait-info">~1h30 • Suivi du vol</div>
+                </div>
+
+                <div class="forfait-card" onclick="selectForfait('disney', 'Paris', 'Disneyland Paris', 80)">
+                    <div class="forfait-icon">🏰</div>
+                    <div class="forfait-name">Paris → Disney</div>
+                    <div class="forfait-price">80€</div>
+                    <div class="forfait-info">~45 min • Porte à porte</div>
+                </div>
+
+                <div class="forfait-card" onclick="selectForfait('gare', 'Paris', 'Gare du Nord', 35)">
+                    <div class="forfait-icon">🚄</div>
+                    <div class="forfait-name">Paris → Gares</div>
+                    <div class="forfait-price">35€</div>
+                    <div class="forfait-info">~20 min • Toutes gares</div>
+                </div>
+
+                <div class="forfait-card forfait-custom" onclick="scrollToEstimateur()">
+                    <div class="forfait-icon">📍</div>
+                    <div class="forfait-name">Autre trajet</div>
+                    <div class="forfait-price">Sur mesure</div>
+                    <div class="forfait-info">Calculez votre prix</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Estimateur de prix -->
     <section id="estimateur" class="estimateur-section">
         <div class="estimateur-box">
-            <h2>Estimez votre tarif</h2>
-            <p class="subtitle">Obtenez le prix de votre course en quelques clics</p>
+            <h2>Trajet personnalisé</h2>
+            <p class="subtitle">Calculez le prix de votre course sur mesure</p>
 
             <div class="form-group">
                 <label>📍 Adresse de départ</label>
@@ -1005,6 +1125,30 @@
         let destCoords = null;
         let calculatedPrice = 0;
         let calculatedDistance = 0;
+
+        // Sélectionner un forfait et rediriger vers la réservation
+        function selectForfait(type, depart, destination, price) {
+            const today = new Date().toISOString().split('T')[0];
+            const now = new Date();
+            now.setHours(now.getHours() + 2);
+            const heure = now.toTimeString().slice(0,5);
+
+            const params = new URLSearchParams({
+                destination: type,
+                date: today,
+                heure: heure,
+                passengers: '1',
+                luggage: '1',
+                price: price
+            });
+
+            window.location.href = 'reserver.html?' + params.toString();
+        }
+
+        // Scroll vers l'estimateur personnalisé
+        function scrollToEstimateur() {
+            document.getElementById('estimateur').scrollIntoView({ behavior: 'smooth' });
+        }
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {

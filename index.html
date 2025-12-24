@@ -145,6 +145,12 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        
+
         html, body {
             overflow-x: hidden;
             max-width: 100vw;
@@ -1130,9 +1136,9 @@
             <a href="#services">Services</a>
             <a href="#tarifs">Tarifs</a>
             <a href="#vehicule">Véhicule</a>
-            <a href="reserver.html" class="btn btn-primary">Réserver</a>
+            <a href="#forfaits" class="btn btn-primary">Réserver</a>
         </nav>
-        <a href="reserver.html" class="btn btn-primary mobile-nav">Réserver</a>
+        <a href="#forfaits" class="btn btn-primary mobile-nav">Réserver</a>
     </header>
 
     <section class="hero">
@@ -1140,7 +1146,7 @@
         <h1>Votre chauffeur privé<br><span>Tesla Model Y</span></h1>
         <p>Transport premium 100% électrique. Confort exceptionnel, ponctualité garantie, tarifs transparents.</p>
         <div class="hero-buttons">
-            <a href="reserver.html" class="btn btn-primary">
+            <a href="#forfaits" class="btn btn-primary">
                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
                 Réserver maintenant
             </a>
@@ -1371,7 +1377,7 @@
                         <li>45 min d'attente</li>
                         <li>Aide bagages</li>
                     </ul>
-                    <a href="reserver.html?destination=orly" class="btn btn-secondary" style="width:100%;justify-content:center">Réserver</a>
+                    <a href="https://wa.me/33683669716?text=Bonjour%2C%20je%20souhaite%20réserver%20un%20transfert%20Paris%20↔%20Orly%20(55€)" target="_blank" class="btn btn-secondary" style="width:100%;justify-content:center">Réserver</a>
                 </div>
                 <div class="tarif-card featured">
                     <p class="tarif-label">Aéroport</p>
@@ -1383,7 +1389,7 @@
                         <li>Aide bagages</li>
                         <li>Eau offerte</li>
                     </ul>
-                    <a href="reserver.html?destination=cdg" class="btn btn-gradient" style="width:100%;justify-content:center">Réserver</a>
+                    <a href="https://wa.me/33683669716?text=Bonjour%2C%20je%20souhaite%20réserver%20un%20transfert%20Paris%20↔%20CDG%20(65€)" target="_blank" class="btn btn-gradient" style="width:100%;justify-content:center">Réserver</a>
                 </div>
                 <div class="tarif-card">
                     <p class="tarif-label">Aéroport</p>
@@ -1394,7 +1400,7 @@
                         <li>45 min d'attente</li>
                         <li>Aide bagages</li>
                     </ul>
-                    <a href="reserver.html?destination=beauvais" class="btn btn-secondary" style="width:100%;justify-content:center">Réserver</a>
+                    <a href="https://wa.me/33683669716?text=Bonjour%2C%20je%20souhaite%20réserver%20un%20transfert%20Paris%20↔%20Beauvais%20(120€)" target="_blank" class="btn btn-secondary" style="width:100%;justify-content:center">Réserver</a>
                 </div>
             </div>
         </div>
@@ -1666,7 +1672,7 @@
             <p class="section-desc" style="margin-left:auto;margin-right:auto;text-align:center">Réponse en moins de 30 minutes.</p>
 
             <div class="contact-buttons">
-                <a href="reserver.html" class="btn btn-primary">Réserver en ligne</a>
+                <a href="#forfaits" class="btn btn-primary">Réserver en ligne</a>
                 <a href="https://wa.me/33683669716" class="btn btn-secondary">
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
                     WhatsApp
@@ -1718,7 +1724,7 @@
     </footer>
 
     <div class="mobile-cta">
-        <a href="reserver.html" class="btn btn-primary">Réserver maintenant</a>
+        <a href="#forfaits" class="btn btn-primary">Réserver maintenant</a>
     </div>
 
     <script>
@@ -1770,23 +1776,12 @@
             document.getElementById('btn-calculate').style.display = 'flex';
         }
 
-        // Sélectionner un forfait et rediriger vers la réservation
+        // Sélectionner un forfait et ouvrir WhatsApp
+        // Sélectionner un forfait et ouvrir WhatsApp
         function selectForfait(type, depart, destination, price) {
-            const today = new Date().toISOString().split('T')[0];
-            const now = new Date();
-            now.setHours(now.getHours() + 2);
-            const heure = now.toTimeString().slice(0,5);
-
-            const params = new URLSearchParams({
-                destination: type,
-                date: today,
-                heure: heure,
-                passengers: '1',
-                luggage: '1',
-                price: price
-            });
-
-            window.location.href = 'reserver.html?' + params.toString();
+            const message = `Bonjour, je souhaite réserver un transfert ${depart} → ${destination} (${price}€)`;
+            const encoded = encodeURIComponent(message);
+            window.open('https://wa.me/33683669716?text=' + encoded, '_blank');
         }
 
         // Scroll vers l'estimateur personnalisé
@@ -1973,7 +1968,7 @@
             document.getElementById('price-result').classList.add('visible');
         }
 
-        // Réserver la course
+        // Réserver la course via WhatsApp
         function reserverCourse() {
             const depart = document.getElementById('depart').value;
             const destination = document.getElementById('destination').value;
@@ -1981,25 +1976,20 @@
             const heure = document.getElementById('est-heure').value;
             const passengers = document.getElementById('est-passengers').value;
             const luggage = document.getElementById('est-luggage').value;
-            const flightNumber = document.getElementById('flight-number').value;
+            const flightNumber = document.getElementById('flight-number')?.value || '';
 
-            // Redirection vers la page de réservation avec les paramètres
-            const params = new URLSearchParams({
-                depart: depart,
-                destination: destination,
-                date: date,
-                heure: heure,
-                passengers: passengers,
-                luggage: luggage,
-                price: calculatedPrice
-            });
+            let message = `🚗 *Demande de réservation VTC*\n\n`;
+            message += `📍 *Départ :* ${depart}\n`;
+            message += `📍 *Arrivée :* ${destination}\n`;
+            message += `📅 *Date :* ${date}\n`;
+            message += `⏰ *Heure :* ${heure}\n`;
+            message += `👥 *Passagers :* ${passengers}\n`;
+            message += `🧳 *Bagages :* ${luggage}\n`;
+            if (flightNumber) message += `✈️ *Vol :* ${flightNumber}\n`;
+            message += `\n💰 *Prix estimé :* ${calculatedPrice}€`;
 
-            // Ajouter le numéro de vol s'il est renseigné
-            if (flightNumber && flightNumber.trim() !== '') {
-                params.set('flightNumber', flightNumber.trim());
-            }
-
-            window.location.href = 'reserver.html?' + params.toString();
+            const encoded = encodeURIComponent(message);
+            window.open('https://wa.me/33683669716?text=' + encoded, '_blank');
         }
 
         // Animation spinner

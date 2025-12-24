@@ -40,10 +40,24 @@
     <!-- Autres balises SEO -->
     <meta name="robots" content="index, follow">
     <meta name="author" content="Florent VTC">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#d4af37">
     <link rel="canonical" href="https://florent-vtc.fr">
     <link rel="icon" type="image/svg+xml" href="logo-florent-vtc.svg">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Florent VTC">
     <link rel="apple-touch-icon" href="logo-florent-vtc.svg">
+    <link rel="apple-touch-icon" sizes="152x152" href="logo-florent-vtc.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo-florent-vtc.svg">
+    <link rel="apple-touch-icon" sizes="167x167" href="logo-florent-vtc.svg">
+
+    <!-- Android Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
 
     <!-- Schema.org JSON-LD (Google Rich Results) -->
     <script type="application/ld+json">
@@ -740,6 +754,343 @@
         .pac-logo::after {
             display: none !important;
         }
+
+        /* Onglets Mode Transfert / Mise à disposition */
+        .mode-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .mode-tab {
+            flex: 1;
+            padding: 14px 24px;
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            background: transparent;
+            color: var(--white);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .mode-tab:hover {
+            background: rgba(212,175,55,0.1);
+        }
+
+        .mode-tab.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--black);
+            border-color: var(--gold);
+        }
+
+        .mode-content {
+            transition: opacity 0.3s;
+        }
+
+        /* Bouton WhatsApp flottant */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 99;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        @keyframes pulse-whatsapp {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.6), 0 0 0 10px rgba(37, 211, 102, 0.1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                bottom: 90px;
+                right: 16px;
+                width: 56px;
+                height: 56px;
+            }
+
+            .whatsapp-float svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        /* Avis clients */
+        .avis-section {
+            padding: 80px 24px;
+            background: linear-gradient(180deg, rgba(212,175,55,0.03), transparent);
+        }
+
+        .avis-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .avis-note-globale {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 12px 24px;
+            margin-bottom: 24px;
+        }
+
+        .avis-note-globale .note {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .avis-note-globale .etoiles {
+            display: flex;
+            gap: 4px;
+        }
+
+        .avis-note-globale .star {
+            color: var(--gold);
+            font-size: 20px;
+        }
+
+        .avis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .avis-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .avis-card:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-4px);
+            border-color: rgba(212,175,55,0.4);
+        }
+
+        .avis-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .avis-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--black);
+            flex-shrink: 0;
+        }
+
+        .avis-info {
+            flex: 1;
+        }
+
+        .avis-nom {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .avis-etoiles {
+            display: flex;
+            gap: 2px;
+        }
+
+        .avis-etoiles .star {
+            color: var(--gold);
+            font-size: 14px;
+        }
+
+        .avis-texte {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .avis-date {
+            color: rgba(255,255,255,0.4);
+            font-size: 12px;
+        }
+
+        .avis-footer {
+            text-align: center;
+        }
+
+        .btn-avis-google {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            background: transparent;
+            color: var(--white);
+            border: 1px solid var(--gold);
+            border-radius: 100px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-avis-google:hover {
+            background: rgba(212,175,55,0.1);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .avis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 24px;
+            background: linear-gradient(180deg, transparent, rgba(212,175,55,0.02), transparent);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: 48px;
+        }
+
+        .faq-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--gold);
+        }
+
+        .faq-icon {
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--gold);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 28px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 28px 24px 28px;
+        }
+
+        .faq-answer p {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .faq-answer strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .faq-question {
+                padding: 20px;
+                font-size: 15px;
+            }
+
+            .faq-icon {
+                font-size: 20px;
+                margin-left: 12px;
+            }
+
+            .faq-item.active .faq-answer {
+                padding: 0 20px 20px 20px;
+            }
+
+            .faq-answer {
+                padding: 0 20px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -832,14 +1183,53 @@
             <h2>Trajet personnalisé</h2>
             <p class="subtitle">Calculez le prix de votre course sur mesure</p>
 
-            <div class="form-group">
-                <label>📍 Adresse de départ</label>
-                <input type="text" id="depart" placeholder="Ex: 25 rue de Rivoli, Paris" autocomplete="off">
+            <!-- Onglets mode Transfert / Mise à disposition -->
+            <div class="mode-tabs">
+                <button class="mode-tab active" onclick="switchMode('transfert')">
+                    🚗 Transfert
+                </button>
+                <button class="mode-tab" onclick="switchMode('disposition')">
+                    ⏰ Mise à disposition
+                </button>
             </div>
 
-            <div class="form-group">
-                <label>📍 Adresse d'arrivée</label>
-                <input type="text" id="destination" placeholder="Ex: Aéroport CDG Terminal 2" autocomplete="off">
+            <!-- Mode Transfert -->
+            <div id="mode-transfert" class="mode-content">
+                <div class="form-group">
+                    <label>📍 Adresse de départ</label>
+                    <input type="text" id="depart" placeholder="Ex: 25 rue de Rivoli, Paris" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label>📍 Adresse d'arrivée</label>
+                    <input type="text" id="destination" placeholder="Ex: Aéroport CDG Terminal 2" autocomplete="off">
+                </div>
+            </div>
+
+            <!-- Mode Mise à disposition -->
+            <div id="mode-disposition" class="mode-content" style="display: none;">
+                <div class="form-group">
+                    <label>📍 Lieu de prise en charge</label>
+                    <input type="text" id="lieu-pickup" placeholder="Ex: 25 rue de Rivoli, Paris" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label>⏰ Nombre d'heures</label>
+                    <select id="nb-heures">
+                        <option value="1">1 heure - 45€</option>
+                        <option value="2">2 heures - 90€</option>
+                        <option value="3">3 heures - 135€</option>
+                        <option value="4">4 heures - 180€</option>
+                        <option value="5">5 heures - 225€</option>
+                        <option value="6">6 heures - 270€</option>
+                        <option value="7">7 heures - 315€</option>
+                        <option value="8">8 heures - 360€</option>
+                        <option value="9">9 heures - 405€</option>
+                        <option value="10">10 heures - 450€</option>
+                        <option value="11">11 heures - 495€</option>
+                        <option value="12">12 heures - 540€</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-row">
@@ -851,6 +1241,14 @@
                     <label>⏰ Heure</label>
                     <input type="time" id="est-heure">
                 </div>
+            </div>
+
+            <div class="form-group" id="flight-number-group" style="display: none; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; opacity: 0;">
+                <label>✈️ Numéro de vol (optionnel)</label>
+                <input type="text" id="flight-number" placeholder="Ex: AF1234" autocomplete="off">
+                <p style="font-size: 12px; color: var(--gray); margin-top: 6px; line-height: 1.4;">
+                    Permet de suivre votre vol et d'adapter l'heure de prise en charge
+                </p>
             </div>
 
             <div class="form-row">
@@ -1043,6 +1441,198 @@
         </div>
     </section>
 
+
+    <!-- Avis clients -->
+    <section id="avis" class="avis-section">
+        <div class="container">
+            <div class="avis-header">
+                <p class="section-label">Avis clients</p>
+                <h2>Ils nous font confiance</h2>
+                <div class="avis-note-globale">
+                    <span class="note">4.9</span>
+                    <span style="color: var(--gray); font-size: 18px;">/5</span>
+                    <div class="etoiles">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="avis-grid">
+                <!-- Avis 1 -->
+                <div class="avis-card">
+                    <div class="avis-card-header">
+                        <div class="avis-avatar">SL</div>
+                        <div class="avis-info">
+                            <div class="avis-nom">Sophie Laurent</div>
+                            <div class="avis-etoiles">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="avis-texte">
+                        "Service impeccable pour mon transfert vers CDG. Florent était à l'heure, très professionnel et la Tesla Model Y est d'un confort exceptionnel. Je recommande vivement pour tous vos transferts aéroport !"
+                    </p>
+                    <p class="avis-date">Il y a 2 semaines</p>
+                </div>
+
+                <!-- Avis 2 -->
+                <div class="avis-card">
+                    <div class="avis-card-header">
+                        <div class="avis-avatar">MD</div>
+                        <div class="avis-info">
+                            <div class="avis-nom">Marc Dubois</div>
+                            <div class="avis-etoiles">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="avis-texte">
+                        "Excellent chauffeur, sympathique et discret. Le véhicule est impeccable, silencieux et très agréable. Service premium à un tarif honnête. Je ferai de nouveau appel à Florent VTC sans hésiter."
+                    </p>
+                    <p class="avis-date">Il y a 1 mois</p>
+                </div>
+
+                <!-- Avis 3 -->
+                <div class="avis-card">
+                    <div class="avis-card-header">
+                        <div class="avis-avatar">CM</div>
+                        <div class="avis-info">
+                            <div class="avis-nom">Claire Martin</div>
+                            <div class="avis-etoiles">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="avis-texte">
+                        "Rapport qualité/prix imbattable ! Transport propre et écologique en Tesla, ponctualité irréprochable et tarif transparent. Parfait pour mes déplacements professionnels. Je recommande à 100%."
+                    </p>
+                    <p class="avis-date">Il y a 3 semaines</p>
+                </div>
+            </div>
+
+            <div class="avis-footer">
+                <a href="https://g.page/r/CYKXZZ8Ly-zsEBM/review" target="_blank" rel="noopener" class="btn-avis-google">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                    Voir tous les avis Google
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <p class="section-label" style="text-align: center;">Questions fréquentes</p>
+            <h2 style="text-align: center;">Tout ce que vous devez savoir</h2>
+            <p class="section-desc" style="text-align: center; margin-left: auto; margin-right: auto;">
+                Les réponses à vos questions les plus courantes.
+            </p>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Comment réserver une course ?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Vous avez 3 options pour réserver facilement : <strong>en ligne</strong> via notre formulaire de réservation, par <strong>WhatsApp</strong> au 06 83 66 97 16, ou par <strong>téléphone</strong> au même numéro. Notre système de réservation est disponible 24h/24 et 7j/7 pour s'adapter à votre emploi du temps.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Quels sont les moyens de paiement acceptés ?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nous acceptons plusieurs moyens de paiement pour votre confort : <strong>carte bancaire</strong>, <strong>espèces</strong>, et <strong>virement bancaire</strong>. Le paiement peut être effectué à la fin de la course ou en amont selon votre préférence.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Y a-t-il des frais d'annulation ?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>L'annulation est <strong>totalement gratuite</strong> jusqu'à 24 heures avant le départ. Nous comprenons que les imprévus arrivent, c'est pourquoi nous offrons cette flexibilité sans frais supplémentaires.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Le chauffeur m'attend-il à l'aéroport ?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Oui, absolument ! Votre chauffeur vous attend avec un panneau à votre nom. Nous incluons <strong>45 minutes d'attente gratuites</strong> à partir de l'heure d'atterrissage prévue. De plus, nous effectuons le <strong>suivi en temps réel de votre vol</strong> pour nous adapter en cas de retard ou d'avance.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Combien de bagages puis-je prendre ?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Notre Tesla Model Y dispose d'un <strong>coffre spacieux</strong> pouvant accueillir jusqu'à <strong>4 bagages</strong> de taille standard (valises cabine ou soute). Si vous avez des bagages volumineux ou des besoins spécifiques, n'hésitez pas à nous le signaler lors de la réservation.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Le prix peut-il changer ?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Non, jamais ! Le <strong>prix fixe est garanti</strong> dès la réservation. Pas de mauvaises surprises : pas de compteur, pas de supplément pour les embouteillages ou les détours. Le prix annoncé est le prix final, quelles que soient les conditions de circulation.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Proposez-vous des sièges enfant ?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Oui, nous mettons à disposition des <strong>sièges enfant gratuitement</strong> sur simple demande lors de la réservation. Précisez-nous l'âge et le poids de votre enfant pour que nous installions le siège adapté (rehausseur, siège bébé, etc.).</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Quelle est la zone desservie ?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nous couvrons <strong>Paris et toute l'Île-de-France</strong>, incluant tous les arrondissements de Paris, les aéroports (CDG, Orly, Beauvais), les gares principales, et l'ensemble des départements 75, 77, 78, 91, 92, 93, 94, 95. Des trajets longue distance vers la province sont également possibles sur demande.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="contact-section">
         <div class="container">
             <h2>Prêt à réserver ?</h2>
@@ -1125,6 +1715,33 @@
         let destCoords = null;
         let calculatedPrice = 0;
         let calculatedDistance = 0;
+        let currentMode = 'transfert'; // Mode par défaut
+
+        // Tarif mise à disposition
+        const TARIF_DISPOSITION = 45; // 45€/heure
+
+        // Switch entre les modes Transfert et Mise à disposition
+        function switchMode(mode) {
+            currentMode = mode;
+
+            // Gérer les onglets
+            const tabs = document.querySelectorAll('.mode-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Afficher/cacher les contenus
+            if (mode === 'transfert') {
+                document.getElementById('mode-transfert').style.display = 'block';
+                document.getElementById('mode-disposition').style.display = 'none';
+            } else {
+                document.getElementById('mode-transfert').style.display = 'none';
+                document.getElementById('mode-disposition').style.display = 'block';
+            }
+
+            // Réinitialiser le résultat
+            document.getElementById('price-result').classList.remove('visible');
+            document.getElementById('btn-calculate').style.display = 'flex';
+        }
 
         // Sélectionner un forfait et rediriger vers la réservation
         function selectForfait(type, depart, destination, price) {
@@ -1165,7 +1782,34 @@
             // Google Places Autocomplete
             initAutocomplete('depart', (coords) => { departCoords = coords; });
             initAutocomplete('destination', (coords) => { destCoords = coords; });
+            initAutocomplete('lieu-pickup', (coords) => {}); // Autocomplete pour mise à disposition
         });
+
+        // Détecter si c'est un aéroport et afficher le champ numéro de vol
+        function checkAirport() {
+            const depart = document.getElementById('depart').value.toLowerCase();
+            const destination = document.getElementById('destination').value.toLowerCase();
+            const flightGroup = document.getElementById('flight-number-group');
+
+            const airports = ['cdg', 'roissy', 'charles de gaulle', 'orly', 'beauvais'];
+            const isAirport = airports.some(airport =>
+                depart.includes(airport) || destination.includes(airport)
+            );
+
+            if (isAirport) {
+                flightGroup.style.display = 'block';
+                setTimeout(() => {
+                    flightGroup.style.maxHeight = '200px';
+                    flightGroup.style.opacity = '1';
+                }, 10);
+            } else {
+                flightGroup.style.maxHeight = '0';
+                flightGroup.style.opacity = '0';
+                setTimeout(() => {
+                    flightGroup.style.display = 'none';
+                }, 300);
+            }
+        }
 
         // Initialiser Google Places Autocomplete
         function initAutocomplete(inputId, onSelect) {
@@ -1191,6 +1835,10 @@
             });
         }
 
+            input.addEventListener('input', function() {
+                checkAirport();
+            });
+
         // Détecter forfait
         function detecterForfait(depart, destination) {
             const dep = depart.toLowerCase();
@@ -1208,6 +1856,28 @@
 
         // Calculer le prix
         function calculerPrix() {
+            // Mode Mise à disposition
+            if (currentMode === 'disposition') {
+                const lieuPickup = document.getElementById('lieu-pickup').value;
+                const nbHeures = parseInt(document.getElementById('nb-heures').value);
+
+                if (!lieuPickup || lieuPickup.length < 3) {
+                    alert('Veuillez entrer un lieu de prise en charge');
+                    return;
+                }
+
+                // Calculer le prix : 45€/heure
+                calculatedPrice = nbHeures * TARIF_DISPOSITION;
+
+                document.getElementById('price-value').textContent = calculatedPrice + '€';
+                document.getElementById('price-details').innerHTML =
+                    '<strong>⏰ MISE À DISPOSITION</strong><br>' + nbHeures + ' heure' + (nbHeures > 1 ? 's' : '') + ' × ' + TARIF_DISPOSITION + '€<br><small>Tesla Model Y • Prix fixe</small>';
+                document.getElementById('price-result').classList.add('visible');
+                document.getElementById('btn-calculate').style.display = 'none';
+                return;
+            }
+
+            // Mode Transfert
             const depart = document.getElementById('depart').value;
             const destination = document.getElementById('destination').value;
 
@@ -1284,6 +1954,7 @@
             const heure = document.getElementById('est-heure').value;
             const passengers = document.getElementById('est-passengers').value;
             const luggage = document.getElementById('est-luggage').value;
+            const flightNumber = document.getElementById('flight-number').value;
 
             // Redirection vers la page de réservation avec les paramètres
             const params = new URLSearchParams({
@@ -1296,6 +1967,11 @@
                 price: calculatedPrice
             });
 
+            // Ajouter le numéro de vol s'il est renseigné
+            if (flightNumber && flightNumber.trim() !== '') {
+                params.set('flightNumber', flightNumber.trim());
+            }
+
             window.location.href = 'reserver.html?' + params.toString();
         }
 
@@ -1303,6 +1979,81 @@
         const style = document.createElement('style');
         style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
         document.head.appendChild(style);
+    </script>
+
+    <!-- PWA Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('[PWA] Service Worker enregistré avec succès:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('[PWA] Échec de l\'enregistrement du Service Worker:', error);
+                    });
+            });
+        }
+
+        // Gestion de l'installation PWA
+        let deferredPrompt;
+        const installBanner = document.getElementById('pwa-install-banner');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Empêcher le mini-infobar de Chrome sur mobile
+            e.preventDefault();
+            // Stocker l'événement pour l'utiliser plus tard
+            deferredPrompt = e;
+            // Afficher la bannière d'installation personnalisée
+            if (installBanner) {
+                installBanner.style.display = 'flex';
+            }
+        });
+
+        function installPWA() {
+            if (!deferredPrompt) {
+                return;
+            }
+            // Afficher la boîte de dialogue d'installation
+            deferredPrompt.prompt();
+            // Attendre la réponse de l'utilisateur
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('[PWA] Installation acceptée');
+                } else {
+                    console.log('[PWA] Installation refusée');
+                }
+                deferredPrompt = null;
+                // Masquer la bannière
+                if (installBanner) {
+                    installBanner.style.display = 'none';
+                }
+            });
+        }
+
+        function closePWABanner() {
+            if (installBanner) {
+                installBanner.style.display = 'none';
+            }
+            // Mémoriser que l'utilisateur a fermé la bannière
+            localStorage.setItem('pwa-banner-closed', 'true');
+        }
+
+        // Vérifier si la bannière a déjà été fermée
+        window.addEventListener('load', () => {
+            const bannerClosed = localStorage.getItem('pwa-banner-closed');
+            if (bannerClosed && installBanner) {
+                installBanner.style.display = 'none';
+            }
+        });
+
+        // Détecter si l'app est déjà installée
+        window.addEventListener('appinstalled', () => {
+            console.log('[PWA] Application installée avec succès');
+            if (installBanner) {
+                installBanner.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>

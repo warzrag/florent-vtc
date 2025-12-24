@@ -737,10 +737,40 @@
             document.getElementById('date').min = today;
 
             const params = new URLSearchParams(window.location.search);
-            const dest = params.get('destination');
-            if (dest && TARIFS[dest]) {
-                selectDestination(dest);
+
+            // Si on vient de l'estimateur avec des adresses personnalisées
+            const departParam = params.get('depart');
+            const destParam = params.get('destination');
+            const dateParam = params.get('date');
+            const heureParam = params.get('heure');
+            const passengersParam = params.get('passengers');
+            const luggageParam = params.get('luggage');
+            const priceParam = params.get('price');
+
+            if (departParam && destParam) {
+                // Trajet personnalisé depuis l'estimateur
+                selectDestination('custom');
+                document.getElementById('customDepart').value = departParam;
+                document.getElementById('customArrivee').value = destParam;
+
+                if (priceParam && parseInt(priceParam) > 0) {
+                    calculatedPrice = parseInt(priceParam);
+                    document.getElementById('priceEstimation').classList.add('visible');
+                    document.getElementById('priceLoading').style.display = 'none';
+                    document.getElementById('priceResult').style.display = 'block';
+                    document.getElementById('estimatedPrice').textContent = calculatedPrice + '€';
+                    document.getElementById('priceDetails').textContent = 'Prix estimé depuis la page d\'accueil';
+                }
+            } else if (destParam && TARIFS[destParam]) {
+                // Forfait classique (cdg, orly, beauvais, gare)
+                selectDestination(destParam);
             }
+
+            // Pré-remplir date/heure/passagers/bagages si fournis
+            if (dateParam) document.getElementById('date').value = dateParam;
+            if (heureParam) document.getElementById('heure').value = heureParam;
+            if (passengersParam) document.getElementById('passengers').value = passengersParam;
+            if (luggageParam) document.getElementById('luggage').value = luggageParam;
 
             document.querySelectorAll('.destination-card').forEach(card => {
                 card.addEventListener('click', () => {

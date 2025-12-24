@@ -124,6 +124,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google Places API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpNFQlTYuGzsjIUcMM-643vSZ3V6z6W5c&libraries=places&language=fr"></script>
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -468,6 +472,207 @@
 
             section { padding-bottom: 120px; }
         }
+
+        /* Estimateur de prix */
+        .estimateur-section {
+            padding: 80px 24px;
+            background: linear-gradient(180deg, rgba(212,175,55,0.05), transparent);
+        }
+
+        .estimateur-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        .estimateur-box h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .estimateur-box .subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--gray);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--white);
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .form-group select option {
+            background: #111;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 500px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        .btn-calculate {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--black);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+        }
+
+        .price-result {
+            display: none;
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(184,150,46,0.1));
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+
+        .price-result.visible {
+            display: block;
+        }
+
+        .price-value {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .price-details {
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .price-details strong {
+            color: var(--gold);
+        }
+
+        .btn-reserve {
+            width: 100%;
+            margin-top: 16px;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: var(--green);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-reserve:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Google Places Autocomplete */
+        .pac-container {
+            background: #111 !important;
+            border: 1px solid rgba(212,175,55,0.3) !important;
+            border-radius: 12px !important;
+            margin-top: 4px !important;
+            font-family: 'Inter', -apple-system, sans-serif !important;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+            z-index: 9999 !important;
+        }
+
+        .pac-item {
+            padding: 12px 16px !important;
+            border-top: 1px solid rgba(255,255,255,0.1) !important;
+            cursor: pointer !important;
+            color: #fff !important;
+            font-size: 14px !important;
+            line-height: 1.4 !important;
+        }
+
+        .pac-item:first-child {
+            border-top: none !important;
+        }
+
+        .pac-item:hover, .pac-item-selected {
+            background: rgba(212,175,55,0.15) !important;
+        }
+
+        .pac-item-query {
+            color: #fff !important;
+            font-weight: 500 !important;
+            font-size: 14px !important;
+        }
+
+        .pac-matched {
+            color: var(--gold) !important;
+            font-weight: 600 !important;
+        }
+
+        .pac-icon {
+            display: none !important;
+        }
+
+        .pac-item span:last-child {
+            color: rgba(255,255,255,0.5) !important;
+            font-size: 12px !important;
+        }
+
+        .pac-logo::after {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -498,6 +703,69 @@
                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                 06 83 66 97 16
             </a>
+        </div>
+    </section>
+
+    <!-- Estimateur de prix -->
+    <section id="estimateur" class="estimateur-section">
+        <div class="estimateur-box">
+            <h2>Estimez votre tarif</h2>
+            <p class="subtitle">Obtenez le prix de votre course en quelques clics</p>
+
+            <div class="form-group">
+                <label>📍 Adresse de départ</label>
+                <input type="text" id="depart" placeholder="Ex: 25 rue de Rivoli, Paris" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label>📍 Adresse d'arrivée</label>
+                <input type="text" id="destination" placeholder="Ex: Aéroport CDG Terminal 2" autocomplete="off">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>📅 Date</label>
+                    <input type="date" id="est-date">
+                </div>
+                <div class="form-group">
+                    <label>⏰ Heure</label>
+                    <input type="time" id="est-heure">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>👥 Passagers</label>
+                    <select id="est-passengers">
+                        <option value="1">1 passager</option>
+                        <option value="2">2 passagers</option>
+                        <option value="3">3 passagers</option>
+                        <option value="4">4 passagers</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>🧳 Bagages</label>
+                    <select id="est-luggage">
+                        <option value="0">0 bagage</option>
+                        <option value="1" selected>1 bagage</option>
+                        <option value="2">2 bagages</option>
+                        <option value="3">3 bagages</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" class="btn-calculate" id="btn-calculate" onclick="calculerPrix()">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14h-2v-4H8v-2h4V7h2v4h4v2h-4v4z"/></svg>
+                CALCULER LE PRIX
+            </button>
+
+            <div class="price-result" id="price-result">
+                <div class="price-value" id="price-value">--€</div>
+                <div class="price-details" id="price-details">--</div>
+                <button class="btn-reserve" id="btn-reserve" onclick="reserverCourse()">
+                    ✓ RÉSERVER À CE PRIX
+                </button>
+            </div>
         </div>
     </section>
 
@@ -715,5 +983,182 @@
     <div class="mobile-cta">
         <a href="reserver.html" class="btn btn-primary">Réserver maintenant</a>
     </div>
+
+    <script>
+        // Configuration des tarifs Florent VTC (Tesla Model Y)
+        const TARIFS = {
+            base: 8,
+            parKm: 2.20,
+            minimum: 25
+        };
+
+        // Forfaits fixes
+        const FORFAITS = [
+            { mots: ['cdg', 'roissy', 'charles de gaulle'], prix: 65, nom: 'Paris ↔ CDG' },
+            { mots: ['orly'], prix: 55, nom: 'Paris ↔ Orly' },
+            { mots: ['beauvais'], prix: 120, nom: 'Paris ↔ Beauvais' },
+            { mots: ['gare du nord', 'gare de lyon', 'gare montparnasse', 'gare de l\'est'], prix: 35, nom: 'Paris ↔ Gare' },
+            { mots: ['disney', 'disneyland'], prix: 80, nom: 'Paris ↔ Disneyland' }
+        ];
+
+        let departCoords = null;
+        let destCoords = null;
+        let calculatedPrice = 0;
+        let calculatedDistance = 0;
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Date minimum = aujourd'hui
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('est-date').min = today;
+            document.getElementById('est-date').value = today;
+
+            // Heure par défaut
+            const now = new Date();
+            now.setHours(now.getHours() + 2);
+            document.getElementById('est-heure').value = now.toTimeString().slice(0,5);
+
+            // Google Places Autocomplete
+            initAutocomplete('depart', (coords) => { departCoords = coords; });
+            initAutocomplete('destination', (coords) => { destCoords = coords; });
+        });
+
+        // Initialiser Google Places Autocomplete
+        function initAutocomplete(inputId, onSelect) {
+            const input = document.getElementById(inputId);
+            const autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ['geocode', 'establishment'],
+                componentRestrictions: { country: 'fr' },
+                fields: ['formatted_address', 'geometry', 'name']
+            });
+
+            autocomplete.addListener('place_changed', function() {
+                const place = autocomplete.getPlace();
+                if (place.geometry && place.geometry.location) {
+                    onSelect({
+                        lat: place.geometry.location.lat(),
+                        lon: place.geometry.location.lng()
+                    });
+                }
+            });
+
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') e.preventDefault();
+            });
+        }
+
+        // Détecter forfait
+        function detecterForfait(depart, destination) {
+            const dep = depart.toLowerCase();
+            const dest = destination.toLowerCase();
+
+            for (const f of FORFAITS) {
+                const depMatch = f.mots.some(mot => dep.includes(mot));
+                const destMatch = f.mots.some(mot => dest.includes(mot));
+                if (depMatch || destMatch) {
+                    return { prix: f.prix, nom: f.nom };
+                }
+            }
+            return null;
+        }
+
+        // Calculer le prix
+        function calculerPrix() {
+            const depart = document.getElementById('depart').value;
+            const destination = document.getElementById('destination').value;
+
+            if (!depart || depart.length < 3) {
+                alert('Veuillez entrer une adresse de départ');
+                return;
+            }
+            if (!destination || destination.length < 3) {
+                alert('Veuillez entrer une adresse d\'arrivée');
+                return;
+            }
+
+            // Vérifier si forfait
+            const forfait = detecterForfait(depart, destination);
+
+            if (forfait) {
+                calculatedPrice = forfait.prix;
+                document.getElementById('price-value').textContent = forfait.prix + '€';
+                document.getElementById('price-details').innerHTML =
+                    '<strong>🎫 FORFAIT</strong> ' + forfait.nom + '<br><small>Tesla Model Y • Prix fixe garanti</small>';
+                document.getElementById('price-result').classList.add('visible');
+                document.getElementById('btn-calculate').style.display = 'none';
+            } else if (departCoords && destCoords) {
+                // Calcul via OSRM
+                document.getElementById('btn-calculate').innerHTML = '<div class="spinner" style="width:20px;height:20px;border:2px solid rgba(0,0,0,0.2);border-top-color:#000;border-radius:50%;animation:spin 1s linear infinite;"></div> Calcul en cours...';
+
+                fetch(`https://router.project-osrm.org/route/v1/driving/${departCoords.lon},${departCoords.lat};${destCoords.lon},${destCoords.lat}?overview=false`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.routes && data.routes.length > 0) {
+                            const distanceKm = data.routes[0].distance / 1000;
+                            const durationMin = Math.round(data.routes[0].duration / 60);
+
+                            calculatedDistance = distanceKm;
+                            let price = TARIFS.base + (distanceKm * TARIFS.parKm);
+                            price = Math.max(price, TARIFS.minimum);
+                            price = Math.ceil(price / 5) * 5;
+
+                            calculatedPrice = price;
+
+                            document.getElementById('price-value').textContent = price + '€';
+                            document.getElementById('price-details').innerHTML =
+                                '<strong>' + distanceKm.toFixed(1) + ' km</strong> • ~' + durationMin + ' min<br><small>Tesla Model Y • Prix estimé</small>';
+                            document.getElementById('price-result').classList.add('visible');
+                            document.getElementById('btn-calculate').style.display = 'none';
+                        } else {
+                            afficherErreur();
+                        }
+                    })
+                    .catch(() => afficherErreur());
+            } else {
+                // Estimation basique
+                calculatedPrice = 50;
+                document.getElementById('price-value').textContent = '~50€';
+                document.getElementById('price-details').innerHTML =
+                    '<strong>Estimation</strong><br><small>Sélectionnez les adresses pour un prix précis</small>';
+                document.getElementById('price-result').classList.add('visible');
+                document.getElementById('btn-calculate').style.display = 'none';
+            }
+        }
+
+        function afficherErreur() {
+            document.getElementById('btn-calculate').innerHTML = 'CALCULER LE PRIX';
+            document.getElementById('price-value').textContent = 'Sur devis';
+            document.getElementById('price-details').innerHTML = '<small>Contactez-nous pour un tarif précis</small>';
+            document.getElementById('price-result').classList.add('visible');
+        }
+
+        // Réserver la course
+        function reserverCourse() {
+            const depart = document.getElementById('depart').value;
+            const destination = document.getElementById('destination').value;
+            const date = document.getElementById('est-date').value;
+            const heure = document.getElementById('est-heure').value;
+            const passengers = document.getElementById('est-passengers').value;
+            const luggage = document.getElementById('est-luggage').value;
+
+            // Redirection vers la page de réservation avec les paramètres
+            const params = new URLSearchParams({
+                depart: depart,
+                destination: destination,
+                date: date,
+                heure: heure,
+                passengers: passengers,
+                luggage: luggage,
+                price: calculatedPrice
+            });
+
+            window.location.href = 'reserver.html?' + params.toString();
+        }
+
+        // Animation spinner
+        const style = document.createElement('style');
+        style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>

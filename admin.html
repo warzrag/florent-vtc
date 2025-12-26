@@ -1120,7 +1120,12 @@
             <div class="modal-footer" style="flex-wrap: wrap; gap: 8px;">
                 <button class="btn btn-secondary" onclick="closeModal('detailModal')">Fermer</button>
                 <button class="btn btn-success" id="messageFinBtn" style="display:none; background: #25D366;" onclick="sendEndOfRideMessage()">
-                    📩 Message fin de course
+                    📱 WhatsApp
+                </button>
+                <button class="btn btn-success" id="messageSmsBtn" style="display:none; background: #3b82f6;" onclick="sendEndOfRideSMS()">
+                    💬 SMS
+                </button>
+                    
                 </button>
                 <button class="btn btn-success" id="confirmBtn" onclick="updateStatus('confirmed')">Confirmer</button>
             </div>
@@ -1478,19 +1483,19 @@
                 confirmBtn.textContent = 'Confirmer';
                 confirmBtn.className = 'btn btn-success';
                 confirmBtn.onclick = () => updateStatus('confirmed');
-                messageFinBtn.style.display = 'none';
+                messageFinBtn.style.display = 'none'; document.getElementById('messageSmsBtn').style.display = 'none';
             } else if (r.status === 'confirmed') {
                 confirmBtn.style.display = 'block';
                 confirmBtn.textContent = '✓ Marquer Réalisée';
                 confirmBtn.className = 'btn btn-success';
                 confirmBtn.onclick = () => updateStatus('completed');
-                messageFinBtn.style.display = 'block';
+                messageFinBtn.style.display = 'inline-block'; document.getElementById('messageSmsBtn').style.display = 'inline-block';
             } else if (r.status === 'completed') {
                 confirmBtn.style.display = 'none';
-                messageFinBtn.style.display = 'block';
+                messageFinBtn.style.display = 'inline-block'; document.getElementById('messageSmsBtn').style.display = 'inline-block';
             } else {
                 confirmBtn.style.display = 'none';
-                messageFinBtn.style.display = 'none';
+                messageFinBtn.style.display = 'none'; document.getElementById('messageSmsBtn').style.display = 'none';
             }
 
             document.getElementById('detailModal').classList.add('active');
@@ -1563,6 +1568,25 @@ Florent - Votre chauffeur VTC`;
 
             const encoded = encodeURIComponent(message);
             window.open('https://wa.me/' + phone + '?text=' + encoded, '_blank');
+        }
+
+        
+        // Envoyer message fin de course par SMS
+        function sendEndOfRideSMS() {
+            const r = reservationsCache.find(res => res.id === selectedReservationId);
+            if (!r) return;
+            
+            if (!r.client_phone) {
+                alert('Pas de numéro de téléphone pour ce client');
+                return;
+            }
+            
+            let phone = r.client_phone.replace(/[^0-9]/g, '');
+            
+            const clientName = r.client_name ? r.client_name.split(' ')[0] : '';
+            const message = 'Bonjour ' + clientName + ' ! Merci d\'avoir fait appel à Florent VTC. J\'espère que vous avez passé un agréable moment. Si vous êtes satisfait(e), un petit avis Google m\'aiderait beaucoup : https://g.page/r/CYKXZZ8Ly-zsEBM/review - Florent';
+
+            window.open('sms:' + phone + '?body=' + encodeURIComponent(message), '_blank');
         }
 
         // Delete reservation

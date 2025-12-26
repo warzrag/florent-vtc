@@ -873,7 +873,7 @@
                             <div class="filter-tab active" data-filter="all">Toutes</div>
                             <div class="filter-tab" data-filter="pending">En attente</div>
                             <div class="filter-tab" data-filter="confirmed">Confirmées</div>
-                            <div class="filter-tab" data-filter="completed">Terminées</div>
+                            <div class="filter-tab" data-filter="completed">Réalisées</div>
                         </div>
                     </div>
 
@@ -1117,8 +1117,11 @@
             <div class="modal-body" id="modalContent">
                 <!-- Dynamic content -->
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="flex-wrap: wrap; gap: 8px;">
                 <button class="btn btn-secondary" onclick="closeModal('detailModal')">Fermer</button>
+                <button class="btn btn-success" id="messageFinBtn" style="display:none; background: #25D366;" onclick="sendEndOfRideMessage()">
+                    📩 Message fin de course
+                </button>
                 <button class="btn btn-success" id="confirmBtn" onclick="updateStatus('confirmed')">Confirmer</button>
             </div>
         </div>
@@ -1369,7 +1372,7 @@
                 const statusLabels = {
                     pending: 'En attente',
                     confirmed: 'Confirmée',
-                    completed: 'Terminée',
+                    completed: 'Réalisée',
                     cancelled: 'Annulée'
                 };
 
@@ -1467,16 +1470,27 @@
             `;
 
             const confirmBtn = document.getElementById('confirmBtn');
+            const messageFinBtn = document.getElementById('messageFinBtn');
+            
+            // Bouton principal selon statut
             if (r.status === 'pending') {
                 confirmBtn.style.display = 'block';
                 confirmBtn.textContent = 'Confirmer';
+                confirmBtn.className = 'btn btn-success';
                 confirmBtn.onclick = () => updateStatus('confirmed');
+                messageFinBtn.style.display = 'none';
             } else if (r.status === 'confirmed') {
                 confirmBtn.style.display = 'block';
-                confirmBtn.textContent = 'Marquer terminée';
+                confirmBtn.textContent = '✓ Marquer Réalisée';
+                confirmBtn.className = 'btn btn-success';
                 confirmBtn.onclick = () => updateStatus('completed');
+                messageFinBtn.style.display = 'block';
+            } else if (r.status === 'completed') {
+                confirmBtn.style.display = 'none';
+                messageFinBtn.style.display = 'block';
             } else {
                 confirmBtn.style.display = 'none';
+                messageFinBtn.style.display = 'none';
             }
 
             document.getElementById('detailModal').classList.add('active');
@@ -1500,9 +1514,55 @@
                 renderReservations();
                 updateStats();
                 closeModal('detailModal');
+                
+                // Proposer d'envoyer le message de fin si course terminée
+                if (status === 'completed') {
+                    const r = reservations.find(res => res.id === selectedReservationId);
+                    if (r && r.client_phone && confirm('Course marquée comme réalisée !\n\nEnvoyer le message de remerciement avec demande d\'avis Google ?')) {
+                        sendEndOfRideMessageDirect(r);
+                    }
+                }
             } catch (err) {
                 console.error('Erreur:', err);
             }
+        }
+        
+        // Envoyer message fin de course avec lien avis Google
+        function sendEndOfRideMessage() {
+            const r = reservations.find(res => res.id === selectedReservationId);
+            if (!r) return;
+            sendEndOfRideMessageDirect(r);
+        }
+        
+        function sendEndOfRideMessageDirect(r) {
+            if (!r.client_phone) {
+                alert('Pas de numéro de téléphone pour ce client');
+                return;
+            }
+            
+            // Formater le numéro de téléphone
+            let phone = r.client_phone.replace(/[^0-9]/g, '');
+            if (phone.startsWith('0')) {
+                phone = '33' + phone.substring(1);
+            }
+            
+            // Message de fin de course
+            const clientName = r.client_name ? r.client_name.split(' ')[0] : 'cher client';
+            const message = `Bonjour ${clientName} ! 🚗
+
+Merci d'avoir fait appel à Florent VTC pour votre trajet.
+
+J'espère que vous avez passé un agréable moment à bord de la Tesla Model Y.
+
+Si vous êtes satisfait(e), un petit avis Google m'aiderait beaucoup à développer mon activité ⭐
+
+👉 https://g.page/r/CYKXZZ8Ly-zsEBM/review
+
+Merci et à très bientôt !
+Florent - Votre chauffeur VTC`;
+
+            const encoded = encodeURIComponent(message);
+            window.open('https://wa.me/' + phone + '?text=' + encoded, '_blank');
         }
 
         // Delete reservation

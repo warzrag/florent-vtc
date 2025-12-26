@@ -1586,7 +1586,18 @@ Florent - Votre chauffeur VTC`;
             const clientName = r.client_name ? r.client_name.split(' ')[0] : '';
             const message = 'Bonjour ' + clientName + ' ! Merci d\'avoir fait appel à Florent VTC. J\'espère que vous avez passé un agréable moment. Si vous êtes satisfait(e), un petit avis Google m\'aiderait beaucoup : https://g.page/r/CYKXZZ8Ly-zsEBM/review - Florent';
 
-            window.open('sms:' + phone + '?body=' + encodeURIComponent(message), '_blank');
+            // Detecter si mobile ou PC
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                window.open('sms:' + phone + '?body=' + encodeURIComponent(message), '_blank');
+            } else {
+                // Sur PC : copier le message
+                const fullText = 'Numéro: ' + r.client_phone + '\n\nMessage:\n' + message;
+                navigator.clipboard.writeText(fullText).then(() => {
+                    alert('📋 Message copié !\n\nNuméro: ' + r.client_phone + '\n\nColle-le dans ton téléphone pour envoyer le SMS.');
+                });
+            }
         }
 
         // Delete reservation

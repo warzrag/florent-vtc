@@ -1517,7 +1517,7 @@
                 
                 // Proposer d'envoyer le message de fin si course terminée
                 if (status === 'completed') {
-                    const r = reservations.find(res => res.id === selectedReservationId);
+                    const r = reservationsCache.find(res => res.id === selectedReservationId);
                     if (r && r.client_phone && confirm('Course marquée comme réalisée !\n\nEnvoyer le message de remerciement avec demande d\'avis Google ?')) {
                         sendEndOfRideMessageDirect(r);
                     }
@@ -1529,7 +1529,7 @@
         
         // Envoyer message fin de course avec lien avis Google
         function sendEndOfRideMessage() {
-            const r = reservations.find(res => res.id === selectedReservationId);
+            const r = reservationsCache.find(res => res.id === selectedReservationId);
             if (!r) return;
             sendEndOfRideMessageDirect(r);
         }

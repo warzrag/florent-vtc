@@ -2159,7 +2159,7 @@
             if (!heureInput || !heureInput.value) return 1;
             const heure = parseInt(heureInput.value.split(':')[0]);
             if (heure >= 22 || heure < 6) {
-                return 1.20; // +20%
+                return 1.10; // +10%
             }
             return 1;
         }
@@ -2410,7 +2410,7 @@
 
                             calculatedPrice = price;
 
-                            const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +20%</small>' : '';
+                            const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +10%</small>' : '';
                             document.getElementById('price-value').textContent = price + '€';
                             document.getElementById('price-details').innerHTML =
                                 '<strong>' + distanceKm.toFixed(1) + ' km</strong> - ~' + durationMin + ' min' + nightLabel + '<br><small>Tesla Model Y</small>';
@@ -2458,7 +2458,7 @@
 
                             calculatedPrice = price;
 
-                            const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +20%</small>' : '';
+                            const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +10%</small>' : '';
                             document.getElementById('price-value').textContent = price + '€';
                             document.getElementById('price-details').innerHTML =
                                 '<strong>' + distanceKm.toFixed(1) + ' km</strong> - ~' + durationMin + ' min' + nightLabel + '<br><small>Tesla Model Y</small>';
@@ -2513,7 +2513,7 @@
                 let forfaitPrix = forfait.prix * getMajorationNuit();
                 forfaitPrix = Math.ceil(forfaitPrix / 5) * 5;
                 calculatedPrice = forfaitPrix;
-                const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +20%</small>' : '';
+                const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +10%</small>' : '';
                 document.getElementById('price-value').textContent = forfaitPrix + '€';
                 document.getElementById('price-details').innerHTML =
                     '<strong>FORFAIT</strong> ' + forfait.nom + nightLabel + '<br><small>Tesla Model Y</small>';
@@ -2538,7 +2538,7 @@
 
                             calculatedPrice = price;
 
-                            const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +20%</small>' : '';
+                            const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +10%</small>' : '';
                             document.getElementById('price-value').textContent = price + '€';
                             document.getElementById('price-details').innerHTML =
                                 '<strong>' + distanceKm.toFixed(1) + ' km</strong> - ~' + durationMin + ' min' + nightLabel + '<br><small>Tesla Model Y</small>';

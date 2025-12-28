@@ -1460,6 +1460,24 @@
         }
 
     </style>
+
+    <!-- Firebase SDK (doit être chargé avant les scripts) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBJuFLVMI3gUKFohxYRZeg8Qyn0mXf1sQI",
+            authDomain: "admin-vtc.firebaseapp.com",
+            databaseURL: "https://admin-vtc-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "admin-vtc",
+            storageBucket: "admin-vtc.firebasestorage.app",
+            messagingSenderId: "692871193828",
+            appId: "1:692871193828:web:2dd34c34736f2faf9bb8f1"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+    </script>
 </head>
 <body>
     <header>
@@ -2766,25 +2784,7 @@
 </a>
 
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-    
     <script>
-        // Firebase Config (même projet que vtc-aeroport-paris)
-        const firebaseConfig = {
-            apiKey: "AIzaSyBJuFLVMI3gUKFohxYRZeg8Qyn0mXf1sQI",
-            authDomain: "admin-vtc.firebaseapp.com",
-            databaseURL: "https://admin-vtc-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "admin-vtc",
-            storageBucket: "admin-vtc.firebasestorage.app",
-            messagingSenderId: "692871193828",
-            appId: "1:692871193828:web:2dd34c34736f2faf9bb8f1"
-        };
-        
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        
         // Telegram notification
         const TELEGRAM_BOT_TOKEN = '8395819727:AAHJjiFQAFb--6hhThOmzoUXft4U4jDUQ4M';
         const TELEGRAM_CHAT_ID = '983151531';

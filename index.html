@@ -2269,6 +2269,11 @@
                 if (departCoords) recalculerPrixAuto();
             });
             initAutocomplete('lieu-pickup', (coords) => {}); // Autocomplete pour mise à disposition
+
+            // Recalculer le prix quand l'heure change
+            document.getElementById('est-heure').addEventListener('change', () => {
+                if (departCoords && destCoords) recalculerPrixAuto();
+            });
         });
 
         // Détecter si c'est un aéroport et afficher le champ numéro de vol

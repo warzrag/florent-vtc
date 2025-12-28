@@ -2219,6 +2219,22 @@
                 updateStats();
                 closeModal('detailModal');
                 
+                // Proposer d'envoyer le message de confirmation
+                if (status === 'confirmed') {
+                    const r = reservationsCache.find(res => res.id === selectedReservationId);
+                    if (r && r.client_phone && confirm('Course confirmée !\n\nEnvoyer le message de confirmation au client ?')) {
+                        sendConfirmationMessage(r);
+                    }
+                }
+
+                // Proposer d'envoyer le message de confirmation
+                if (status === 'confirmed') {
+                    const r = reservationsCache.find(res => res.id === selectedReservationId);
+                    if (r && r.client_phone && confirm('Course confirmee !\n\nEnvoyer le message de confirmation au client ?')) {
+                        sendConfirmationMessage(r);
+                    }
+                }
+
                 // Proposer d'envoyer le message de fin si course terminée
                 if (status === 'completed') {
                     const r = reservationsCache.find(res => res.id === selectedReservationId);
@@ -2238,6 +2254,42 @@
             sendEndOfRideMessageDirect(r);
         }
         
+        // Envoyer message de confirmation de course
+        function sendConfirmationMessage(r) {
+            if (!r.client_phone) {
+                alert('Pas de numero de telephone pour ce client');
+                return;
+            }
+
+            let phone = r.client_phone.replace(/[^0-9]/g, '');
+            if (phone.startsWith('0')) {
+                phone = '33' + phone.slice(1);
+            }
+
+            const clientName = r.client_name ? r.client_name.split(' ')[0] : '';
+            const dateObj = new Date(r.date);
+            const dateStr = dateObj.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+            const timeStr = r.time ? r.time.slice(0, 5) : '';
+
+            const message = `Bonjour ${clientName} !
+
+Votre course est confirmee :
+
+Date : ${dateStr}
+Heure : ${timeStr}
+Trajet : ${r.trajet || ''}
+Prix : ${r.price || ''}EUR
+
+Je serai ponctuel au point de rendez-vous.
+A bientot !
+
+Florent - VTC Paris
+Tel: 07 43 66 12 03`;
+
+            const encoded = encodeURIComponent(message);
+            window.open('https://wa.me/' + phone + '?text=' + encoded, '_blank');
+        }
+
         function sendEndOfRideMessageDirect(r) {
             if (!r.client_phone) {
                 alert('Pas de numéro de téléphone pour ce client');

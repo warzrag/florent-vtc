@@ -1788,6 +1788,9 @@
                 <button class="btn btn-success" id="saveContactBtn" style="display:none; background: #8b5cf6;" onclick="saveContact()">
                     👤 Contact
                 </button>
+                <button class="btn btn-success" id="bonCommandeBtn" style="background: #f59e0b; color: #000;" onclick="generateBonCommande()">
+                    📄 Bon de commande
+                </button>
                 <button class="btn btn-success" id="confirmBtn" onclick="updateStatus('confirmed')">Confirmer</button>
             </div>
         </div>
@@ -2370,6 +2373,140 @@ Florent - Votre chauffeur VTC`;
         }
 
         // Enregistrer le contact client
+
+        // Generer bon de commande PDF
+        function generateBonCommande() {
+            const r = reservationsCache.find(res => res.id === selectedReservationId);
+            if (!r) return;
+
+            const dateObj = new Date(r.date);
+            const dateStr = dateObj.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            const timeStr = r.time ? r.time.slice(0, 5) : '';
+            const today = new Date().toLocaleDateString('fr-FR');
+
+            const bonHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bon de Commande - Florent VTC</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #d4af37; padding-bottom: 20px; margin-bottom: 30px; }
+        .logo { font-size: 28px; font-weight: bold; color: #d4af37; }
+        .logo span { color: #333; }
+        .doc-info { text-align: right; }
+        .doc-title { font-size: 24px; font-weight: bold; color: #333; margin-bottom: 5px; }
+        .doc-date { color: #666; }
+        .section { margin-bottom: 25px; }
+        .section-title { font-size: 14px; font-weight: bold; color: #d4af37; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .info-item { }
+        .info-label { font-size: 12px; color: #666; margin-bottom: 3px; }
+        .info-value { font-size: 16px; color: #333; font-weight: 500; }
+        .trajet-box { background: #f8f8f8; padding: 20px; border-radius: 10px; margin: 15px 0; }
+        .trajet-row { display: flex; align-items: center; margin-bottom: 10px; }
+        .trajet-icon { width: 30px; font-size: 18px; }
+        .trajet-text { font-size: 16px; }
+        .price-box { background: #d4af37; color: #000; padding: 20px; border-radius: 10px; text-align: center; margin-top: 30px; }
+        .price-label { font-size: 14px; margin-bottom: 5px; }
+        .price-value { font-size: 36px; font-weight: bold; }
+        .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; color: #666; font-size: 12px; }
+        .footer a { color: #d4af37; }
+        @media print { body { padding: 20px; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Florent <span>VTC</span></div>
+        <div class="doc-info">
+            <div class="doc-title">BON DE COMMANDE</div>
+            <div class="doc-date">Emis le ${today}</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Informations Client</div>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Nom</div>
+                <div class="info-value">${r.client_name || 'N/A'}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Telephone</div>
+                <div class="info-value">${r.client_phone || 'N/A'}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Email</div>
+                <div class="info-value">${r.client_email || 'N/A'}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Reference</div>
+                <div class="info-value">${r.reference || r.id.slice(0,8).toUpperCase()}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Details de la Course</div>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Date</div>
+                <div class="info-value">${dateStr}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Heure</div>
+                <div class="info-value">${timeStr}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Passagers</div>
+                <div class="info-value">${r.passengers || 1}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Bagages</div>
+                <div class="info-value">${r.luggage || 0}</div>
+            </div>
+        </div>
+        <div class="trajet-box">
+            <div class="trajet-row">
+                <span class="trajet-icon">📍</span>
+                <span class="trajet-text"><strong>Depart:</strong> ${r.trajet ? r.trajet.split(' -> ')[0] || r.trajet.split(' → ')[0] : 'N/A'}</span>
+            </div>
+            <div class="trajet-row">
+                <span class="trajet-icon">🎯</span>
+                <span class="trajet-text"><strong>Arrivee:</strong> ${r.trajet ? r.trajet.split(' -> ')[1] || r.trajet.split(' → ')[1] || '' : 'N/A'}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Vehicule</div>
+        <div class="info-value">Tesla Model Y - Berline Premium 100% Electrique</div>
+    </div>
+
+    ${r.notes ? '<div class="section"><div class="section-title">Notes</div><div class="info-value">' + r.notes + '</div></div>' : ''}
+
+    <div class="price-box">
+        <div class="price-label">MONTANT TOTAL</div>
+        <div class="price-value">${r.price || 0} EUR</div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Florent VTC</strong> - Service de chauffeur prive premium</p>
+        <p>Tel: 07 43 66 12 03 | Email: contact@florent-vtc.fr</p>
+        <p><a href="https://florent-vtc.fr">www.florent-vtc.fr</a></p>
+    </div>
+</body>
+</html>`;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(bonHtml);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => printWindow.print(), 500);
+        }
+
         function saveContact() {
             const r = reservationsCache.find(res => res.id === selectedReservationId);
             if (!r) return;

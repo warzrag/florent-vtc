@@ -2711,7 +2711,15 @@
                 const { data: insertedData, error: supaError } = await window.supabaseClient.from('reservations').insert([supabaseData]).select();
                 console.log('Supabase response:', { data: insertedData, error: supaError });
                 if (supaError) console.error('Supabase error:', supaError);
-                else console.log('Reservation saved to Supabase');
+                else {
+                    console.log('Reservation saved to Supabase');
+                    // Google Ads conversion tracking
+                    gtag('event', 'conversion', {
+                        'send_to': 'AW-17791984182/GeC0COSsydgbELbE8KNC',
+                        'value': parseFloat(reservationData.prix) || 50.0,
+                        'currency': 'EUR'
+                    });
+                }
 
                 // Envoyer notification Telegram
                 await window.sendTelegramNotification({

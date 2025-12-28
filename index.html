@@ -2272,7 +2272,10 @@
 
             // Recalculer le prix quand l'heure change
             document.getElementById('est-heure').addEventListener('change', () => {
-                if (departCoords && destCoords) recalculerPrixAuto();
+                const priceVisible = document.getElementById('price-result').classList.contains('visible');
+                if (priceVisible) {
+                    recalculerPrixAuto();
+                }
             });
         });
 
@@ -2392,10 +2395,13 @@
             const forfait = detecterForfait(depart, destination);
 
             if (forfait) {
-                calculatedPrice = forfait.prix;
-                document.getElementById('price-value').textContent = forfait.prix + '€';
+                let forfaitPrix = forfait.prix * getMajorationNuit();
+                forfaitPrix = Math.ceil(forfaitPrix / 5) * 5;
+                calculatedPrice = forfaitPrix;
+                const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +10%</small>' : '';
+                document.getElementById('price-value').textContent = forfaitPrix + '€';
                 document.getElementById('price-details').innerHTML =
-                    '<strong>FORFAIT</strong> ' + forfait.nom + '<br><small>Tesla Model Y • Prix fixe garanti</small>';
+                    '<strong>FORFAIT</strong> ' + forfait.nom + nightLabel + '<br><small>Tesla Model Y</small>';
                 document.getElementById('price-result').classList.add('visible');
                 document.getElementById('btn-calculate').style.display = 'none';
             } else if (departCoords && destCoords) {

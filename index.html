@@ -2153,6 +2153,24 @@
             minimum: 25
         };
 
+        // Majoration nuit (22h - 6h) = +20%
+        function getMajorationNuit() {
+            const heureInput = document.getElementById('est-heure');
+            if (!heureInput || !heureInput.value) return 1;
+            const heure = parseInt(heureInput.value.split(':')[0]);
+            if (heure >= 22 || heure < 6) {
+                return 1.20; // +20%
+            }
+            return 1;
+        }
+
+        function isNightRate() {
+            const heureInput = document.getElementById('est-heure');
+            if (!heureInput || !heureInput.value) return false;
+            const heure = parseInt(heureInput.value.split(':')[0]);
+            return (heure >= 22 || heure < 6);
+        }
+
         // Forfaits fixes
         const FORFAITS = [
             { mots: ['cdg', 'roissy', 'charles de gaulle'], prix: 65, nom: 'Paris ↔ CDG' },
@@ -2387,13 +2405,15 @@
                             calculatedDistance = distanceKm;
                             let price = TARIFS.base + (distanceKm * TARIFS.parKm);
                             price = Math.max(price, TARIFS.minimum);
+                            price = price * getMajorationNuit();
                             price = Math.ceil(price / 5) * 5;
 
                             calculatedPrice = price;
 
+                            const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +20%</small>' : '';
                             document.getElementById('price-value').textContent = price + '€';
                             document.getElementById('price-details').innerHTML =
-                                '<strong>' + distanceKm.toFixed(1) + ' km</strong> • ~' + durationMin + ' min<br><small>Tesla Model Y • Prix estimé</small>';
+                                '<strong>' + distanceKm.toFixed(1) + ' km</strong> - ~' + durationMin + ' min' + nightLabel + '<br><small>Tesla Model Y</small>';
                             document.getElementById('price-result').classList.add('visible');
                             document.getElementById('btn-calculate').style.display = 'none';
                         }
@@ -2433,13 +2453,15 @@
                             calculatedDistance = distanceKm;
                             let price = TARIFS.base + (distanceKm * TARIFS.parKm);
                             price = Math.max(price, TARIFS.minimum);
+                            price = price * getMajorationNuit();
                             price = Math.ceil(price / 5) * 5;
 
                             calculatedPrice = price;
 
+                            const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +20%</small>' : '';
                             document.getElementById('price-value').textContent = price + '€';
                             document.getElementById('price-details').innerHTML =
-                                '<strong>' + distanceKm.toFixed(1) + ' km</strong> - ~' + durationMin + ' min<br><small>Tesla Model Y - Prix estime</small>';
+                                '<strong>' + distanceKm.toFixed(1) + ' km</strong> - ~' + durationMin + ' min' + nightLabel + '<br><small>Tesla Model Y</small>';
                             document.getElementById('price-result').classList.add('visible');
                             document.getElementById('btn-calculate').style.display = 'none';
                         }
@@ -2488,10 +2510,13 @@
             const forfait = detecterForfait(depart, destination);
 
             if (forfait) {
-                calculatedPrice = forfait.prix;
-                document.getElementById('price-value').textContent = forfait.prix + '€';
+                let forfaitPrix = forfait.prix * getMajorationNuit();
+                forfaitPrix = Math.ceil(forfaitPrix / 5) * 5;
+                calculatedPrice = forfaitPrix;
+                const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +20%</small>' : '';
+                document.getElementById('price-value').textContent = forfaitPrix + '€';
                 document.getElementById('price-details').innerHTML =
-                    '<strong>🎫 FORFAIT</strong> ' + forfait.nom + '<br><small>Tesla Model Y • Prix fixe garanti</small>';
+                    '<strong>FORFAIT</strong> ' + forfait.nom + nightLabel + '<br><small>Tesla Model Y</small>';
                 document.getElementById('price-result').classList.add('visible');
                 document.getElementById('btn-calculate').style.display = 'none';
             } else if (departCoords && destCoords) {
@@ -2508,13 +2533,15 @@
                             calculatedDistance = distanceKm;
                             let price = TARIFS.base + (distanceKm * TARIFS.parKm);
                             price = Math.max(price, TARIFS.minimum);
+                            price = price * getMajorationNuit();
                             price = Math.ceil(price / 5) * 5;
 
                             calculatedPrice = price;
 
+                            const nightLabel = isNightRate() ? '<br><small style="color:#f59e0b;">Majoration nuit +20%</small>' : '';
                             document.getElementById('price-value').textContent = price + '€';
                             document.getElementById('price-details').innerHTML =
-                                '<strong>' + distanceKm.toFixed(1) + ' km</strong> • ~' + durationMin + ' min<br><small>Tesla Model Y • Prix estimé</small>';
+                                '<strong>' + distanceKm.toFixed(1) + ' km</strong> - ~' + durationMin + ' min' + nightLabel + '<br><small>Tesla Model Y</small>';
                             document.getElementById('price-result').classList.add('visible');
                             document.getElementById('btn-calculate').style.display = 'none';
                         } else {

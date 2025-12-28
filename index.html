@@ -1461,11 +1461,16 @@
 
     </style>
 
-    <!-- Firebase SDK (doit être chargé avant les scripts) -->
+    
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    
+    <!-- SCRIPT GLOBAL - Firebase, Telegram, Utilitaires -->
     <script>
-        // Firebase Config
+        // ==========================================
+        // 1. FIREBASE INITIALISATION
+        // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyBJuFLVMI3gUKFohxYRZeg8Qyn0mXf1sQI",
             authDomain: "admin-vtc.firebaseapp.com",
@@ -1476,32 +1481,34 @@
             appId: "1:692871193828:web:2dd34c34736f2faf9bb8f1"
         };
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        window.db = firebase.database();
         
-        // Telegram notification
+        // ==========================================
+        // 2. TELEGRAM NOTIFICATION
+        // ==========================================
         const TELEGRAM_BOT_TOKEN = '8395819727:AAHJjiFQAFb--6hhThOmzoUXft4U4jDUQ4M';
         const TELEGRAM_CHAT_ID = '983151531';
         
-        async function sendTelegramNotification(reservation) {
-            const message = \`🚖 *NOUVELLE RÉSERVATION FLORENT VTC!*
+        window.sendTelegramNotification = async function(reservation) {
+            const message = `🚖 *NOUVELLE RÉSERVATION FLORENT VTC!*
 
-📋 *Réf:* \${reservation.reference || 'N/A'}
-👤 *Client:* \${reservation.nomClient}
-📧 *Email:* \${reservation.emailClient || 'N/A'}
-📞 *Tél:* \${reservation.phoneClient}
+📋 *Réf:* ${reservation.reference || 'N/A'}
+👤 *Client:* ${reservation.nomClient}
+📧 *Email:* ${reservation.emailClient || 'N/A'}
+📞 *Tél:* ${reservation.phoneClient}
 
-📍 *Départ:* \${reservation.depart}
-📍 *Arrivée:* \${reservation.destination}
+📍 *Départ:* ${reservation.depart}
+📍 *Arrivée:* ${reservation.destination}
 
-📅 *Date:* \${reservation.dateReservation}
-⏰ *Heure:* \${reservation.heureReservation}
-👥 *Passagers:* \${reservation.nombrePassagers}
+📅 *Date:* ${reservation.dateReservation}
+⏰ *Heure:* ${reservation.heureReservation}
+👥 *Passagers:* ${reservation.nombrePassagers}
 
-💰 *Prix:* \${reservation.prixEstime}
-🌐 *Source:* florent-vtc.fr\`;
+💰 *Prix:* ${reservation.prixEstime}
+🌐 *Source:* florent-vtc.fr`;
             
             try {
-                await fetch(\`https://api.telegram.org/bot\${TELEGRAM_BOT_TOKEN}/sendMessage\`, {
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1514,7 +1521,14 @@
             } catch (error) {
                 console.error('Telegram error:', error);
             }
-        }
+        };
+        
+        // ==========================================
+        // 3. UTILITAIRES
+        // ==========================================
+        window.generateReferenceNumber = function() {
+            return 'FLO-' + Date.now().toString().slice(-8);
+        };
     </script>
 </head>
 <body>
@@ -2468,11 +2482,6 @@
         function closeReservationModal() {
             document.getElementById('reservationModal').classList.remove('active');
         }
-        
-        function generateReferenceNumber() {
-            return 'FLO-' + Date.now().toString().slice(-8);
-        }
-        
         async function submitReservation(event) {
             event.preventDefault();
             
@@ -2484,7 +2493,7 @@
             const nom = document.getElementById('clientNom').value;
             const email = document.getElementById('clientEmail').value;
             const phone = document.getElementById('clientPhone').value;
-            const refNumber = generateReferenceNumber();
+            const refNumber = window.generateReferenceNumber();
             
             const clientName = prenom + ' ' + nom
 
@@ -2534,11 +2543,11 @@
             
             try {
                 // Sauvegarder dans Firebase
-                await db.ref('reservations/' + refNumber).set(reservation);
+                await window.db.ref('reservations/' + refNumber).set(reservation);
                 console.log('Reservation saved to Firebase');
-                
+
                 // Envoyer notification Telegram
-                await sendTelegramNotification({
+                await window.sendTelegramNotification({
                     nomClient: clientName,
                     phoneClient: phone,
                     emailClient: email,
@@ -2822,50 +2831,6 @@
 </a>
 
 
-    <script>
-        // Telegram notification
-        const TELEGRAM_BOT_TOKEN = '8395819727:AAHJjiFQAFb--6hhThOmzoUXft4U4jDUQ4M';
-        const TELEGRAM_CHAT_ID = '983151531';
-        
-        async function sendTelegramNotification(reservation) {
-            const message = `🚖 *NOUVELLE RÉSERVATION FLORENT VTC!*
-            
-📋 *Réf:* ${reservation.reference || 'N/A'}
-
-👤 *Client:* ${reservation.nomClient}
-📧 *Email:* ${reservation.emailClient || 'N/A'}
-📞 *Tél:* ${reservation.phoneClient}
-
-📍 *Départ:* ${reservation.depart}
-📍 *Arrivée:* ${reservation.destination}
-
-📅 *Date:* ${reservation.dateReservation}
-⏰ *Heure:* ${reservation.heureReservation}
-👥 *Passagers:* ${reservation.nombrePassagers}
-
-💰 *Prix:* ${reservation.prixEstime}
-🌐 *Source:* florent-vtc.fr`;
-            
-            try {
-                await fetch(\`https://api.telegram.org/bot\${TELEGRAM_BOT_TOKEN}/sendMessage\`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'Markdown'
-                    })
-                });
-                console.log('Telegram notification sent');
-            } catch (error) {
-                console.error('Telegram error:', error);
-            }
-        }
-        
-        function generateReferenceNumber() {
-            return 'FLO-' + Date.now().toString().slice(-8);
-        }
-    </script>
 
 </body>
 </html>

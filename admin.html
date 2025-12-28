@@ -665,33 +665,593 @@
             margin-top: 4px;
         }
 
-        /* Responsive */
+        /* ========================================
+           MOBILE-FIRST RESPONSIVE DESIGN
+           ======================================== */
+
+        /* Mobile Navigation Bar */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--dark);
+            border-bottom: 1px solid var(--border);
+            z-index: 1001;
+            padding: 0 16px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-nav-logo {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .mobile-nav-logo span {
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hamburger {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .hamburger:active {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Mobile Side Menu (slide-in) */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1002;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            bottom: 0;
+            width: 280px;
+            background: var(--dark);
+            z-index: 1003;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(280px);
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mobile-menu-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            border-radius: 12px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .mobile-nav-item:hover,
+        .mobile-nav-item:active {
+            background: rgba(255,255,255,0.08);
+            color: var(--white);
+        }
+
+        .mobile-nav-item.active {
+            background: rgba(59,130,246,0.15);
+            color: var(--blue);
+        }
+
+        .mobile-nav-item svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Bottom Tab Navigation for Mobile */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--dark);
+            border-top: 1px solid var(--border);
+            z-index: 1000;
+            padding: 8px 0;
+            padding-bottom: calc(8px + env(safe-area-inset-bottom));
+        }
+
+        .bottom-nav-inner {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            min-width: 60px;
+        }
+
+        .bottom-nav-item svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .bottom-nav-item.active {
+            color: var(--blue);
+        }
+
+        .bottom-nav-item:active {
+            transform: scale(0.95);
+        }
+
+        /* Mobile Card Styles for reservations */
+        .mobile-reservation-card {
+            display: none;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .mobile-reservation-card .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .mobile-reservation-card .client-info {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .mobile-reservation-card .client-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .mobile-reservation-card .client-phone {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .mobile-reservation-card .route {
+            font-size: 13px;
+            color: var(--gray);
+            margin: 12px 0;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+        }
+
+        .mobile-reservation-card .route-from,
+        .mobile-reservation-card .route-to {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .mobile-reservation-card .route-from {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .mobile-reservation-card .route-icon {
+            font-size: 14px;
+        }
+
+        .mobile-reservation-card .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-reservation-card .date-time {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .mobile-reservation-card .price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .mobile-reservation-card .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .mobile-reservation-card .card-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .mobile-reservation-card .card-actions .btn-view {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .mobile-reservation-card .card-actions .btn-call {
+            background: var(--green);
+            color: white;
+        }
+
+        /* Mobile-optimized Floating Action Button */
+        .fab {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            border: none;
+            color: white;
+            box-shadow: 0 4px 20px rgba(59,130,246,0.4);
+            cursor: pointer;
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fab svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .fab:active {
+            transform: scale(0.95);
+        }
+
+        /* ========================================
+           RESPONSIVE BREAKPOINTS
+           ======================================== */
+
+        /* Tablet/Small Desktop */
         @media (max-width: 1200px) {
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            /* Dashboard grid stack */
+            #dashboardSection > div:last-child {
+                grid-template-columns: 1fr !important;
+            }
+
+            #comptabiliteSection > div:not(.stats-grid):not(.card) {
+                grid-template-columns: 1fr !important;
+            }
         }
 
+        /* Tablet */
         @media (max-width: 900px) {
             .sidebar {
                 display: none;
             }
+
             .main-content {
                 margin-left: 0;
+                padding-top: 80px;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            .bottom-nav {
+                display: block;
+            }
+
+            .main-content {
+                padding-bottom: 90px;
+            }
+
+            /* Hide desktop add buttons */
+            .page-header .add-btn {
+                display: none;
+            }
+
+            /* Show FAB */
+            .fab {
+                display: flex;
             }
         }
 
+        /* Mobile */
         @media (max-width: 600px) {
+            .main-content {
+                padding: 70px 12px 100px 12px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 14px;
+                border-radius: 12px;
+            }
+
+            .stat-card .value {
+                font-size: 22px;
+            }
+
+            .stat-card .label {
+                font-size: 12px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+                margin-bottom: 20px;
+            }
+
+            .page-title {
+                font-size: 22px;
+            }
+
+            .page-subtitle {
+                font-size: 13px;
+            }
+
+            .card {
+                border-radius: 12px;
+            }
+
+            .card-header {
+                padding: 14px 16px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+
+            .filter-tabs {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 4px;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .filter-tab {
+                padding: 10px 14px;
+                font-size: 13px;
+                white-space: nowrap;
+            }
+
+            /* Hide table on mobile, show cards */
+            #reservationsTable {
+                display: none;
+            }
+
+            .mobile-reservation-card {
+                display: block;
+            }
+
+            #reservationsBody {
+                display: none;
+            }
+
+            /* Calendar responsive */
+            .calendar-grid {
+                gap: 4px;
+                padding: 12px;
+            }
+
+            .calendar-day {
+                padding: 6px;
+                font-size: 12px;
+                border-radius: 8px;
+            }
+
+            .calendar-day-header {
+                font-size: 10px;
+                padding: 4px;
+            }
+
+            /* Modals */
+            .modal {
+                margin: 12px;
+                max-height: calc(100vh - 24px);
+                border-radius: 16px;
+            }
+
+            .modal-header {
+                padding: 18px;
+            }
+
+            .modal-body {
+                padding: 18px;
+            }
+
+            .modal-footer {
+                padding: 18px;
+                flex-wrap: wrap;
+            }
+
+            .modal-footer .btn {
+                min-width: calc(50% - 6px);
+                padding: 14px;
+                font-size: 15px;
+            }
+
+            .form-group input {
+                padding: 16px;
+                font-size: 16px;
+            }
+
+            /* Action buttons larger for touch */
+            .action-btn {
+                width: 44px;
+                height: 44px;
+                border-radius: 10px;
+            }
+
+            /* Selected day list on dashboard */
+            #selectedDayList {
+                max-height: none !important;
+            }
+
+            /* Pending list */
+            #pendingList {
+                max-height: none !important;
+            }
+
+            /* Login box */
+            .login-box {
+                padding: 28px 20px;
+                border-radius: 16px;
+            }
+
+            .login-box h1 {
+                font-size: 22px;
+            }
+
+            /* Hide legend text on very small */
+            #dashboardSection .card:first-child > div:last-child span {
+                font-size: 11px;
+            }
+        }
+
+        /* Very small phones */
+        @media (max-width: 380px) {
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-            .page-header {
-                flex-direction: column;
-                gap: 16px;
-                align-items: flex-start;
+
+            .stat-card {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
-            th, td {
-                padding: 12px 16px;
+
+            .stat-card .value {
+                font-size: 24px;
+            }
+
+            .stat-card .trend {
+                display: none;
+            }
+
+            .bottom-nav-item span {
+                display: none;
+            }
+
+            .bottom-nav-item svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .page-title {
+                font-size: 20px;
+            }
+        }
+
+        /* Touch feedback */
+        @media (hover: none) and (pointer: coarse) {
+            .nav-item:active,
+            .filter-tab:active,
+            .action-btn:active,
+            .btn:active {
+                transform: scale(0.97);
+            }
+
+            .calendar-day:active {
+                background: rgba(59,130,246,0.2);
+            }
+        }
+
+        /* Safe area for notch phones */
+        @supports (padding-top: env(safe-area-inset-top)) {
+            .mobile-nav {
+                padding-top: env(safe-area-inset-top);
+                height: calc(60px + env(safe-area-inset-top));
+            }
+
+            @media (max-width: 900px) {
+                .main-content {
+                    padding-top: calc(80px + env(safe-area-inset-top));
+                }
             }
         }
     </style>
@@ -721,6 +1281,90 @@
 
     <!-- Dashboard -->
     <div class="dashboard" id="dashboard">
+
+        <!-- Mobile Navigation Bar -->
+        <nav class="mobile-nav">
+            <button class="hamburger" onclick="openMobileMenu()">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <div class="mobile-nav-logo"><span>Florent</span> VTC</div>
+            <div style="width: 44px;"></div>
+        </nav>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+
+        <!-- Mobile Slide Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <div class="mobile-nav-logo"><span>Florent</span> VTC</div>
+                <button class="mobile-menu-close" onclick="closeMobileMenu()">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="mobile-nav-item active" data-page="dashboard" onclick="showPage('dashboard'); closeMobileMenu();">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                Dashboard
+            </div>
+            <div class="mobile-nav-item" data-page="reservations" onclick="showPage('reservations'); closeMobileMenu();">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                Réservations
+            </div>
+            <div class="mobile-nav-item" data-page="clients" onclick="showPage('clients'); closeMobileMenu();">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                Clients
+            </div>
+            <div class="mobile-nav-item" data-page="parrainage" onclick="showPage('parrainage'); closeMobileMenu();">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Parrainage
+            </div>
+            <div class="mobile-nav-item" data-page="comptabilite" onclick="showPage('comptabilite'); closeMobileMenu();">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                Comptabilité
+            </div>
+            <div style="flex: 1;"></div>
+            <div style="border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px;">
+                <div class="user-info" style="margin-bottom: 16px;">
+                    <div class="user-avatar">F</div>
+                    <div>
+                        <div class="user-name">Florent</div>
+                        <div class="user-role">Administrateur</div>
+                    </div>
+                </div>
+                <div class="mobile-nav-item" onclick="logout(); closeMobileMenu();" style="color: var(--red);">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    Déconnexion
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Tab Navigation -->
+        <nav class="bottom-nav">
+            <div class="bottom-nav-inner">
+                <div class="bottom-nav-item active" data-page="dashboard" onclick="showPage('dashboard')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    <span>Accueil</span>
+                </div>
+                <div class="bottom-nav-item" data-page="reservations" onclick="showPage('reservations')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span>Courses</span>
+                </div>
+                <div class="bottom-nav-item" data-page="clients" onclick="showPage('clients')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span>Clients</span>
+                </div>
+                <div class="bottom-nav-item" data-page="comptabilite" onclick="showPage('comptabilite')">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    <span>Compta</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Floating Action Button -->
+        <button class="fab" onclick="openAddModal()">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+        </button>
+
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-logo">
@@ -891,6 +1535,9 @@
                         <tbody id="reservationsBody">
                         </tbody>
                     </table>
+
+                    <!-- Mobile Reservation Cards -->
+                    <div id="mobileReservationsCards" style="padding: 12px;"></div>
 
                     <div class="empty-state" id="emptyState" style="display:none">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -1125,7 +1772,11 @@
                 <button class="btn btn-success" id="messageSmsBtn" style="display:none; background: #3b82f6;" onclick="sendEndOfRideSMS()">
                     💬 SMS
                 </button>
-                    
+                <button class="btn btn-success" id="copyMsgBtn" style="display:none; background: #6b7280;" onclick="copyEndOfRideMessage()">
+                    📋 Copier
+                </button>
+                <button class="btn btn-success" id="saveContactBtn" style="display:none; background: #8b5cf6;" onclick="saveContact()">
+                    👤 Contact
                 </button>
                 <button class="btn btn-success" id="confirmBtn" onclick="updateStatus('confirmed')">Confirmer</button>
             </div>
@@ -1358,28 +2009,31 @@
                 : reservations.filter(r => r.status === currentFilter);
 
             const tbody = document.getElementById('reservationsBody');
+            const mobileCards = document.getElementById('mobileReservationsCards');
             const empty = document.getElementById('emptyState');
 
             if (filtered.length === 0) {
                 tbody.innerHTML = '';
+                mobileCards.innerHTML = '';
                 empty.style.display = 'block';
                 return;
             }
 
             empty.style.display = 'none';
 
+            const statusLabels = {
+                pending: 'En attente',
+                confirmed: 'Confirmée',
+                completed: 'Réalisée',
+                cancelled: 'Annulée'
+            };
+
+            // Desktop table
             tbody.innerHTML = filtered.map(r => {
                 const initials = (r.client_name || 'XX').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
                 const dateObj = new Date(r.date);
                 const dateStr = dateObj.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
                 const timeStr = r.time ? r.time.slice(0, 5) : '--:--';
-
-                const statusLabels = {
-                    pending: 'En attente',
-                    confirmed: 'Confirmée',
-                    completed: 'Réalisée',
-                    cancelled: 'Annulée'
-                };
 
                 return `
                     <tr>
@@ -1407,6 +2061,46 @@
                             </div>
                         </td>
                     </tr>
+                `;
+            }).join('');
+
+            // Mobile cards
+            mobileCards.innerHTML = filtered.map(r => {
+                const dateObj = new Date(r.date);
+                const dateStr = dateObj.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+                const timeStr = r.time ? r.time.slice(0, 5) : '--:--';
+                const pickup = r.pickup_address || (r.trajet ? r.trajet.split(' → ')[0] : '');
+                const destination = r.destination || (r.trajet ? r.trajet.split(' → ')[1] : '');
+                const phone = (r.client_phone || '').replace(/[^0-9+]/g, '');
+
+                return `
+                    <div class="mobile-reservation-card">
+                        <div class="card-top">
+                            <div class="client-info">
+                                <div class="client-name">${r.client_name || 'Client'}</div>
+                                <div class="client-phone">${r.client_phone || ''}</div>
+                            </div>
+                            <span class="status-badge ${r.status}"><span class="status-dot"></span>${statusLabels[r.status] || r.status}</span>
+                        </div>
+                        <div class="route">
+                            <div class="route-from">
+                                <span class="route-icon">📍</span>
+                                <span>${pickup || 'Départ'}</span>
+                            </div>
+                            <div class="route-to">
+                                <span class="route-icon">🎯</span>
+                                <span>${destination || 'Arrivée'}</span>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="date-time">📅 ${dateStr} à ${timeStr}</div>
+                            <div class="price">${r.price || 0}€</div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-view" onclick="viewReservation('${r.id}')">Détails</button>
+                            <a href="tel:${phone}" class="btn-call" style="text-align: center; text-decoration: none;">Appeler</a>
+                        </div>
+                    </div>
                 `;
             }).join('');
         }
@@ -1483,19 +2177,19 @@
                 confirmBtn.textContent = 'Confirmer';
                 confirmBtn.className = 'btn btn-success';
                 confirmBtn.onclick = () => updateStatus('confirmed');
-                messageFinBtn.style.display = 'none'; document.getElementById('messageSmsBtn').style.display = 'none';
+                messageFinBtn.style.display = 'none'; document.getElementById('messageSmsBtn').style.display = 'none'; document.getElementById('copyMsgBtn').style.display = 'none'; document.getElementById('saveContactBtn').style.display = 'inline-block';
             } else if (r.status === 'confirmed') {
                 confirmBtn.style.display = 'block';
                 confirmBtn.textContent = '✓ Marquer Réalisée';
                 confirmBtn.className = 'btn btn-success';
                 confirmBtn.onclick = () => updateStatus('completed');
-                messageFinBtn.style.display = 'inline-block'; document.getElementById('messageSmsBtn').style.display = 'inline-block';
+                messageFinBtn.style.display = 'inline-block'; document.getElementById('messageSmsBtn').style.display = 'inline-block'; document.getElementById('copyMsgBtn').style.display = 'inline-block'; document.getElementById('saveContactBtn').style.display = 'inline-block';
             } else if (r.status === 'completed') {
                 confirmBtn.style.display = 'none';
-                messageFinBtn.style.display = 'inline-block'; document.getElementById('messageSmsBtn').style.display = 'inline-block';
+                messageFinBtn.style.display = 'inline-block'; document.getElementById('messageSmsBtn').style.display = 'inline-block'; document.getElementById('copyMsgBtn').style.display = 'inline-block'; document.getElementById('saveContactBtn').style.display = 'inline-block';
             } else {
                 confirmBtn.style.display = 'none';
-                messageFinBtn.style.display = 'none'; document.getElementById('messageSmsBtn').style.display = 'none';
+                messageFinBtn.style.display = 'none'; document.getElementById('messageSmsBtn').style.display = 'none'; document.getElementById('copyMsgBtn').style.display = 'none'; document.getElementById('saveContactBtn').style.display = 'inline-block';
             }
 
             document.getElementById('detailModal').classList.add('active');
@@ -1571,6 +2265,76 @@ Florent - Votre chauffeur VTC`;
         }
 
         
+        // Générer le message fin de course
+        function getEndOfRideMessage() {
+            const r = reservationsCache.find(res => res.id === selectedReservationId);
+            if (!r) return '';
+            const clientName = r.client_name ? r.client_name.split(' ')[0] : '';
+            return 'Bonjour ' + clientName + ' !\n\nMerci pour votre confiance, c\'était un plaisir de vous accompagner 🙏\n\nGardez mon contact pour vos prochains trajets, je suis disponible 7j/7.\n\n💡 Parrainage : Recommandez-moi à un proche et bénéficiez de -10€ chacun sur votre prochaine course !\n\nSi vous avez un moment, votre avis m\'aiderait beaucoup :\nhttps://g.page/r/CYKXZZ8Ly-zsEBM/review\n\nRéserver :\nhttps://florent-vtc.fr\n📞 07 43 66 12 03\n\nÀ très bientôt,\nFlorent';
+        }
+
+        // Copier le message fin de course
+        function copyEndOfRideMessage() {
+            const message = getEndOfRideMessage();
+            if (!message) return;
+            
+            navigator.clipboard.writeText(message).then(() => {
+                // Changer temporairement le bouton pour confirmer
+                const btn = document.getElementById('copyMsgBtn');
+                const original = btn.innerHTML;
+                btn.innerHTML = '✓ Copié !';
+                btn.style.background = '#22c55e';
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                    btn.style.background = '#6b7280';
+                }, 2000);
+            });
+        }
+
+        // Enregistrer le contact client
+        function saveContact() {
+            const r = reservationsCache.find(res => res.id === selectedReservationId);
+            if (!r) return;
+            
+            const name = r.client_name || 'Client VTC';
+            let phone = r.client_phone || '';
+            
+            // Formater le numéro en international
+            phone = phone.replace(/[^0-9+]/g, '');
+            if (phone.startsWith('0')) {
+                phone = '+33' + phone.substring(1);
+            }
+            
+            // Créer le fichier vCard
+            const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:${name}
+TEL;TYPE=CELL:${phone}
+NOTE:Client Florent VTC
+END:VCARD`;
+            
+            // Créer et télécharger le fichier
+            const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = name.replace(/[^a-zA-Z0-9]/g, '_') + '.vcf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            // Feedback visuel
+            const btn = document.getElementById('saveContactBtn');
+            const original = btn.innerHTML;
+            btn.innerHTML = '✓ Téléchargé !';
+            btn.style.background = '#22c55e';
+            setTimeout(() => {
+                btn.innerHTML = original;
+                btn.style.background = '#8b5cf6';
+            }, 2000);
+        }
+
         // Envoyer message fin de course par SMS
         function sendEndOfRideSMS() {
             const r = reservationsCache.find(res => res.id === selectedReservationId);
@@ -1581,23 +2345,17 @@ Florent - Votre chauffeur VTC`;
                 return;
             }
             
-            let phone = r.client_phone.replace(/[^0-9]/g, '');
-            
-            const clientName = r.client_name ? r.client_name.split(' ')[0] : '';
-            const message = 'Bonjour ' + clientName + ' ! Merci d\'avoir fait appel à Florent VTC. J\'espère que vous avez passé un agréable moment. Si vous êtes satisfait(e), un petit avis Google m\'aiderait beaucoup : https://g.page/r/CYKXZZ8Ly-zsEBM/review - Florent';
-
-            // Detecter si mobile ou PC
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            
-            if (isMobile) {
-                window.open('sms:' + phone + '?body=' + encodeURIComponent(message), '_blank');
-            } else {
-                // Sur PC : copier le message
-                const fullText = 'Numéro: ' + r.client_phone + '\n\nMessage:\n' + message;
-                navigator.clipboard.writeText(fullText).then(() => {
-                    alert('📋 Message copié !\n\nNuméro: ' + r.client_phone + '\n\nColle-le dans ton téléphone pour envoyer le SMS.');
-                });
+            // Nettoyer et formater le numéro français
+            let phone = r.client_phone.replace(/[^0-9+]/g, '');
+            // Si le numéro commence par 0, le convertir en format international
+            if (phone.startsWith('0')) {
+                phone = '+33' + phone.substring(1);
+            } else if (!phone.startsWith('+')) {
+                phone = '+33' + phone;
             }
+
+            // Ouvrir l'app SMS avec le numéro
+            window.location.href = 'sms:' + phone;
         }
 
         // Delete reservation
@@ -1691,6 +2449,20 @@ Florent - Votre chauffeur VTC`;
             });
         });
 
+        // ========== MOBILE MENU FUNCTIONS ==========
+
+        function openMobileMenu() {
+            document.getElementById('mobileMenu').classList.add('active');
+            document.getElementById('mobileMenuOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('active');
+            document.getElementById('mobileMenuOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
         // ========== NAVIGATION ==========
 
         function showPage(page) {
@@ -1699,9 +2471,20 @@ Florent - Votre chauffeur VTC`;
                 section.style.display = 'none';
             });
 
-            // Mettre à jour la navigation
+            // Mettre à jour la navigation desktop
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector(`[data-page="${page}"]`).classList.add('active');
+            const desktopNav = document.querySelector(`.sidebar [data-page="${page}"]`);
+            if (desktopNav) desktopNav.classList.add('active');
+
+            // Mettre à jour la navigation mobile menu
+            document.querySelectorAll('.mobile-nav-item').forEach(n => n.classList.remove('active'));
+            const mobileMenuNav = document.querySelector(`.mobile-menu [data-page="${page}"]`);
+            if (mobileMenuNav) mobileMenuNav.classList.add('active');
+
+            // Mettre à jour la navigation bottom bar
+            document.querySelectorAll('.bottom-nav-item').forEach(n => n.classList.remove('active'));
+            const bottomNav = document.querySelector(`.bottom-nav [data-page="${page}"]`);
+            if (bottomNav) bottomNav.classList.add('active');
 
             // Afficher la bonne section
             if (page === 'dashboard') {

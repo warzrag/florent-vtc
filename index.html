@@ -2666,7 +2666,7 @@
                     date: reservationData.date,
                     time: reservationData.heure,
                     price: reservationData.prix,
-                    payment_method: paymentLabel,
+                    notes: 'Paiement: ' + paymentLabel,
                     status: 'pending'
                 };
                 console.log('Supabase data to insert:', supabaseData);

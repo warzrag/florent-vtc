@@ -2241,9 +2241,15 @@
             now.setHours(now.getHours() + 2);
             document.getElementById('est-heure').value = now.toTimeString().slice(0,5);
 
-            // Google Places Autocomplete
-            initAutocomplete('depart', (coords) => { departCoords = coords; });
-            initAutocomplete('destination', (coords) => { destCoords = coords; });
+            // Google Places Autocomplete - recalcule le prix à chaque changement
+            initAutocomplete('depart', (coords) => {
+                departCoords = coords;
+                if (destCoords) recalculerPrixAuto();
+            });
+            initAutocomplete('destination', (coords) => {
+                destCoords = coords;
+                if (departCoords) recalculerPrixAuto();
+            });
             initAutocomplete('lieu-pickup', (coords) => {}); // Autocomplete pour mise à disposition
         });
 
@@ -2348,6 +2354,98 @@
                 }
             }
             return null;
+        }
+
+        // Recalculer le prix automatiquement (sans alerts)
+        function recalculerPrixAuto() {
+            if (currentMode === 'disposition') return;
+
+            const depart = document.getElementById('depart').value;
+            const destination = document.getElementById('destination').value;
+
+            if (!depart || depart.length < 3 || !destination || destination.length < 3) return;
+
+            // Vérifier si forfait
+            const forfait = detecterForfait(depart, destination);
+
+            if (forfait) {
+                calculatedPrice = forfait.prix;
+                document.getElementById('price-value').textContent = forfait.prix + '€';
+                document.getElementById('price-details').innerHTML =
+                    '<strong>FORFAIT</strong> ' + forfait.nom + '<br><small>Tesla Model Y • Prix fixe garanti</small>';
+                document.getElementById('price-result').classList.add('visible');
+                document.getElementById('btn-calculate').style.display = 'none';
+            } else if (departCoords && destCoords) {
+                // Calcul via OSRM
+                fetch(`https://router.project-osrm.org/route/v1/driving/${departCoords.lon},${departCoords.lat};${destCoords.lon},${destCoords.lat}?overview=false`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.routes && data.routes.length > 0) {
+                            const distanceKm = data.routes[0].distance / 1000;
+                            const durationMin = Math.round(data.routes[0].duration / 60);
+
+                            calculatedDistance = distanceKm;
+                            let price = TARIFS.base + (distanceKm * TARIFS.parKm);
+                            price = Math.max(price, TARIFS.minimum);
+                            price = Math.ceil(price / 5) * 5;
+
+                            calculatedPrice = price;
+
+                            document.getElementById('price-value').textContent = price + '€';
+                            document.getElementById('price-details').innerHTML =
+                                '<strong>' + distanceKm.toFixed(1) + ' km</strong> • ~' + durationMin + ' min<br><small>Tesla Model Y • Prix estimé</small>';
+                            document.getElementById('price-result').classList.add('visible');
+                            document.getElementById('btn-calculate').style.display = 'none';
+                        }
+                    })
+                    .catch(() => {});
+            }
+        }
+
+        // Recalculer le prix automatiquement (sans alerts)
+        function recalculerPrixAuto() {
+            if (currentMode === 'disposition') return;
+
+            const depart = document.getElementById('depart').value;
+            const destination = document.getElementById('destination').value;
+
+            if (!depart || depart.length < 3 || !destination || destination.length < 3) return;
+
+            // Vérifier si forfait
+            const forfait = detecterForfait(depart, destination);
+
+            if (forfait) {
+                calculatedPrice = forfait.prix;
+                document.getElementById('price-value').textContent = forfait.prix + '€';
+                document.getElementById('price-details').innerHTML =
+                    '<strong>FORFAIT</strong> ' + forfait.nom + '<br><small>Tesla Model Y - Prix fixe garanti</small>';
+                document.getElementById('price-result').classList.add('visible');
+                document.getElementById('btn-calculate').style.display = 'none';
+            } else if (departCoords && destCoords) {
+                // Calcul via OSRM
+                fetch(`https://router.project-osrm.org/route/v1/driving/${departCoords.lon},${departCoords.lat};${destCoords.lon},${destCoords.lat}?overview=false`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.routes && data.routes.length > 0) {
+                            const distanceKm = data.routes[0].distance / 1000;
+                            const durationMin = Math.round(data.routes[0].duration / 60);
+
+                            calculatedDistance = distanceKm;
+                            let price = TARIFS.base + (distanceKm * TARIFS.parKm);
+                            price = Math.max(price, TARIFS.minimum);
+                            price = Math.ceil(price / 5) * 5;
+
+                            calculatedPrice = price;
+
+                            document.getElementById('price-value').textContent = price + '€';
+                            document.getElementById('price-details').innerHTML =
+                                '<strong>' + distanceKm.toFixed(1) + ' km</strong> - ~' + durationMin + ' min<br><small>Tesla Model Y - Prix estime</small>';
+                            document.getElementById('price-result').classList.add('visible');
+                            document.getElementById('btn-calculate').style.display = 'none';
+                        }
+                    })
+                    .catch(() => {});
+            }
         }
 
         // Calculer le prix

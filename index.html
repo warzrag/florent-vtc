@@ -2655,20 +2655,14 @@
             try {
                 // Sauvegarder dans Supabase (synchro avec admin)
                 const supabaseData = {
-                    reference: refNumber,
                     client_name: clientName,
                     client_phone: phone,
                     client_email: email,
-                    pickup_address: reservationData.depart,
-                    destination: reservationData.destination || '',
-                    trajet: reservationData.depart + ' → ' + (reservationData.destination || ''),
+                    trajet: reservationData.depart + ' -> ' + (reservationData.destination || ''),
                     date: reservationData.date,
                     time: reservationData.heure,
-                    passengers: parseInt(reservationData.passengers),
-                    luggage: parseInt(reservationData.luggage),
                     price: reservationData.prix,
-                    status: 'pending',
-                    created_at: new Date().toISOString()
+                    status: 'pending'
                 };
                 console.log('Supabase data to insert:', supabaseData);
                 const { data: insertedData, error: supaError } = await window.supabaseClient.from('reservations').insert([supabaseData]).select();

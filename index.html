@@ -857,6 +857,158 @@
             box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
         }
 
+
+        /* Modal Réservation */
+        .reservation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .reservation-modal.active {
+            display: flex;
+        }
+        .reservation-modal-content {
+            background: #111;
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .reservation-modal-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .reservation-modal-header h3 {
+            font-size: 20px;
+            color: #D4AF37;
+        }
+        .reservation-modal-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .reservation-modal-close:hover {
+            color: #fff;
+        }
+        .reservation-modal-body {
+            padding: 24px;
+        }
+        .reservation-modal-body .form-group {
+            margin-bottom: 16px;
+        }
+        .reservation-modal-body label {
+            display: block;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 6px;
+        }
+        .reservation-modal-body input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+        }
+        .reservation-modal-body input:focus {
+            outline: none;
+            border-color: #D4AF37;
+        }
+        .reservation-modal-body input::placeholder {
+            color: #555;
+        }
+        .reservation-recap {
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .reservation-recap-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .reservation-recap-row:last-child {
+            margin-bottom: 0;
+            padding-top: 8px;
+            border-top: 1px solid rgba(212,175,55,0.2);
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .reservation-recap-label {
+            color: #888;
+        }
+        .reservation-recap-value {
+            color: #fff;
+        }
+        .btn-confirm-reservation {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #D4AF37, #B8962E);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-confirm-reservation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+        }
+        .btn-confirm-reservation:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .reservation-success {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .reservation-success-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .reservation-success h3 {
+            color: #22c55e;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .reservation-success p {
+            color: #888;
+            margin-bottom: 24px;
+        }
+        .reservation-success .ref-number {
+            background: rgba(255,255,255,0.05);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 18px;
+            color: #D4AF37;
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
         .whatsapp-float svg {
             width: 32px;
             height: 32px;
@@ -880,7 +1032,159 @@
                 height: 56px;
             }
 
-            .whatsapp-float svg {
+    
+        /* Modal Réservation */
+        .reservation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .reservation-modal.active {
+            display: flex;
+        }
+        .reservation-modal-content {
+            background: #111;
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .reservation-modal-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .reservation-modal-header h3 {
+            font-size: 20px;
+            color: #D4AF37;
+        }
+        .reservation-modal-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .reservation-modal-close:hover {
+            color: #fff;
+        }
+        .reservation-modal-body {
+            padding: 24px;
+        }
+        .reservation-modal-body .form-group {
+            margin-bottom: 16px;
+        }
+        .reservation-modal-body label {
+            display: block;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 6px;
+        }
+        .reservation-modal-body input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+        }
+        .reservation-modal-body input:focus {
+            outline: none;
+            border-color: #D4AF37;
+        }
+        .reservation-modal-body input::placeholder {
+            color: #555;
+        }
+        .reservation-recap {
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .reservation-recap-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .reservation-recap-row:last-child {
+            margin-bottom: 0;
+            padding-top: 8px;
+            border-top: 1px solid rgba(212,175,55,0.2);
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .reservation-recap-label {
+            color: #888;
+        }
+        .reservation-recap-value {
+            color: #fff;
+        }
+        .btn-confirm-reservation {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #D4AF37, #B8962E);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-confirm-reservation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+        }
+        .btn-confirm-reservation:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .reservation-success {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .reservation-success-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .reservation-success h3 {
+            color: #22c55e;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .reservation-success p {
+            color: #888;
+            margin-bottom: 24px;
+        }
+        .reservation-success .ref-number {
+            background: rgba(255,255,255,0.05);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 18px;
+            color: #D4AF37;
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        .whatsapp-float svg {
                 width: 28px;
                 height: 28px;
             }
@@ -2056,88 +2360,160 @@
         }
 
         // Réserver la course via WhatsApp
+        // Variables globales pour la réservation
+        let reservationData = {};
+        
         function reserverCourse() {
             const date = document.getElementById('est-date').value;
             const heure = document.getElementById('est-heure').value;
             const passengers = document.getElementById('est-passengers').value;
             const luggage = document.getElementById('est-luggage').value;
             
-            // Demander le nom et téléphone du client
-            const clientName = prompt('Votre nom complet :');
-            if (!clientName) return;
-            const clientPhone = prompt('Votre numéro de téléphone :');
-            if (!clientPhone) return;
-
-            let message = `🚗 *Demande de réservation VTC*\n\n`;
             let depart = '';
             let destination = '';
-            let serviceType = 'transfert';
-
+            
             if (currentMode === 'disposition') {
-                serviceType = 'disposition';
-                const lieuPickup = document.getElementById('lieu-pickup').value;
-                const nbHeures = document.getElementById('nb-heures').value;
-                depart = lieuPickup;
-                destination = 'Mise à disposition ' + nbHeures + 'h';
-
-                message += `🕐 *Type :* Mise à disposition\n`;
-                message += `📍 *Lieu de prise en charge :* ${lieuPickup}\n`;
-                message += `⏱️ *Durée :* ${nbHeures} heure(s)\n`;
+                depart = document.getElementById('lieu-pickup').value;
+                destination = 'Mise à disposition ' + document.getElementById('nb-heures').value + 'h';
             } else {
                 depart = document.getElementById('depart').value;
                 destination = document.getElementById('destination').value;
-                const flightNumber = document.getElementById('flight-number')?.value || '';
-
-                message += `🚕 *Type :* Transfert\n`;
-                message += `📍 *Départ :* ${depart}\n`;
-                message += `📍 *Arrivée :* ${destination}\n`;
-                if (flightNumber) message += `✈️ *Vol :* ${flightNumber}\n`;
             }
+            
+            // Stocker les données
+            reservationData = {
+                depart: depart,
+                destination: destination,
+                date: date,
+                heure: heure,
+                passengers: passengers,
+                luggage: luggage,
+                prix: calculatedPrice,
+                mode: currentMode,
+                flightNumber: document.getElementById('flight-number')?.value || '',
+                nbHeures: currentMode === 'disposition' ? document.getElementById('nb-heures').value : ''
+            };
+            
+            // Afficher le récap dans le modal
+            document.getElementById('recapTrajet').textContent = depart.substring(0, 25) + ' → ' + destination.substring(0, 25);
+            document.getElementById('recapDate').textContent = new Date(date).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+            document.getElementById('recapHeure').textContent = heure;
+            document.getElementById('recapPrix').textContent = calculatedPrice + '€';
+            
+            // Réinitialiser le formulaire
+            document.getElementById('reservationForm').reset();
+            document.getElementById('reservationFormContainer').style.display = 'block';
+            document.getElementById('reservationSuccess').style.display = 'none';
+            
+            // Ouvrir le modal
+            document.getElementById('reservationModal').classList.add('active');
+        }
+        
+        function closeReservationModal() {
+            document.getElementById('reservationModal').classList.remove('active');
+        }
+        
+        async function submitReservation(event) {
+            event.preventDefault();
+            
+            const btn = document.getElementById('btnSubmitReservation');
+            btn.disabled = true;
+            btn.textContent = 'Envoi en cours...';
+            
+            const prenom = document.getElementById('clientPrenom').value;
+            const nom = document.getElementById('clientNom').value;
+            const email = document.getElementById('clientEmail').value;
+            const phone = document.getElementById('clientPhone').value;
+            const refNumber = generateReferenceNumber();
+            
+            const clientName = prenom + ' ' + nom
 
-            message += `📅 *Date :* ${date}\n`;
-            message += `⏰ *Heure :* ${heure}\n`;
-            message += `👥 *Passagers :* ${passengers}\n`;
-            message += `🧳 *Bagages :* ${luggage}\n`;
-            message += `\n💰 *Prix estimé :* ${calculatedPrice}€`;
+;
+            
+            // Construire le message WhatsApp
+            let message = `🚗 *Réservation VTC Confirmée*\n\n`;
+            message += `📋 *Réf:* ${refNumber}\n\n`;
+            message += `👤 *Client:* ${clientName}\n`;
+            message += `📧 *Email:* ${email}\n`;
+            message += `📞 *Tél:* ${phone}\n\n`;
+            
+            if (reservationData.mode === 'disposition') {
+                message += `🕐 *Type:* Mise à disposition\n`;
+                message += `📍 *Lieu:* ${reservationData.depart}\n`;
+                message += `⏱️ *Durée:* ${reservationData.nbHeures}h\n`;
+            } else {
+                message += `🚕 *Type:* Transfert\n`;
+                message += `📍 *Départ:* ${reservationData.depart}\n`;
+                message += `📍 *Arrivée:* ${reservationData.destination}\n`;
+                if (reservationData.flightNumber) message += `✈️ *Vol:* ${reservationData.flightNumber}\n`;
+            }
+            
+            message += `\n📅 *Date:* ${reservationData.date}\n`;
+            message += `⏰ *Heure:* ${reservationData.heure}\n`;
+            message += `👥 *Passagers:* ${reservationData.passengers}\n`;
+            message += `🧳 *Bagages:* ${reservationData.luggage}\n`;
+            message += `\n💰 *Prix:* ${reservationData.prix}€`;
             
             // Sauvegarder dans Supabase
             const reservation = {
-                reference_number: generateReferenceNumber(),
+                reference_number: refNumber,
                 nom_client: clientName,
-                phone_client: clientPhone,
-                email_client: 'non fourni',
-                depart: depart,
-                destination: destination,
-                date_reservation: date,
-                heure_reservation: heure,
-                nombre_passagers: parseInt(passengers),
-                bagages: parseInt(luggage),
+                phone_client: phone,
+                email_client: email,
+                depart: reservationData.depart,
+                destination: reservationData.destination,
+                date_reservation: reservationData.date,
+                heure_reservation: reservationData.heure,
+                nombre_passagers: parseInt(reservationData.passengers),
+                bagages: parseInt(reservationData.luggage),
                 type_vehicule: 'Tesla Model Y',
-                prix_estime: calculatedPrice,
+                prix_estime: reservationData.prix,
                 statut: 'En attente',
                 created_at: new Date().toISOString()
-            };
+            }
             
-            supabase.from('reservations').insert([reservation]).then(result => {
+            try {
+                // Sauvegarder dans Supabase
+                const result = await supabase.from('reservations').insert([reservation]);
+                
                 if (result.error) {
                     console.error('Supabase error:', result.error);
                 } else {
                     console.log('Reservation saved to Supabase');
-                    sendTelegramNotification({
-                        nomClient: clientName,
-                        phoneClient: clientPhone,
-                        depart: depart,
-                        destination: destination,
-                        dateReservation: date,
-                        heureReservation: heure,
-                        nombrePassagers: passengers,
-                        prixEstime: calculatedPrice + '€'
-                    });
                 }
-            });
-
-            const encoded = encodeURIComponent(message);
-            window.open('https://wa.me/33743661203?text=' + encoded, '_blank');
+                
+                // Envoyer notification Telegram
+                await sendTelegramNotification({
+                    nomClient: clientName,
+                    phoneClient: phone,
+                    emailClient: email,
+                    depart: reservationData.depart,
+                    destination: reservationData.destination,
+                    dateReservation: reservationData.date,
+                    heureReservation: reservationData.heure,
+                    nombrePassagers: reservationData.passengers,
+                    prixEstime: reservationData.prix + '€',
+                    reference: refNumber
+                });
+                
+                // Afficher le succès
+                document.getElementById('reservationFormContainer').style.display = 'none';
+                document.getElementById('successRefNumber').textContent = refNumber;
+                document.getElementById('reservationSuccess').style.display = 'block';
+                
+                // Ouvrir WhatsApp après 1 seconde
+                setTimeout(() => {
+                    const encoded = encodeURIComponent(message);
+                    window.open('https://wa.me/33743661203?text=' + encoded, '_blank');
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue. Veuillez réessayer.');
+            }
+            
+            btn.disabled = false;
+            btn.textContent = 'Confirmer ma réservation';
         }
 
         // Animation spinner
@@ -2322,6 +2698,69 @@
         (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
     </script>
     -->
+<!-- Modal Réservation -->
+<div class="reservation-modal" id="reservationModal">
+    <div class="reservation-modal-content">
+        <div class="reservation-modal-header">
+            <h3>🚗 Finaliser la réservation</h3>
+            <button class="reservation-modal-close" onclick="closeReservationModal()">&times;</button>
+        </div>
+        <div class="reservation-modal-body" id="reservationFormContainer">
+            <!-- Récap du trajet -->
+            <div class="reservation-recap" id="reservationRecap">
+                <div class="reservation-recap-row">
+                    <span class="reservation-recap-label">Trajet</span>
+                    <span class="reservation-recap-value" id="recapTrajet">-</span>
+                </div>
+                <div class="reservation-recap-row">
+                    <span class="reservation-recap-label">Date</span>
+                    <span class="reservation-recap-value" id="recapDate">-</span>
+                </div>
+                <div class="reservation-recap-row">
+                    <span class="reservation-recap-label">Heure</span>
+                    <span class="reservation-recap-value" id="recapHeure">-</span>
+                </div>
+                <div class="reservation-recap-row">
+                    <span class="reservation-recap-label">Prix</span>
+                    <span class="reservation-recap-value" id="recapPrix" style="color: #D4AF37;">-</span>
+                </div>
+            </div>
+            
+            <!-- Formulaire -->
+            <form id="reservationForm" onsubmit="submitReservation(event)">
+                <div class="form-group">
+                    <label>Prénom *</label>
+                    <input type="text" id="clientPrenom" placeholder="Jean" required>
+                </div>
+                <div class="form-group">
+                    <label>Nom *</label>
+                    <input type="text" id="clientNom" placeholder="Dupont" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="clientEmail" placeholder="jean.dupont@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Téléphone *</label>
+                    <input type="tel" id="clientPhone" placeholder="06 12 34 56 78" required>
+                </div>
+                <button type="submit" class="btn-confirm-reservation" id="btnSubmitReservation">
+                    Confirmer ma réservation
+                </button>
+            </form>
+        </div>
+        
+        <!-- Success message (hidden by default) -->
+        <div class="reservation-success" id="reservationSuccess" style="display: none;">
+            <div class="reservation-success-icon">✅</div>
+            <h3>Réservation confirmée !</h3>
+            <p>Vous allez recevoir un message WhatsApp de confirmation.</p>
+            <div class="ref-number" id="successRefNumber">FLO-XXXXXXXX</div>
+            <button class="btn-confirm-reservation" onclick="closeReservationModal()">Fermer</button>
+        </div>
+    </div>
+</div>
+
 <!-- Bouton WhatsApp flottant -->
 <a href="https://wa.me/33743661203" target="_blank" class="whatsapp-float" aria-label="Contacter via WhatsApp">
     <svg viewBox="0 0 24 24" fill="white" width="32" height="32"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -2354,7 +2793,10 @@
         async function sendTelegramNotification(reservation) {
             const message = `🚖 *NOUVELLE RÉSERVATION FLORENT VTC!*
             
+📋 *Réf:* ${reservation.reference || 'N/A'}
+
 👤 *Client:* ${reservation.nomClient}
+📧 *Email:* ${reservation.emailClient || 'N/A'}
 📞 *Tél:* ${reservation.phoneClient}
 
 📍 *Départ:* ${reservation.depart}

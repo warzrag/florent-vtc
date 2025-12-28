@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiche Siege Arriere - Florent VTC</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .instructions {
+            background: #fff;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Format A5 : 148mm x 210mm */
+        .affiche {
+            width: 148mm;
+            height: 210mm;
+            background: linear-gradient(180deg, #0a0a0a 0%, #151515 100%);
+            border-radius: 5mm;
+            padding: 10mm;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .affiche::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 2px;
+            margin-bottom: 5mm;
+        }
+
+        .merci {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 10mm;
+            text-align: center;
+        }
+
+        .qr-container {
+            display: flex;
+            gap: 8mm;
+            margin-bottom: 10mm;
+        }
+
+        .qr-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4mm;
+        }
+
+        .qr-code {
+            width: 45mm;
+            height: 45mm;
+            background: #fff;
+            border-radius: 4mm;
+            padding: 3mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-label {
+            font-size: 12px;
+            color: #d4af37;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .qr-sublabel {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+        }
+
+        .separator {
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 5mm 0;
+        }
+
+        .forfaits {
+            display: flex;
+            gap: 6mm;
+            margin-bottom: 8mm;
+        }
+
+        .forfait {
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.3);
+            padding: 3mm 5mm;
+            border-radius: 3mm;
+            text-align: center;
+        }
+
+        .forfait-name {
+            font-size: 10px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .forfait-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d4af37;
+        }
+
+        .phone {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 3mm;
+        }
+
+        .website {
+            font-size: 14px;
+            color: #d4af37;
+            margin-bottom: 8mm;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4mm;
+        }
+
+        .feature {
+            font-size: 9px;
+            color: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.05);
+            padding: 2mm 3mm;
+            border-radius: 2mm;
+        }
+
+        .tesla-badge {
+            position: absolute;
+            bottom: 8mm;
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .instructions { display: none; }
+            .affiche { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <strong>Affiche siege arriere (A5)</strong> - Imprime sur papier cartonne et plastifie pour un rendu pro.
+    </div>
+
+    <div class="affiche">
+        <div class="logo">FLORENT VTC</div>
+        <div class="merci">Merci de voyager avec nous</div>
+
+        <div class="qr-container">
+            <div class="qr-box">
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://florent-vtc.fr&color=0a0a0a" alt="QR Reservation">
+                </div>
+                <div class="qr-label">Reserver</div>
+                <div class="qr-sublabel">florent-vtc.fr</div>
+            </div>
+            <div class="qr-box">
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://g.page/r/CYKXZZ8Ly-zsEBM/review&color=0a0a0a" alt="QR Avis">
+                </div>
+                <div class="qr-label">Laisser un avis</div>
+                <div class="qr-sublabel">Google</div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="forfaits">
+            <div class="forfait">
+                <div class="forfait-name">Paris - CDG</div>
+                <div class="forfait-price">65€</div>
+            </div>
+            <div class="forfait">
+                <div class="forfait-name">Paris - Orly</div>
+                <div class="forfait-price">55€</div>
+            </div>
+            <div class="forfait">
+                <div class="forfait-name">Paris - Beauvais</div>
+                <div class="forfait-price">120€</div>
+            </div>
+        </div>
+
+        <div class="phone">07 43 66 12 03</div>
+        <div class="website">florent-vtc.fr</div>
+
+        <div class="features">
+            <span class="feature">Eau fraiche offerte</span>
+            <span class="feature">Chargeur iPhone/Android</span>
+            <span class="feature">Wifi gratuit</span>
+            <span class="feature">Sieges chauffants</span>
+        </div>
+
+        <div class="tesla-badge">Tesla Model Y Juniper 2025</div>
+    </div>
+</body>
+</html>

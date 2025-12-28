@@ -1994,13 +1994,23 @@
             await loadReservations();
             renderDashboard();
 
-            // Rafraîchir toutes les 30 secondes
+            // Rafraîchir toutes les 5 secondes
             setInterval(async () => {
                 await loadReservations();
-                // Rafraîchir la page active
                 const activePage = document.querySelector('.nav-item.active')?.dataset?.page || 'dashboard';
                 showPage(activePage);
-            }, 30000);
+            }, 5000);
+
+            // Temps reel avec Supabase
+            supabaseClient
+                .channel('reservations')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'reservations' }, async () => {
+                    console.log('Nouvelle reservation detectee!');
+                    await loadReservations();
+                    const activePage = document.querySelector('.nav-item.active')?.dataset?.page || 'dashboard';
+                    showPage(activePage);
+                })
+                .subscribe();
         }
 
         // Check if already logged in

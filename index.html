@@ -1646,12 +1646,12 @@
 
             <!-- Mode Transfert -->
             <div id="mode-transfert" class="mode-content">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>📍 Adresse de départ</label>
                     <input type="text" id="depart" placeholder="Ex: 25 rue de Rivoli, Paris" autocomplete="off">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>📍 Adresse d'arrivée</label>
                     <input type="text" id="destination" placeholder="Ex: Aéroport CDG Terminal 2" autocomplete="off">
                 </div>
@@ -1659,12 +1659,12 @@
 
             <!-- Mode Mise à disposition -->
             <div id="mode-disposition" class="mode-content" style="display: none;">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>📍 Lieu de prise en charge</label>
                     <input type="text" id="lieu-pickup" placeholder="Ex: 25 rue de Rivoli, Paris" autocomplete="off">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>⏰ Nombre d'heures</label>
                     <select id="nb-heures">
                         <option value="1">1 heure - 45€</option>
@@ -1684,11 +1684,11 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>📅 Date</label>
                     <input type="date" id="est-date">
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>⏰ Heure</label>
                     <input type="time" id="est-heure">
                 </div>
@@ -1703,7 +1703,7 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>👥 Passagers</label>
                     <select id="est-passengers">
                         <option value="1">1 passager</option>
@@ -1712,7 +1712,7 @@
                         <option value="4">4 passagers</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>🧳 Bagages</label>
                     <select id="est-luggage">
                         <option value="0">0 bagage</option>
@@ -2604,6 +2604,9 @@
             const nom = document.getElementById('clientNom').value;
             const email = document.getElementById('clientEmail').value;
             const phone = document.getElementById('clientPhone').value;
+            const payment = document.getElementById('clientPayment').value;
+            const paymentLabels = {cb: 'Carte bancaire', especes: 'Especes'};
+            const paymentLabel = paymentLabels[payment] || payment;
             const refNumber = window.generateReferenceNumber();
             
             const clientName = prenom + ' ' + nom
@@ -2633,6 +2636,7 @@
             message += `*Passagers:* ${reservationData.passengers}\n`;
             message += `*Bagages:* ${reservationData.luggage}\n`;
             message += `\n*Prix:* ${reservationData.prix}EUR`;
+            message += `\n*Paiement:* ${paymentLabel}`;
             
             // Sauvegarder dans Supabase
             const reservation = {
@@ -2916,21 +2920,30 @@
             
             <!-- Formulaire -->
             <form id="reservationForm" onsubmit="submitReservation(event)">
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>Prénom *</label>
                     <input type="text" id="clientPrenom" placeholder="Jean" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>Nom *</label>
                     <input type="text" id="clientNom" placeholder="Dupont" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>Email *</label>
                     <input type="email" id="clientEmail" placeholder="jean.dupont@email.com" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom:15px;">
                     <label>Téléphone *</label>
                     <input type="tel" id="clientPhone" placeholder="06 12 34 56 78" required>
+                </div>
+                <div class="form-group">
+                    <label>Moyen de paiement *</label>
+                    <select id="clientPayment" required style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:#1a1a1a;color:#fff;font-size:16px;">
+                        <option value="">-- Choisir --</option>
+                        <option value="cb">Carte bancaire</option>
+                        <option value="especes">Especes</option>
+                        
+                    </select>
                 </div>
                 <button type="submit" class="btn-confirm-reservation" id="btnSubmitReservation">
                     Confirmer ma réservation

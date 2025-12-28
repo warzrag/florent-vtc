@@ -1477,6 +1477,44 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
+        
+        // Telegram notification
+        const TELEGRAM_BOT_TOKEN = '8395819727:AAHJjiFQAFb--6hhThOmzoUXft4U4jDUQ4M';
+        const TELEGRAM_CHAT_ID = '983151531';
+        
+        async function sendTelegramNotification(reservation) {
+            const message = \`🚖 *NOUVELLE RÉSERVATION FLORENT VTC!*
+
+📋 *Réf:* \${reservation.reference || 'N/A'}
+👤 *Client:* \${reservation.nomClient}
+📧 *Email:* \${reservation.emailClient || 'N/A'}
+📞 *Tél:* \${reservation.phoneClient}
+
+📍 *Départ:* \${reservation.depart}
+📍 *Arrivée:* \${reservation.destination}
+
+📅 *Date:* \${reservation.dateReservation}
+⏰ *Heure:* \${reservation.heureReservation}
+👥 *Passagers:* \${reservation.nombrePassagers}
+
+💰 *Prix:* \${reservation.prixEstime}
+🌐 *Source:* florent-vtc.fr\`;
+            
+            try {
+                await fetch(\`https://api.telegram.org/bot\${TELEGRAM_BOT_TOKEN}/sendMessage\`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+                console.log('Telegram notification sent');
+            } catch (error) {
+                console.error('Telegram error:', error);
+            }
+        }
     </script>
 </head>
 <body>

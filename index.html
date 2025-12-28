@@ -1916,14 +1916,35 @@
         }
 
         // Détecter forfait
+        // Mots-clés pour détecter Paris et environs proches
+        const PARIS_KEYWORDS = ['paris', '75001', '75002', '75003', '75004', '75005', '75006', '75007', '75008', '75009', '75010', '75011', '75012', '75013', '75014', '75015', '75016', '75017', '75018', '75019', '75020'];
+        
+        function isParisArea(text) {
+            const t = text.toLowerCase();
+            return PARIS_KEYWORDS.some(k => t.includes(k));
+        }
+        
         function detecterForfait(depart, destination) {
             const dep = depart.toLowerCase();
             const dest = destination.toLowerCase();
+            
+            // Les forfaits ne s'appliquent que si Paris est impliqué
+            const parisInDepart = isParisArea(depart);
+            const parisInDest = isParisArea(destination);
+            
+            // Si ni le départ ni l'arrivée n'est Paris, pas de forfait
+            if (!parisInDepart && !parisInDest) {
+                return null;
+            }
 
             for (const f of FORFAITS) {
                 const depMatch = f.mots.some(mot => dep.includes(mot));
                 const destMatch = f.mots.some(mot => dest.includes(mot));
-                if (depMatch || destMatch) {
+                
+                // Le forfait s'applique si:
+                // - Départ = Paris ET Destination = aéroport/gare/disney
+                // - OU Départ = aéroport/gare/disney ET Destination = Paris
+                if ((parisInDepart && destMatch) || (depMatch && parisInDest)) {
                     return { prix: f.prix, nom: f.nom };
                 }
             }

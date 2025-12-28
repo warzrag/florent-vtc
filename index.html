@@ -1482,9 +1482,15 @@
         };
         firebase.initializeApp(firebaseConfig);
         window.db = firebase.database();
-        
+
         // ==========================================
-        // 2. TELEGRAM NOTIFICATION
+        // 2. SUPABASE (pour synchro avec admin)
+        // ==========================================
+        const SUPABASE_URL = 'https://ihhatfwgtswtsmzesczc.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloaGF0ZndndHN3dHNtemVzY3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNjQzMTQsImV4cCI6MjA4MDc0MDMxNH0.uNcB-MF7QDKidbesjTOEHXMP0bszxYll3L2E5sirsAY';
+
+        // ==========================================
+        // 3. TELEGRAM NOTIFICATION
         // ==========================================
         const TELEGRAM_BOT_TOKEN = '8395819727:AAHJjiFQAFb--6hhThOmzoUXft4U4jDUQ4M';
         const TELEGRAM_CHAT_ID = '983151531';
@@ -2542,9 +2548,26 @@
             }
             
             try {
-                // Sauvegarder dans Firebase
-                await window.db.ref('reservations/' + refNumber).set(reservation);
-                console.log('Reservation saved to Firebase');
+                // Sauvegarder dans Supabase (synchro avec admin)
+                const supabaseData = {
+                    reference: refNumber,
+                    client_name: clientName,
+                    client_phone: phone,
+                    client_email: email,
+                    pickup_address: reservationData.depart,
+                    destination: reservationData.destination || '',
+                    trajet: reservationData.depart + ' → ' + (reservationData.destination || ''),
+                    date: reservationData.date,
+                    time: reservationData.heure,
+                    passengers: parseInt(reservationData.passengers),
+                    luggage: parseInt(reservationData.luggage),
+                    price: reservationData.prix,
+                    status: 'pending',
+                    created_at: new Date().toISOString()
+                };
+                const { error: supaError } = await window.supabaseClient.from('reservations').insert([supabaseData]);
+                if (supaError) console.error('Supabase error:', supaError);
+                else console.log('Reservation saved to Supabase');
 
                 // Envoyer notification Telegram
                 await window.sendTelegramNotification({

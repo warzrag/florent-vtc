@@ -2415,6 +2415,31 @@ END:VCARD`;
             window.location.href = 'sms:' + phone;
         }
 
+        // Cancel reservation (mark as cancelled)
+        async function cancelReservation(id) {
+            if (!confirm('Refuser cette reservation ?')) return;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('reservations')
+                    .update({ status: 'cancelled' })
+                    .eq('id', id);
+
+                if (error) {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors du refus');
+                    return;
+                }
+
+                await loadReservations();
+                renderReservations();
+                updateStats();
+                closeModal('detailModal');
+            } catch (err) {
+                console.error('Erreur:', err);
+            }
+        }
+
         // Delete reservation
         async function deleteReservation(id) {
             if (!confirm('Supprimer cette réservation ?')) return;

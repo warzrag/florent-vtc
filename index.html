@@ -2473,14 +2473,9 @@
             }
             
             try {
-                // Sauvegarder dans Supabase
-                const result = await supabase.from('reservations').insert([reservation]);
-                
-                if (result.error) {
-                    console.error('Supabase error:', result.error);
-                } else {
-                    console.log('Reservation saved to Supabase');
-                }
+                // Sauvegarder dans Firebase
+                await db.ref('reservations/' + refNumber).set(reservation);
+                console.log('Reservation saved to Firebase');
                 
                 // Envoyer notification Telegram
                 await sendTelegramNotification({

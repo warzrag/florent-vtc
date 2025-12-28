@@ -1492,19 +1492,19 @@
         window.sendTelegramNotification = async function(reservation) {
             const message = `🚖 *NOUVELLE RÉSERVATION FLORENT VTC!*
 
-📋 *Réf:* ${reservation.reference || 'N/A'}
-👤 *Client:* ${reservation.nomClient}
-📧 *Email:* ${reservation.emailClient || 'N/A'}
-📞 *Tél:* ${reservation.phoneClient}
+*Ref: ${reservation.reference || 'N/A'}
+*Client: ${reservation.nomClient}
+*Email: ${reservation.emailClient || 'N/A'}
+*Tel: ${reservation.phoneClient}
 
-📍 *Départ:* ${reservation.depart}
-📍 *Arrivée:* ${reservation.destination}
+*Depart: ${reservation.depart}
+*Arrivee: ${reservation.destination}
 
-📅 *Date:* ${reservation.dateReservation}
-⏰ *Heure:* ${reservation.heureReservation}
-👥 *Passagers:* ${reservation.nombrePassagers}
+*Date: ${reservation.dateReservation}
+*Heure: ${reservation.heureReservation}
+*Passagers: ${reservation.nombrePassagers}
 
-💰 *Prix:* ${reservation.prixEstime}
+*Prix: ${reservation.prixEstime}
 🌐 *Source:* florent-vtc.fr`;
             
             try {
@@ -2499,29 +2499,29 @@
 
 ;
             
-            // Construire le message WhatsApp
-            let message = `🚗 *Réservation VTC Confirmée*\n\n`;
-            message += `📋 *Réf:* ${refNumber}\n\n`;
-            message += `👤 *Client:* ${clientName}\n`;
-            message += `📧 *Email:* ${email}\n`;
-            message += `📞 *Tél:* ${phone}\n\n`;
-            
+            // Construire le message WhatsApp (sans emojis pour compatibilité)
+            let message = `*RESERVATION VTC CONFIRMEE*\n\n`;
+            message += `*Ref:* ${refNumber}\n\n`;
+            message += `*Client:* ${clientName}\n`;
+            message += `*Email:* ${email}\n`;
+            message += `*Tel:* ${phone}\n\n`;
+
             if (reservationData.mode === 'disposition') {
-                message += `🕐 *Type:* Mise à disposition\n`;
-                message += `📍 *Lieu:* ${reservationData.depart}\n`;
-                message += `⏱️ *Durée:* ${reservationData.nbHeures}h\n`;
+                message += `*Type:* Mise a disposition\n`;
+                message += `*Lieu:* ${reservationData.depart}\n`;
+                message += `*Duree:* ${reservationData.nbHeures}h\n`;
             } else {
-                message += `🚕 *Type:* Transfert\n`;
-                message += `📍 *Départ:* ${reservationData.depart}\n`;
-                message += `📍 *Arrivée:* ${reservationData.destination}\n`;
-                if (reservationData.flightNumber) message += `✈️ *Vol:* ${reservationData.flightNumber}\n`;
+                message += `*Type:* Transfert\n`;
+                message += `*Depart:* ${reservationData.depart}\n`;
+                message += `*Arrivee:* ${reservationData.destination}\n`;
+                if (reservationData.flightNumber) message += `*Vol:* ${reservationData.flightNumber}\n`;
             }
-            
-            message += `\n📅 *Date:* ${reservationData.date}\n`;
-            message += `⏰ *Heure:* ${reservationData.heure}\n`;
-            message += `👥 *Passagers:* ${reservationData.passengers}\n`;
-            message += `🧳 *Bagages:* ${reservationData.luggage}\n`;
-            message += `\n💰 *Prix:* ${reservationData.prix}€`;
+
+            message += `\n*Date:* ${reservationData.date}\n`;
+            message += `*Heure:* ${reservationData.heure}\n`;
+            message += `*Passagers:* ${reservationData.passengers}\n`;
+            message += `*Bagages:* ${reservationData.luggage}\n`;
+            message += `\n*Prix:* ${reservationData.prix}EUR`;
             
             // Sauvegarder dans Supabase
             const reservation = {

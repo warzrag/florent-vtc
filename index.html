@@ -2413,6 +2413,10 @@
             document.getElementById('reservationModal').classList.remove('active');
         }
         
+        function generateReferenceNumber() {
+            return 'FLO-' + Date.now().toString().slice(-8);
+        }
+        
         async function submitReservation(event) {
             event.preventDefault();
             
